@@ -12,7 +12,8 @@
    WindowStyle="None"
    AllowsTransparency="True"
    ResizeMode="NoResize"
-   Background="Transparent">
+   Background="Transparent"
+   FocusManager.FocusedElement="{Binding ElementName=InputTextBox}">
    <Grid Margin="10"
       Background="#252525">
       <Grid.Effect>
