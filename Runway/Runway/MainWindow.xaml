@@ -21,5 +21,14 @@
             Direction="0"
             Opacity="0.7"/>
       </Grid.Effect>
+
+      <TextBox x:Name="InputTextBox"
+         Background="Transparent"
+         BorderBrush="{x:Null}"
+         VerticalContentAlignment="Center"
+         Padding="6,0,0,0"
+         Foreground="White"
+         FontSize="28"
+         CaretBrush="White" />
    </Grid>
 </Window>
