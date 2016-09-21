@@ -1,6 +1,8 @@
-﻿namespace Runway.ViewModels
+﻿using GalaSoft.MvvmLight;
+
+namespace Runway.ViewModels
 {
-   public class MainViewModel
+   public class MainViewModel : ViewModelBase
    {
    }
 }
