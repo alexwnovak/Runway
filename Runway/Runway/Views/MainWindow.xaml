@@ -14,6 +14,15 @@
    ResizeMode="NoResize"
    Background="Transparent"
    FocusManager.FocusedElement="{Binding ElementName=InputTextBox}">
+
+   <Window.Resources>
+      <ResourceDictionary>
+         <ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary Source="..\Styles\TextBoxStyle.xaml" />
+         </ResourceDictionary.MergedDictionaries>
+      </ResourceDictionary>
+   </Window.Resources>
+
    <Grid Margin="10"
       Background="#252525">
       <Grid.Effect>
@@ -23,13 +32,6 @@
             Opacity="0.7"/>
       </Grid.Effect>
 
-      <TextBox x:Name="InputTextBox"
-         Background="Transparent"
-         BorderBrush="{x:Null}"
-         VerticalContentAlignment="Center"
-         Padding="6,0,0,0"
-         Foreground="White"
-         FontSize="28"
-         CaretBrush="White" />
+      <TextBox x:Name="InputTextBox" />
    </Grid>
 </Window>
