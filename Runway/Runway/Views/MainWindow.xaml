@@ -13,7 +13,8 @@
    AllowsTransparency="True"
    ResizeMode="NoResize"
    Background="Transparent"
-   FocusManager.FocusedElement="{Binding ElementName=InputTextBox}">
+   FocusManager.FocusedElement="{Binding ElementName=InputTextBox}"
+   DataContext="{Binding Main, Source={StaticResource Locator}}">
 
    <Window.Resources>
       <ResourceDictionary>
