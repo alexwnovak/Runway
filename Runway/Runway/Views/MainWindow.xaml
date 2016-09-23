@@ -33,6 +33,7 @@
             Opacity="0.7"/>
       </Grid.Effect>
 
-      <TextBox x:Name="InputTextBox" />
+      <TextBox x:Name="InputTextBox"
+         Text="{Binding CurrentCommandText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
    </Grid>
 </Window>
