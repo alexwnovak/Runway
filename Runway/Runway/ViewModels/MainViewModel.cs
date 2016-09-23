@@ -47,6 +47,12 @@ namespace Runway.ViewModels
       {
          string commandSuggestion = _commandCatalog.Resolve( newText );
 
+         if ( string.IsNullOrEmpty( commandSuggestion ) )
+         {
+            PreviewCommandText = null;
+            return;
+         }
+
          int commonIndex = commandSuggestion.IndexOf( newText, StringComparison.InvariantCultureIgnoreCase );
          int postCommonIndex = commonIndex + newText.Length;
 

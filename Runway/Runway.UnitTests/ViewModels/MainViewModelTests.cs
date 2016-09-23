@@ -27,5 +27,25 @@ namespace Runway.UnitTests.ViewModels
 
          viewModel.PreviewCommandText.Should().Be( "opy" );
       }
+
+      public void CurrentCommandText_PrefixIsNull_PreviewTextIsNull()
+      {
+         // Arrange
+
+         var commandCatalogMock = new Mock<ICommandCatalog>();
+         commandCatalogMock.Setup( cc => cc.Resolve( null ) ).Returns<string>( null );
+
+         // Act
+
+         var viewModel = new MainViewModel( commandCatalogMock.Object )
+         {
+            CurrentCommandText = null
+         };
+
+         // Assert
+
+         viewModel.PreviewCommandText.Should().BeNull();
+
+      }
    }
 }
