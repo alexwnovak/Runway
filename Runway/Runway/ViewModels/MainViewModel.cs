@@ -24,6 +24,19 @@ namespace Runway.ViewModels
          }
       }
 
+      private string _previewCommandText;
+      public string PreviewCommandText
+      {
+         get
+         {
+            return _previewCommandText;
+         }
+         set
+         {
+            Set( () => PreviewCommandText, ref _previewCommandText, value );
+         }
+      }
+
       public MainViewModel( ICommandCatalog commandCatalog )
       {
          _commandCatalog = commandCatalog;
@@ -31,7 +44,9 @@ namespace Runway.ViewModels
 
       private void CommandTextChanged( string newText )
       {
-         
+         string commandSuggestion = _commandCatalog.Resolve( newText );
+
+         PreviewCommandText = commandSuggestion;
       }
    }
 }
