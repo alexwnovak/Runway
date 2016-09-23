@@ -4,6 +4,8 @@ namespace Runway.ViewModels
 {
    public class MainViewModel : ViewModelBase
    {
+      private readonly ICommandCatalog _commandCatalog;
+
       private string _currentCommandText;
       public string CurrentCommandText
       {
@@ -20,6 +22,11 @@ namespace Runway.ViewModels
                CommandTextChanged( value );
             }
          }
+      }
+
+      public MainViewModel( ICommandCatalog commandCatalog )
+      {
+         _commandCatalog = commandCatalog;
       }
 
       private void CommandTextChanged( string newText )
