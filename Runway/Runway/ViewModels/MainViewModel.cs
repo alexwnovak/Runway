@@ -13,8 +13,18 @@ namespace Runway.ViewModels
          }
          set
          {
-            Set( () => CurrentCommandText, ref _currentCommandText, value );
+            bool changed = Set( () => CurrentCommandText, ref _currentCommandText, value );
+
+            if ( changed )
+            {
+               CommandTextChanged( value );
+            }
          }
+      }
+
+      private void CommandTextChanged( string newText )
+      {
+         
       }
    }
 }
