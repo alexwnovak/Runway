@@ -33,7 +33,12 @@
             Opacity="0.7"/>
       </Grid.Effect>
 
-      <TextBox x:Name="InputTextBox"
-         Text="{Binding CurrentCommandText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+      <StackPanel Orientation="Horizontal">
+         <TextBox x:Name="InputTextBox"
+            Text="{Binding CurrentCommandText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+         <TextBox Foreground="#20FFFFFF"
+            Text="{Binding PreviewCommandText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            Padding="-3,0,0,0" />
+      </StackPanel>
    </Grid>
 </Window>
