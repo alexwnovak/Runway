@@ -86,6 +86,7 @@
     </Compile>
     <Compile Include="CommandCatalog.cs" />
     <Compile Include="ICommandCatalog.cs" />
+    <Compile Include="ILaunchableCommand.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
