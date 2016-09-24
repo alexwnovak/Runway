@@ -76,18 +76,18 @@ namespace Runway.ViewModels
 
       private void CommandTextChanged( string newText )
       {
-         string commandSuggestion = _commandCatalog.Resolve( newText );
+         var commandSuggestion = _commandCatalog.Resolve( newText );
 
-         if ( string.IsNullOrEmpty( commandSuggestion ) )
+         if ( commandSuggestion == null )
          {
             PreviewCommandText = null;
             return;
          }
 
-         int commonIndex = commandSuggestion.IndexOf( newText, StringComparison.InvariantCultureIgnoreCase );
+         int commonIndex = commandSuggestion.CommandText.IndexOf( newText, StringComparison.InvariantCultureIgnoreCase );
          int postCommonIndex = commonIndex + newText.Length;
 
-         PreviewCommandText = commandSuggestion.Substring( postCommonIndex );
+         PreviewCommandText = commandSuggestion.CommandText.Substring( postCommonIndex );
       }
    }
 }

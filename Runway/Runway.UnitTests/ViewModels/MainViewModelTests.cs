@@ -13,8 +13,11 @@ namespace Runway.UnitTests.ViewModels
 
          // Arrange
 
+         var commandMock = new Mock<ILaunchableCommand>();
+         commandMock.SetupGet( c => c.CommandText ).Returns( commandName );
+
          var commandCatalogMock = new Mock<ICommandCatalog>();
-         commandCatalogMock.Setup( cc => cc.Resolve( partialCommand ) ).Returns( commandName );
+         commandCatalogMock.Setup( cc => cc.Resolve( partialCommand ) ).Returns( commandMock.Object );
 
          // Act
 
@@ -33,7 +36,7 @@ namespace Runway.UnitTests.ViewModels
          // Arrange
 
          var commandCatalogMock = new Mock<ICommandCatalog>();
-         commandCatalogMock.Setup( cc => cc.Resolve( null ) ).Returns<string>( null );
+         commandCatalogMock.Setup( cc => cc.Resolve( null ) ).Returns<ILaunchableCommand>( null );
 
          // Act
 

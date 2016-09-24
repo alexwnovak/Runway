@@ -5,25 +5,24 @@ namespace Runway
 {
    public class CommandCatalog : ICommandCatalog
    {
-      private static readonly string[] _commandList = CreateCommandList();
+      private static readonly ILaunchableCommand[] _commandList = CreateCommandList();
 
-      private static string[] CreateCommandList()
+      private static ILaunchableCommand[] CreateCommandList()
       {
-         return new[]
+         return new ILaunchableCommand[]
          {
-            "copy",
-            "uninstall"
+            new CopyLaunchCommand(),
          };
       }
 
-      public string Resolve( string commandPartialText )
+      public ILaunchableCommand Resolve( string commandPartialText )
       {
          if ( string.IsNullOrEmpty( commandPartialText ) )
          {
             return null;
          }
 
-         return _commandList.FirstOrDefault( c => c.StartsWith( commandPartialText, StringComparison.InvariantCultureIgnoreCase ) );
+         return _commandList.FirstOrDefault( c => c.CommandText.StartsWith( commandPartialText, StringComparison.InvariantCultureIgnoreCase ) );
       }
    }
 }

@@ -2,6 +2,6 @@
 {
    public interface ICommandCatalog
    {
-      string Resolve( string commandPartialText );
+      ILaunchableCommand Resolve( string commandPartialText );
    }
 }
