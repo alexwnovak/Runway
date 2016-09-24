@@ -45,11 +45,17 @@ namespace Runway.ViewModels
          get;
       }
 
+      public ICommand LaunchCommand
+      {
+         get;
+      }
+
       public MainViewModel( ICommandCatalog commandCatalog )
       {
          _commandCatalog = commandCatalog;
 
          CompleteSuggestionCommand = new RelayCommand( OnCompleteSuggestionCommand );
+         LaunchCommand = new RelayCommand( OnLaunchCommand );
       }
 
       private void OnCompleteSuggestionCommand()
@@ -62,6 +68,10 @@ namespace Runway.ViewModels
          _currentCommandText = CurrentCommandText + PreviewCommandText;
          PreviewCommandText = null;
          RaisePropertyChanged( () => CurrentCommandText );
+      }
+
+      private void OnLaunchCommand()
+      {
       }
 
       private void CommandTextChanged( string newText )

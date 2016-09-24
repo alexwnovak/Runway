@@ -22,6 +22,11 @@ namespace Runway.Views
             e.Handled = true;
             InputTextBox.SelectionStart = InputTextBox.Text.Length;
          }
+         else if ( e.Key == Key.Return || e.Key == Key.Enter )
+         {
+            _viewModel.LaunchCommand.Execute( null );
+            e.Handled = true;
+         }
       }
    }
 }
