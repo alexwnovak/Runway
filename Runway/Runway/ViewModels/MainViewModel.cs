@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Windows.Input;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 
 namespace Runway.ViewModels
 {
@@ -38,9 +40,28 @@ namespace Runway.ViewModels
          }
       }
 
+      public ICommand CompleteSuggestionCommand
+      {
+         get;
+      }
+
       public MainViewModel( ICommandCatalog commandCatalog )
       {
          _commandCatalog = commandCatalog;
+
+         CompleteSuggestionCommand = new RelayCommand( OnCompleteSuggestionCommand );
+      }
+
+      private void OnCompleteSuggestionCommand()
+      {
+         if ( string.IsNullOrEmpty( PreviewCommandText ) )
+         {
+            return;
+         }
+
+         _currentCommandText = CurrentCommandText + PreviewCommandText;
+         PreviewCommandText = null;
+         RaisePropertyChanged( () => CurrentCommandText );
       }
 
       private void CommandTextChanged( string newText )

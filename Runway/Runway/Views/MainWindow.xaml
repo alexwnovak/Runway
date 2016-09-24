@@ -14,7 +14,8 @@
    ResizeMode="NoResize"
    Background="Transparent"
    FocusManager.FocusedElement="{Binding ElementName=InputTextBox}"
-   DataContext="{Binding Main, Source={StaticResource Locator}}">
+   DataContext="{Binding Main, Source={StaticResource Locator}}"
+   PreviewKeyDown="MainWindow_OnPreviewKeyDown">
 
    <Window.Resources>
       <ResourceDictionary>
@@ -38,7 +39,7 @@
             Text="{Binding CurrentCommandText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
          <TextBox Foreground="#20FFFFFF"
             Text="{Binding PreviewCommandText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            Padding="-3,0,0,0" />
+            Padding="-4,0,0,0" />
       </StackPanel>
    </Grid>
 </Window>
