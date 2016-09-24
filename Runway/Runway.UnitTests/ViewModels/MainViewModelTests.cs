@@ -48,7 +48,6 @@ namespace Runway.UnitTests.ViewModels
          // Assert
 
          viewModel.PreviewCommandText.Should().BeNull();
-
       }
    }
 }
