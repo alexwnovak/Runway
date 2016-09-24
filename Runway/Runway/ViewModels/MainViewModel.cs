@@ -72,6 +72,23 @@ namespace Runway.ViewModels
 
       private void OnLaunchCommand()
       {
+         if ( string.IsNullOrEmpty( CurrentCommandText ) )
+         {
+            return;
+         }
+
+         int firstSpace = CurrentCommandText.IndexOf( ' ' );
+
+         if ( firstSpace == -1 )
+         {
+            return;
+         }
+
+         string commandText = CurrentCommandText.Substring( 0, firstSpace );
+         string argumentString = CurrentCommandText.Substring( firstSpace + 1 );
+
+         var launchCommand = _commandCatalog.Resolve( commandText );
+         launchCommand.Launch( new object[] { argumentString } );
       }
 
       private void CommandTextChanged( string newText )
