@@ -25,6 +25,11 @@
       </ResourceDictionary>
    </Window.Resources>
 
+   <Window.InputBindings>
+      <KeyBinding Gesture="Enter" Command="{Binding LaunchCommand, Mode=OneTime}" />
+      <KeyBinding Gesture="Escape" Command="{Binding ExitCommand, Mode=OneTime}" />
+   </Window.InputBindings>
+
    <Grid Margin="10"
       Background="#252525">
       <Grid.Effect>
