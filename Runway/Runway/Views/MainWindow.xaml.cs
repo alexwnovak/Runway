@@ -27,6 +27,11 @@ namespace Runway.Views
             _viewModel.LaunchCommand.Execute( null );
             e.Handled = true;
          }
+         else if ( e.Key == Key.Escape )
+         {
+            _viewModel.ExitCommand.Execute( null );
+            e.Handled = true;
+         }
       }
    }
 }
