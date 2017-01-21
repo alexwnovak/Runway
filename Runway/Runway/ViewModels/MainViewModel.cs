@@ -81,7 +81,9 @@ namespace Runway.ViewModels
 
          _currentCommandText = CurrentCommandText + PreviewCommandText;
          PreviewCommandText = null;
+
          RaisePropertyChanged( () => CurrentCommandText );
+         OnMoveCaretRequested( this, new MoveCaretEventArgs( CaretPosition.End ) );
       }
 
       private void OnLaunchCommand()

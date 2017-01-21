@@ -71,5 +71,25 @@ namespace Runway.UnitTests.ViewModels
 
          appService.Verify( @as => @as.Exit(), Times.Once() );
       }
+
+      [Fact]
+      public void CompleteSuggestionCommand_HasPreviewCommandText_RaisesMoveCaretRequested()
+      {
+         // Act
+
+         var viewModel = new MainViewModel( null, null )
+         {
+            PreviewCommandText = "Doesn't matter"
+         };
+
+         viewModel.MonitorEvents();
+
+         viewModel.CompleteSuggestionCommand.Execute( null );
+
+         // Assert
+
+         viewModel.ShouldRaise( nameof( viewModel.MoveCaretRequested ) )
+                  .WithArgs<MoveCaretEventArgs>( e => e.CaretPosition == CaretPosition.End );
+      }
    }
 }

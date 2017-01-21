@@ -14,8 +14,7 @@
    ResizeMode="NoResize"
    Background="Transparent"
    FocusManager.FocusedElement="{Binding ElementName=InputTextBox}"
-   DataContext="{Binding Main, Source={StaticResource Locator}}"
-   PreviewKeyDown="MainWindow_OnPreviewKeyDown">
+   DataContext="{Binding Main, Source={StaticResource Locator}}">
 
    <Window.Resources>
       <ResourceDictionary>
@@ -26,6 +25,7 @@
    </Window.Resources>
 
    <Window.InputBindings>
+      <KeyBinding Gesture="Tab" Command="{Binding CompleteSuggestionCommand, Mode=OneTime}" />
       <KeyBinding Gesture="Enter" Command="{Binding LaunchCommand, Mode=OneTime}" />
       <KeyBinding Gesture="Escape" Command="{Binding ExitCommand, Mode=OneTime}" />
    </Window.InputBindings>

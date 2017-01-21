@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Input;
 using Runway.ViewModels;
 
 namespace Runway.Views
@@ -11,15 +10,19 @@ namespace Runway.Views
       public MainWindow()
       {
          InitializeComponent();
+
          _viewModel = (MainViewModel) DataContext;
+         _viewModel.MoveCaretRequested += OnMoveCaretRequested;
       }
 
-      private void MainWindow_OnPreviewKeyDown( object sender, KeyEventArgs e )
+      private void OnMoveCaretRequested( object sender, MoveCaretEventArgs e )
       {
-         if ( e.Key == Key.Tab )
+         if ( e.CaretPosition == CaretPosition.Start )
          {
-            _viewModel.CompleteSuggestionCommand.Execute( null );
-            e.Handled = true;
+            InputTextBox.SelectionStart = 0;
+         }
+         else
+         {
             InputTextBox.SelectionStart = InputTextBox.Text.Length;
          }
       }
