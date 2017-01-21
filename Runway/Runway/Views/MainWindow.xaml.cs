@@ -16,15 +16,6 @@ namespace Runway.Views
       }
 
       private void OnMoveCaretRequested( object sender, MoveCaretEventArgs e )
-      {
-         if ( e.CaretPosition == CaretPosition.Start )
-         {
-            InputTextBox.SelectionStart = 0;
-         }
-         else
-         {
-            InputTextBox.SelectionStart = InputTextBox.Text.Length;
-         }
-      }
+         => InputTextBox.MoveCaret( e.CaretPosition );
    }
 }
