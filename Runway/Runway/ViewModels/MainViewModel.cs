@@ -57,6 +57,8 @@ namespace Runway.ViewModels
          get;
       }
 
+      public event EventHandler<MoveCaretEventArgs> MoveCaretRequested;
+
       public MainViewModel( ICommandCatalog commandCatalog, IAppService appService )
       {
          _commandCatalog = commandCatalog;
@@ -67,6 +69,9 @@ namespace Runway.ViewModels
          ExitCommand = new RelayCommand( OnExitCommand );
       }
 
+      protected virtual void OnMoveCaretRequested( object sender, MoveCaretEventArgs e )
+         => MoveCaretRequested?.Invoke( sender, e );
+
       private void OnCompleteSuggestionCommand()
       {
          if ( string.IsNullOrEmpty( PreviewCommandText ) )
@@ -76,7 +81,9 @@ namespace Runway.ViewModels
 
          _currentCommandText = CurrentCommandText + PreviewCommandText;
          PreviewCommandText = null;
+
          RaisePropertyChanged( () => CurrentCommandText );
+         OnMoveCaretRequested( this, new MoveCaretEventArgs( CaretPosition.End ) );
       }
 
       private void OnLaunchCommand()
