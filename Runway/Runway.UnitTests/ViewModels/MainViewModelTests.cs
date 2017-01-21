@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Moq;
+using Runway.Services;
 using Runway.ViewModels;
 using Xunit;
 
@@ -23,7 +24,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object )
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null )
          {
             CurrentCommandText = partialCommand
          };
@@ -43,7 +44,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object )
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null )
          {
             CurrentCommandText = null
          };
@@ -51,6 +52,24 @@ namespace Runway.UnitTests.ViewModels
          // Assert
 
          viewModel.PreviewCommandText.Should().BeNull();
+      }
+
+      [Fact]
+      public void ExitCommand_ExitCommandIsExecuted_ApplicationExits()
+      {
+         // Arrange
+
+         var appService = new Mock<IAppService>();
+
+         // Act
+
+         var viewModel = new MainViewModel( null, appService.Object );
+
+         viewModel.ExitCommand.Execute( null );
+
+         // Assert
+
+         appService.Verify( @as => @as.Exit(), Times.Once() );
       }
    }
 }

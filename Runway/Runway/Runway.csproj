@@ -97,6 +97,8 @@
     <Compile Include="ICommandCatalog.cs" />
     <Compile Include="ILaunchableCommand.cs" />
     <Compile Include="LaunchableCommandBase.cs" />
+    <Compile Include="Services\AppService.cs" />
+    <Compile Include="Services\IAppService.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">

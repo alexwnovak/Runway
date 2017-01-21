@@ -3,6 +3,7 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight.Ioc;
 using NHotkey;
 using NHotkey.Wpf;
+using Runway.Services;
 
 namespace Runway
 {
@@ -20,6 +21,7 @@ namespace Runway
       private void WireDependencies()
       {
          SimpleIoc.Default.Register<ICommandCatalog>( () => new CommandCatalog() );
+         SimpleIoc.Default.Register<IAppService>( () => new AppService() );
       }
 
       private void OnLaunch( object sender, HotkeyEventArgs e ) => MainWindow.Activate();

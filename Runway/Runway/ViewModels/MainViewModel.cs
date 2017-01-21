@@ -2,12 +2,14 @@
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using Runway.Services;
 
 namespace Runway.ViewModels
 {
    public class MainViewModel : ViewModelBase
    {
       private readonly ICommandCatalog _commandCatalog;
+      private readonly IAppService _appService;
 
       private string _currentCommandText;
       public string CurrentCommandText
@@ -50,12 +52,19 @@ namespace Runway.ViewModels
          get;
       }
 
-      public MainViewModel( ICommandCatalog commandCatalog )
+      public ICommand ExitCommand
+      {
+         get;
+      }
+
+      public MainViewModel( ICommandCatalog commandCatalog, IAppService appService )
       {
          _commandCatalog = commandCatalog;
+         _appService = appService;
 
          CompleteSuggestionCommand = new RelayCommand( OnCompleteSuggestionCommand );
          LaunchCommand = new RelayCommand( OnLaunchCommand );
+         ExitCommand = new RelayCommand( OnExitCommand );
       }
 
       private void OnCompleteSuggestionCommand()
@@ -89,6 +98,11 @@ namespace Runway.ViewModels
 
          var launchCommand = _commandCatalog.Resolve( commandText );
          launchCommand.Launch( new object[] { argumentString } );
+      }
+
+      private void OnExitCommand()
+      {
+         _appService.Exit();
       }
 
       private void CommandTextChanged( string newText )
