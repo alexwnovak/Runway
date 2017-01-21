@@ -1,11 +1,13 @@
 ﻿using FluentAssertions;
 using Moq;
 using Runway.ViewModels;
+using Xunit;
 
 namespace Runway.UnitTests.ViewModels
 {
    public class MainViewModelTests
    {
+      [Fact]
       public void CurrentCommandText_PrefixMatchesCommand_ResolvesPreviewText()
       {
          const string partialCommand = "c";
@@ -31,6 +33,7 @@ namespace Runway.UnitTests.ViewModels
          viewModel.PreviewCommandText.Should().Be( "opy" );
       }
 
+      [Fact]
       public void CurrentCommandText_PrefixIsNull_PreviewTextIsNull()
       {
          // Arrange
