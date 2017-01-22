@@ -25,7 +25,7 @@ namespace Runway.ViewModels
 
             if ( changed )
             {
-               CommandTextChanged( value );
+               PreviewCommandText = _commandParser.GetCommandSuggestion( value );
             }
          }
       }
@@ -113,8 +113,5 @@ namespace Runway.ViewModels
       {
          _appService.Exit();
       }
-
-      private void CommandTextChanged( string newText )
-         => PreviewCommandText = _commandParser.GetCommandSuggestion( newText );
    }
 }
