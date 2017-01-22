@@ -10,15 +10,18 @@ namespace Runway.UnitTests.ViewModels
       [Fact]
       public void GetCommandSuggestion_CommandDoesNotExist_ReturnsNullSuggestion()
       {
+         const string command = "doesnotexist";
+
          // Arrange
 
          var commandCatalogMock = new Mock<ICommandCatalog>();
+         commandCatalogMock.Setup( cc => cc.Resolve( command ) ).Returns( CommandCatalog.MissingCommand );
 
          // Act
 
          var commandParser = new CommandParser( commandCatalogMock.Object );
 
-         string suggestion = commandParser.GetCommandSuggestion( "doesnotexist" );
+         string suggestion = commandParser.GetCommandSuggestion( command );
 
          // Assert
 

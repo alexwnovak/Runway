@@ -15,11 +15,22 @@ namespace Runway
          };
       }
 
+      private class NullCommand : ILaunchableCommand
+      {
+         public string CommandText => null;
+
+         public void Launch( object[] parameters )
+         {
+         }
+      }
+
+      public static readonly ILaunchableCommand MissingCommand = new NullCommand();
+
       public ILaunchableCommand Resolve( string commandPartialText )
       {
          if ( string.IsNullOrEmpty( commandPartialText ) )
          {
-            return null;
+            return MissingCommand;
          }
 
          return _commandList.FirstOrDefault( c => c.CommandText.StartsWith( commandPartialText, StringComparison.InvariantCultureIgnoreCase ) );

@@ -15,7 +15,7 @@ namespace Runway.ViewModels
       {
          var command = _commandCatalog.Resolve( partialCommandText );
 
-         if ( command == null )
+         if ( command == CommandCatalog.MissingCommand )
          {
             return null;
          }
