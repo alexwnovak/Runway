@@ -55,24 +55,6 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
-      public void ExitCommand_ExitCommandIsExecuted_ApplicationExits()
-      {
-         // Arrange
-
-         var appService = new Mock<IAppService>();
-
-         // Act
-
-         var viewModel = new MainViewModel( null, appService.Object );
-
-         viewModel.ExitCommand.Execute( null );
-
-         // Assert
-
-         appService.Verify( @as => @as.Exit(), Times.Once() );
-      }
-
-      [Fact]
       public void CompleteSuggestionCommand_HasPreviewCommandText_RaisesMoveCaretRequested()
       {
          // Act
@@ -90,6 +72,24 @@ namespace Runway.UnitTests.ViewModels
 
          viewModel.ShouldRaise( nameof( viewModel.MoveCaretRequested ) )
                   .WithArgs<MoveCaretEventArgs>( e => e.CaretPosition == CaretPosition.End );
+      }
+
+      [Fact]
+      public void ExitCommand_ExitCommandIsExecuted_ApplicationExits()
+      {
+         // Arrange
+
+         var appService = new Mock<IAppService>();
+
+         // Act
+
+         var viewModel = new MainViewModel( null, appService.Object );
+
+         viewModel.ExitCommand.Execute( null );
+
+         // Assert
+
+         appService.Verify( @as => @as.Exit(), Times.Once() );
       }
    }
 }
