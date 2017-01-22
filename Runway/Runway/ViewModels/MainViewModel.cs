@@ -10,6 +10,7 @@ namespace Runway.ViewModels
    {
       private readonly ICommandCatalog _commandCatalog;
       private readonly IAppService _appService;
+      private readonly CommandParser _commandParser;
 
       private string _currentCommandText;
       public string CurrentCommandText
@@ -24,7 +25,7 @@ namespace Runway.ViewModels
 
             if ( changed )
             {
-               CommandTextChanged( value );
+               PreviewCommandText = _commandParser.GetCommandSuggestion( value );
             }
          }
       }
@@ -63,10 +64,11 @@ namespace Runway.ViewModels
       {
          _commandCatalog = commandCatalog;
          _appService = appService;
+         _commandParser = new CommandParser( _commandCatalog );
 
          CompleteSuggestionCommand = new RelayCommand( OnCompleteSuggestionCommand );
          LaunchCommand = new RelayCommand( OnLaunchCommand );
-         ExitCommand = new RelayCommand( OnExitCommand );
+         ExitCommand = new RelayCommand( () => _appService.Exit() );
       }
 
       protected virtual void OnMoveCaretRequested( object sender, MoveCaretEventArgs e )
@@ -101,31 +103,10 @@ namespace Runway.ViewModels
          }
 
          string commandText = CurrentCommandText.Substring( 0, firstSpace );
-         string argumentString = CurrentCommandText.Substring( firstSpace + 1 );
+         string argumentString = _commandParser.ParseArguments( CurrentCommandText );
 
          var launchCommand = _commandCatalog.Resolve( commandText );
          launchCommand.Launch( new object[] { argumentString } );
-      }
-
-      private void OnExitCommand()
-      {
-         _appService.Exit();
-      }
-
-      private void CommandTextChanged( string newText )
-      {
-         var commandSuggestion = _commandCatalog.Resolve( newText );
-
-         if ( commandSuggestion == null )
-         {
-            PreviewCommandText = null;
-            return;
-         }
-
-         int commonIndex = commandSuggestion.CommandText.IndexOf( newText, StringComparison.InvariantCultureIgnoreCase );
-         int postCommonIndex = commonIndex + newText.Length;
-
-         PreviewCommandText = commandSuggestion.CommandText.Substring( postCommonIndex );
       }
    }
 }

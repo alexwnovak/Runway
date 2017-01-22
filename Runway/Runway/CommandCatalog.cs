@@ -1,28 +1,41 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Runway
 {
    public class CommandCatalog : ICommandCatalog
    {
-      private static readonly ILaunchableCommand[] _commandList = CreateCommandList();
+      private static readonly List<ILaunchableCommand> _commandList = new List<ILaunchableCommand>();
 
-      private static ILaunchableCommand[] CreateCommandList()
+      private class NullCommand : ILaunchableCommand
       {
-         return new ILaunchableCommand[]
+         public string CommandText => null;
+
+         public void Launch( object[] parameters )
          {
-            new CopyLaunchCommand(),
-         };
+         }
       }
+
+      public static readonly ILaunchableCommand MissingCommand = new NullCommand();
+
+      public void Add( ILaunchableCommand command ) => _commandList.Add( command );
 
       public ILaunchableCommand Resolve( string commandPartialText )
       {
          if ( string.IsNullOrEmpty( commandPartialText ) )
          {
-            return null;
+            return MissingCommand;
          }
 
-         return _commandList.FirstOrDefault( c => c.CommandText.StartsWith( commandPartialText, StringComparison.InvariantCultureIgnoreCase ) );
+         var commandMatch = _commandList.FirstOrDefault( c => c.CommandText.StartsWith( commandPartialText, StringComparison.InvariantCultureIgnoreCase ) );
+
+         if ( commandMatch == null )
+         {
+            return MissingCommand;
+         }
+
+         return commandMatch;
       }
    }
 }

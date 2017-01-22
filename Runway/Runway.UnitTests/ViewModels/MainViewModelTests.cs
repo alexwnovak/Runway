@@ -55,24 +55,6 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
-      public void ExitCommand_ExitCommandIsExecuted_ApplicationExits()
-      {
-         // Arrange
-
-         var appService = new Mock<IAppService>();
-
-         // Act
-
-         var viewModel = new MainViewModel( null, appService.Object );
-
-         viewModel.ExitCommand.Execute( null );
-
-         // Assert
-
-         appService.Verify( @as => @as.Exit(), Times.Once() );
-      }
-
-      [Fact]
       public void CompleteSuggestionCommand_HasPreviewCommandText_RaisesMoveCaretRequested()
       {
          // Act
@@ -90,6 +72,71 @@ namespace Runway.UnitTests.ViewModels
 
          viewModel.ShouldRaise( nameof( viewModel.MoveCaretRequested ) )
                   .WithArgs<MoveCaretEventArgs>( e => e.CaretPosition == CaretPosition.End );
+      }
+
+      [Fact]
+      public void CommandText_CommandNotFoundForPrefix_PreviewCommandTextIsNull()
+      {
+         const string command = "SomeCommand";
+
+         // Arrange
+
+         var commandCatalogMock = new Mock<ICommandCatalog>();
+         commandCatalogMock.Setup( cc => cc.Resolve( command ) ).Returns( CommandCatalog.MissingCommand );
+
+         // Act
+
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+
+         viewModel.CurrentCommandText = command;
+
+         // Assert
+
+         viewModel.PreviewCommandText.Should().BeNull();
+      }
+
+      [Fact]
+      public void CommandText_CommandIsFoundForPrefix_PreviewTextIsSetCorrectly()
+      {
+         const string commandPartialText = "co";
+         const string commandText = "command";
+         const string previewCommandText = "mmand";
+
+         // Arrange
+
+         var launchableCommand = new Mock<ILaunchableCommand>();
+         launchableCommand.SetupGet( lc => lc.CommandText ).Returns( commandText );
+
+         var commandCatalogMock = new Mock<ICommandCatalog>();
+         commandCatalogMock.Setup( cc => cc.Resolve( commandPartialText ) ).Returns( launchableCommand.Object );
+
+         // Act
+
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+
+         viewModel.CurrentCommandText = commandPartialText;
+
+         // Assert
+
+         viewModel.PreviewCommandText.Should().Be( previewCommandText );
+      }
+
+      [Fact]
+      public void ExitCommand_ExitCommandIsExecuted_ApplicationExits()
+      {
+         // Arrange
+
+         var appService = new Mock<IAppService>();
+
+         // Act
+
+         var viewModel = new MainViewModel( null, appService.Object );
+
+         viewModel.ExitCommand.Execute( null );
+
+         // Assert
+
+         appService.Verify( @as => @as.Exit(), Times.Once() );
       }
    }
 }
