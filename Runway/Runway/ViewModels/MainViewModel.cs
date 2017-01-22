@@ -68,7 +68,7 @@ namespace Runway.ViewModels
 
          CompleteSuggestionCommand = new RelayCommand( OnCompleteSuggestionCommand );
          LaunchCommand = new RelayCommand( OnLaunchCommand );
-         ExitCommand = new RelayCommand( OnExitCommand );
+         ExitCommand = new RelayCommand( () => _appService.Exit() );
       }
 
       protected virtual void OnMoveCaretRequested( object sender, MoveCaretEventArgs e )
@@ -107,11 +107,6 @@ namespace Runway.ViewModels
 
          var launchCommand = _commandCatalog.Resolve( commandText );
          launchCommand.Launch( new object[] { argumentString } );
-      }
-
-      private void OnExitCommand()
-      {
-         _appService.Exit();
       }
    }
 }
