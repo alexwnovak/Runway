@@ -10,6 +10,7 @@ namespace Runway.ViewModels
    {
       private readonly ICommandCatalog _commandCatalog;
       private readonly IAppService _appService;
+      private readonly CommandParser _commandParser;
 
       private string _currentCommandText;
       public string CurrentCommandText
@@ -63,6 +64,7 @@ namespace Runway.ViewModels
       {
          _commandCatalog = commandCatalog;
          _appService = appService;
+         _commandParser = new CommandParser( _commandCatalog );
 
          CompleteSuggestionCommand = new RelayCommand( OnCompleteSuggestionCommand );
          LaunchCommand = new RelayCommand( OnLaunchCommand );
@@ -113,19 +115,6 @@ namespace Runway.ViewModels
       }
 
       private void CommandTextChanged( string newText )
-      {
-         var commandSuggestion = _commandCatalog.Resolve( newText );
-
-         if ( commandSuggestion == null )
-         {
-            PreviewCommandText = null;
-            return;
-         }
-
-         int commonIndex = commandSuggestion.CommandText.IndexOf( newText, StringComparison.InvariantCultureIgnoreCase );
-         int postCommonIndex = commonIndex + newText.Length;
-
-         PreviewCommandText = commandSuggestion.CommandText.Substring( postCommonIndex );
-      }
+         => PreviewCommandText = _commandParser.GetCommandSuggestion( newText );
    }
 }
