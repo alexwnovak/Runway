@@ -8,14 +8,6 @@ namespace Runway
    {
       private static readonly List<ILaunchableCommand> _commandList = new List<ILaunchableCommand>();
 
-      private static List<ILaunchableCommand> CreateCommandList()
-      {
-         return new List<ILaunchableCommand>
-         {
-            new CopyLaunchCommand(),
-         };
-      }
-
       private class NullCommand : ILaunchableCommand
       {
          public string CommandText => null;

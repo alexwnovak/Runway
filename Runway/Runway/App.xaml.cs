@@ -20,7 +20,10 @@ namespace Runway
 
       private void WireDependencies()
       {
-         SimpleIoc.Default.Register<ICommandCatalog>( () => new CommandCatalog() );
+         var commandCatalog = new CommandCatalog();
+         commandCatalog.Add( new CopyLaunchCommand() );
+
+         SimpleIoc.Default.Register<ICommandCatalog>( () => commandCatalog );
          SimpleIoc.Default.Register<IAppService>( () => new AppService() );
       }
 
