@@ -1,4 +1,6 @@
-﻿namespace Runway.ViewModels
+﻿using System;
+
+namespace Runway.ViewModels
 {
    public class CommandParser
    {
@@ -11,7 +13,17 @@
 
       public string GetCommandSuggestion( string partialCommandText )
       {
-         return null;
+         var command = _commandCatalog.Resolve( partialCommandText );
+
+         if ( command == null )
+         {
+            return null;
+         }
+
+         int commonIndex = command.CommandText.IndexOf( partialCommandText, StringComparison.InvariantCultureIgnoreCase );
+         int postCommonIndex = commonIndex + partialCommandText.Length;
+
+         return command.CommandText.Substring( postCommonIndex );
       }
    }
 }
