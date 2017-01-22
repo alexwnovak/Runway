@@ -53,5 +53,43 @@ namespace Runway.UnitTests.ViewModels
 
          suggestion.Should().Be( suggestionText );
       }
+
+      [Fact]
+      public void ParseArguments_OnlyHasCommandButNoArguments_ReturnsNull()
+      {
+         var commandParser = new CommandParser( null );
+
+         string arguments = commandParser.ParseArguments( "copy" );
+
+         arguments.Should().BeNull();
+      }
+
+      [Fact]
+      public void ParseArguments_OnlyHasCommandWithATrailingSpaceButNoArguments_ReturnsNull()
+      {
+         var commandParser = new CommandParser( null );
+
+         string arguments = commandParser.ParseArguments( "copy " );
+
+         arguments.Should().BeNull();
+      }
+
+      [Fact]
+      public void ParseArguments_HasCommandAndArgument_ReturnsArgument()
+      {
+         const string command = "copy";
+         const string arguments = "some text here";
+         string fullText = $"{command} {arguments}";
+
+         // Act
+
+         var commandParser = new CommandParser( null );
+
+         string justArguments = commandParser.ParseArguments( fullText );
+
+         // Assert
+
+         justArguments.Should().Be( arguments );
+      }
    }
 }
