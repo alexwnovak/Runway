@@ -2,15 +2,8 @@
 
 namespace Runway.ViewModels
 {
-   public class CommandParser
+   public static class CommandParser
    {
-      private readonly ICommandCatalog _commandCatalog;
-
-      public CommandParser( ICommandCatalog commandCatalog )
-      {
-         _commandCatalog = commandCatalog;
-      }
-
       public static string GetCommandSuggestion( string partialCommandText, string commandText )
       {
          int commonIndex = commandText.IndexOf( partialCommandText, StringComparison.InvariantCultureIgnoreCase );
