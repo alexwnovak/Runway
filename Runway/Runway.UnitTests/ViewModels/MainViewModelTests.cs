@@ -122,6 +122,24 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
+      public void LaunchCommand_CommandTextIsNull_DoesNotLaunchAnything()
+      {
+         // Arrange
+
+         var commandCatalogMock = new Mock<ICommandCatalog>();
+
+         // Act
+
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+
+         viewModel.LaunchCommand.Execute( null );
+
+         // Assert
+
+         commandCatalogMock.Verify( cc => cc.Resolve( It.IsAny<string>() ), Times.Never() );
+      }
+
+      [Fact]
       public void ExitCommand_ExitCommandIsExecuted_ApplicationExits()
       {
          // Arrange
