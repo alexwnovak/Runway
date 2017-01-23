@@ -63,6 +63,25 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
+      public void CompleteSuggestionCommand_HasPreviewCommandText_RaisesPropertyChangeForCurrentCommandText()
+      {
+         // Act
+
+         var viewModel = new MainViewModel( null, null )
+         {
+            PreviewCommandText = "Doesn't matter"
+         };
+
+         viewModel.MonitorEvents();
+
+         viewModel.CompleteSuggestionCommand.Execute( null );
+
+         // Assert
+
+         viewModel.ShouldRaisePropertyChangeFor( vm => vm.CurrentCommandText );
+      }
+
+      [Fact]
       public void CompleteSuggestionCommand_HasPreviewCommandText_RaisesMoveCaretRequested()
       {
          // Act
