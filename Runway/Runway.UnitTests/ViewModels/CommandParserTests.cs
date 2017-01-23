@@ -29,9 +29,7 @@ namespace Runway.UnitTests.ViewModels
       [Fact]
       public void ParseArguments_OnlyHasCommandButNoArguments_ReturnsNull()
       {
-         var commandParser = new CommandParser( null );
-
-         string arguments = commandParser.ParseArguments( "copy" );
+         string arguments = CommandParser.ParseArguments( "copy" );
 
          arguments.Should().BeNull();
       }
@@ -39,9 +37,7 @@ namespace Runway.UnitTests.ViewModels
       [Fact]
       public void ParseArguments_OnlyHasCommandWithATrailingSpaceButNoArguments_ReturnsNull()
       {
-         var commandParser = new CommandParser( null );
-
-         string arguments = commandParser.ParseArguments( "copy " );
+         string arguments = CommandParser.ParseArguments( "copy " );
 
          arguments.Should().BeNull();
       }
@@ -53,13 +49,7 @@ namespace Runway.UnitTests.ViewModels
          const string arguments = "some text here";
          string fullText = $"{command} {arguments}";
 
-         // Act
-
-         var commandParser = new CommandParser( null );
-
-         string justArguments = commandParser.ParseArguments( fullText );
-
-         // Assert
+         string justArguments = CommandParser.ParseArguments( fullText );
 
          justArguments.Should().Be( arguments );
       }

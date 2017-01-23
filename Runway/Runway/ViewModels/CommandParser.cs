@@ -20,7 +20,7 @@ namespace Runway.ViewModels
          return commandText.Substring( postCommonIndex );
       }
 
-      public string ParseArguments( string fullCommandText )
+      public static string ParseArguments( string fullCommandText )
       {
          int firstSpace = fullCommandText.TrimStart().TrimEnd().IndexOf( ' ' );
 

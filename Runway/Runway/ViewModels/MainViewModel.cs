@@ -108,7 +108,7 @@ namespace Runway.ViewModels
          }
 
          string commandText = CurrentCommandText.Substring( 0, firstSpace );
-         string argumentString = _commandParser.ParseArguments( CurrentCommandText );
+         string argumentString = CommandParser.ParseArguments( CurrentCommandText );
 
          var launchCommand = _commandCatalog.Resolve( commandText );
          launchCommand.Launch( new object[] { argumentString } );
