@@ -10,7 +10,6 @@ namespace Runway.ViewModels
    {
       private readonly ICommandCatalog _commandCatalog;
       private readonly IAppService _appService;
-      private readonly CommandParser _commandParser;
 
       private string _currentCommandText;
       public string CurrentCommandText
@@ -25,7 +24,12 @@ namespace Runway.ViewModels
 
             if ( changed )
             {
-               PreviewCommandText = _commandParser.GetCommandSuggestion( value );
+               var command = _commandCatalog.Resolve( value );
+
+               if ( command != CommandCatalog.MissingCommand )
+               {
+                  PreviewCommandText = CommandParser.GetCommandSuggestion( value, command.CommandText );
+               }
             }
          }
       }
@@ -64,7 +68,6 @@ namespace Runway.ViewModels
       {
          _commandCatalog = commandCatalog;
          _appService = appService;
-         _commandParser = new CommandParser( _commandCatalog );
 
          CompleteSuggestionCommand = new RelayCommand( OnCompleteSuggestionCommand );
          LaunchCommand = new RelayCommand( OnLaunchCommand );
@@ -103,7 +106,7 @@ namespace Runway.ViewModels
          }
 
          string commandText = CurrentCommandText.Substring( 0, firstSpace );
-         string argumentString = _commandParser.ParseArguments( CurrentCommandText );
+         string argumentString = CommandParser.ParseArguments( CurrentCommandText );
 
          var launchCommand = _commandCatalog.Resolve( commandText );
          launchCommand.Launch( new object[] { argumentString } );

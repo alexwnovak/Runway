@@ -2,31 +2,18 @@
 
 namespace Runway.ViewModels
 {
-   public class CommandParser
+   public static class CommandParser
    {
-      private readonly ICommandCatalog _commandCatalog;
-
-      public CommandParser( ICommandCatalog commandCatalog )
+      public static string GetCommandSuggestion( string partialCommandText, string commandText )
       {
-         _commandCatalog = commandCatalog;
-      }
+         int commonIndex = commandText.IndexOf( partialCommandText, StringComparison.InvariantCultureIgnoreCase );
 
-      public string GetCommandSuggestion( string partialCommandText )
-      {
-         var command = _commandCatalog.Resolve( partialCommandText );
-
-         if ( command == CommandCatalog.MissingCommand )
-         {
-            return null;
-         }
-
-         int commonIndex = command.CommandText.IndexOf( partialCommandText, StringComparison.InvariantCultureIgnoreCase );
          int postCommonIndex = commonIndex + partialCommandText.Length;
 
-         return command.CommandText.Substring( postCommonIndex );
+         return commandText.Substring( postCommonIndex );
       }
 
-      public string ParseArguments( string fullCommandText )
+      public static string ParseArguments( string fullCommandText )
       {
          int firstSpace = fullCommandText.TrimStart().TrimEnd().IndexOf( ' ' );
 
