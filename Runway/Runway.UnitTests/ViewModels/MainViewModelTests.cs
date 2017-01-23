@@ -9,6 +9,14 @@ namespace Runway.UnitTests.ViewModels
    public class MainViewModelTests
    {
       [Fact]
+      public void CurrentCommand_NoCommandTextSet_CurrentCommandIsNull()
+      {
+         var viewModel = new MainViewModel( null, null );
+
+         viewModel.CurrentCommand.Should().BeNull();
+      }
+
+      [Fact]
       public void CurrentCommandText_PrefixMatchesCommand_ResolvesPreviewText()
       {
          const string partialCommand = "c";

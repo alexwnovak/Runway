@@ -47,6 +47,12 @@ namespace Runway.ViewModels
          }
       }
 
+      public ILaunchableCommand CurrentCommand
+      {
+         get;
+         private set;
+      }
+
       public ICommand CompleteSuggestionCommand
       {
          get;
