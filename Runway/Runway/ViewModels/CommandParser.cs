@@ -11,19 +11,13 @@ namespace Runway.ViewModels
          _commandCatalog = commandCatalog;
       }
 
-      public string GetCommandSuggestion( string partialCommandText )
+      public static string GetCommandSuggestion( string partialCommandText, string commandText )
       {
-         var command = _commandCatalog.Resolve( partialCommandText );
+         int commonIndex = commandText.IndexOf( partialCommandText, StringComparison.InvariantCultureIgnoreCase );
 
-         if ( command == CommandCatalog.MissingCommand )
-         {
-            return null;
-         }
-
-         int commonIndex = command.CommandText.IndexOf( partialCommandText, StringComparison.InvariantCultureIgnoreCase );
          int postCommonIndex = commonIndex + partialCommandText.Length;
 
-         return command.CommandText.Substring( postCommonIndex );
+         return commandText.Substring( postCommonIndex );
       }
 
       public string ParseArguments( string fullCommandText )
