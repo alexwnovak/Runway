@@ -32,6 +32,11 @@ namespace Runway.ViewModels
 
       public static string ParseArguments( string fullCommandText )
       {
+         if ( string.IsNullOrEmpty( fullCommandText ) )
+         {
+            return null;
+         }
+
          int firstSpace = fullCommandText.TrimStart().TrimEnd().IndexOf( ' ' );
 
          if ( firstSpace == -1 )
