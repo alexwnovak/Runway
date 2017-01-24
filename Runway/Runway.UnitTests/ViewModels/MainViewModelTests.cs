@@ -205,11 +205,14 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
-      public void LaunchCommand_CommandTextIsNull_DoesNotLaunchAnything()
+      public void LaunchCommand_CommandTextIsNull_LaunchesMissingCommandToDoAnything()
       {
          // Arrange
 
+         var commandMock = new Mock<ILaunchableCommand>();
+
          var commandCatalogMock = new Mock<ICommandCatalog>();
+         commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( commandMock.Object );
 
          // Act
 
@@ -219,7 +222,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Assert
 
-         commandCatalogMock.Verify( cc => cc.Resolve( It.IsAny<string>() ), Times.Never() );
+         commandMock.Verify( c => c.Launch( It.IsAny<object[]>() ), Times.Once() );
       }
 
       [Fact]

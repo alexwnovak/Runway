@@ -25,11 +25,7 @@ namespace Runway.ViewModels
             if ( changed )
             {
                var command = _commandCatalog.Resolve( value );
-
-               if ( command != CommandCatalog.MissingCommand )
-               {
-                  PreviewCommandText = CommandParser.GetCommandSuggestion( value, command.CommandText );
-               }
+               PreviewCommandText = CommandParser.GetCommandSuggestion( value, command.CommandText );
             }
          }
       }

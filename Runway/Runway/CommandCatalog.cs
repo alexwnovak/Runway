@@ -10,7 +10,7 @@ namespace Runway
 
       private class NullCommand : ILaunchableCommand
       {
-         public string CommandText => null;
+         public string CommandText => string.Empty;
 
          public void Launch( object[] parameters )
          {
