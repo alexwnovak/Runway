@@ -104,14 +104,7 @@ namespace Runway.ViewModels
             return;
          }
 
-         int firstSpace = CurrentCommandText.IndexOf( ' ' );
-
-         if ( firstSpace == -1 )
-         {
-            return;
-         }
-
-         string commandText = CurrentCommandText.Substring( 0, firstSpace );
+         string commandText = CommandParser.ParseCommand( CurrentCommandText );
          string argumentString = CommandParser.ParseArguments( CurrentCommandText );
 
          var launchCommand = _commandCatalog.Resolve( commandText );
