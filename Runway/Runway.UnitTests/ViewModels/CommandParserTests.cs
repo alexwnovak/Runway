@@ -27,6 +27,52 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
+      public void ParseCommand_CommandIsNull_ReturnsNull()
+      {
+         string command = CommandParser.ParseCommand( null );
+
+         command.Should().BeNull();
+      }
+
+      [Fact]
+      public void ParseCommand_CommandIsEmpty_ReturnsNull()
+      {
+         string command = CommandParser.ParseCommand( string.Empty );
+
+         command.Should().BeNull();
+      }
+
+      [Fact]
+      public void ParseCommand_HasAWholeCommandWithNoSpace_ReturnsTheCommand()
+      {
+         const string fullCommandText = "copy";
+
+         string command = CommandParser.ParseCommand( fullCommandText );
+
+         command.Should().Be( fullCommandText );
+      }
+
+      [Fact]
+      public void ParseCommand_HasWholeCommandWithTrailingSpace_ReturnsTheCommandWithSpaceRemoved()
+      {
+         const string fullCommandText = "copy";
+
+         string command = CommandParser.ParseCommand( $"{fullCommandText} " );
+
+         command.Should().Be( fullCommandText );
+      }
+
+      [Fact]
+      public void ParseCommand_HasCommandAndArguments_ReturnsCommand()
+      {
+         const string fullCommandText = "copy";
+
+         string command = CommandParser.ParseCommand( $"{fullCommandText} extra stuff after" );
+
+         command.Should().Be( fullCommandText );
+      }
+
+      [Fact]
       public void ParseArguments_OnlyHasCommandButNoArguments_ReturnsNull()
       {
          string arguments = CommandParser.ParseArguments( "copy" );
