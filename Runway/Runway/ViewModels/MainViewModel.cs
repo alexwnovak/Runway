@@ -99,11 +99,6 @@ namespace Runway.ViewModels
 
       private void OnLaunchCommand()
       {
-         if ( string.IsNullOrEmpty( CurrentCommandText ) )
-         {
-            return;
-         }
-
          string commandText = CommandParser.ParseCommand( CurrentCommandText );
          string argumentString = CommandParser.ParseArguments( CurrentCommandText );
 
