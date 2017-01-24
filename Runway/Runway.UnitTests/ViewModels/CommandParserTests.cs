@@ -7,6 +7,22 @@ namespace Runway.UnitTests.ViewModels
    public class CommandParserTests
    {
       [Fact]
+      public void GetCommandSuggestion_CommandTextIsNull_ReturnsNull()
+      {
+         string suggestion = CommandParser.GetCommandSuggestion( "DoesntMatter", null );
+
+         suggestion.Should().BeNull();
+      }
+
+      [Fact]
+      public void GetCommandSuggestion_CommandTextIsEmpty_ReturnsNull()
+      {
+         string suggestion = CommandParser.GetCommandSuggestion( "DoesntMatter", string.Empty );
+
+         suggestion.Should().BeNull();
+      }
+
+      [Fact]
       public void GetCommandSuggestion_TextMatchesCommand_ReturnsNullSuggestion()
       {
          string suggestion = CommandParser.GetCommandSuggestion( "FullCommand", "FullCommand" );

@@ -6,6 +6,11 @@ namespace Runway.ViewModels
    {
       public static string GetCommandSuggestion( string partialCommandText, string commandText )
       {
+         if ( string.IsNullOrEmpty( commandText ) )
+         {
+            return null;
+         }
+
          int commonIndex = commandText.IndexOf( partialCommandText, StringComparison.InvariantCultureIgnoreCase );
 
          int postCommonIndex = commonIndex + partialCommandText.Length;
