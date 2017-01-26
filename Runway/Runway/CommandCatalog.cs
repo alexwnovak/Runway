@@ -19,9 +19,14 @@ namespace Runway
             return EmptySet;
          }
 
-         return _commandList.Where( c => c.CommandText.StartsWith( searchText, StringComparison.InvariantCultureIgnoreCase ) )
-               .Select( c => new MatchResult( MatchType.Exact, c )  )
-               .ToArray();
+         var results = from c in _commandList
+                       let exactMatch = c.CommandText == searchText
+                       let partialMatch = c.CommandText.StartsWith( searchText, StringComparison.InvariantCultureIgnoreCase )
+                       let matchType = exactMatch ? MatchType.Exact : MatchType.Partial
+                       where exactMatch || partialMatch
+                       select new MatchResult( matchType, c );
+
+         return results.ToArray();
       }
    }
 }

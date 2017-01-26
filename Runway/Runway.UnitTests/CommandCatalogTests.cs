@@ -53,6 +53,7 @@ namespace Runway.UnitTests
          // Assert
 
          results.Should().HaveCount( 1 );
+         results[0].MatchType.Should().Be( MatchType.Partial );
          results[0].Command.Should().Be( commandMock.Object );
       }
 
