@@ -18,6 +18,31 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
+      public void CurrentMatchResults_MatchIsFound_MatchIsCached()
+      {
+         const string command = "x";
+
+         // Arrange
+
+         var commandMock = new Mock<ILaunchableCommand>();
+
+         var results = MatchResultHelper.Create( MatchType.Exact, commandMock.Object );
+         var commandCatalogMock = new Mock<ICommandCatalog>();
+         commandCatalogMock.Setup( cc => cc.Resolve( command ) ).Returns( results );
+
+         // Act
+
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+
+         viewModel.CurrentCommandText = command;
+
+         // Assert
+
+         viewModel.CurrentMatchResults.Should().HaveCount( 1 );
+         viewModel.CurrentMatchResults.Should().Contain( m => m.Command == commandMock.Object );
+      }
+
+      [Fact]
       public void CurrentCommandText_PrefixMatchesCommand_ResolvesPreviewText()
       {
          const string partialCommand = "c";
