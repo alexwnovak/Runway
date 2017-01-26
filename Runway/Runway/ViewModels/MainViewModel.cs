@@ -24,8 +24,12 @@ namespace Runway.ViewModels
 
             if ( changed )
             {
-               var command = _commandCatalog.Resolve( value );
-               PreviewCommandText = CommandParser.GetCommandSuggestion( value, command.CommandText );
+               var matchResults = _commandCatalog.Resolve( value );
+
+               if ( matchResults.Length > 0 )
+               {
+                  PreviewCommandText = CommandParser.GetCommandSuggestion( value, matchResults[0].Command.CommandText );
+               }
             }
          }
       }
@@ -93,8 +97,8 @@ namespace Runway.ViewModels
          string commandText = CommandParser.ParseCommand( CurrentCommandText );
          string argumentString = CommandParser.ParseArguments( CurrentCommandText );
 
-         var launchCommand = _commandCatalog.Resolve( commandText );
-         launchCommand.Launch( new object[] { argumentString } );
+         var results = _commandCatalog.Resolve( commandText );
+         results[0].Command.Launch( new object[] { argumentString } );
       }
    }
 }

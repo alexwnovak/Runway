@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Moq;
 using Runway.Services;
+using Runway.UnitTests.Helpers;
 using Runway.ViewModels;
 using Xunit;
 
@@ -27,8 +28,9 @@ namespace Runway.UnitTests.ViewModels
          var commandMock = new Mock<ILaunchableCommand>();
          commandMock.SetupGet( c => c.CommandText ).Returns( commandName );
 
+         var matchResults = MatchResultHelper.Create( MatchType.Exact, commandMock.Object );
          var commandCatalogMock = new Mock<ICommandCatalog>();
-         commandCatalogMock.Setup( cc => cc.Resolve( partialCommand ) ).Returns( commandMock.Object );
+         commandCatalogMock.Setup( cc => cc.Resolve( partialCommand ) ).Returns( matchResults );
 
          // Act
 
@@ -112,8 +114,9 @@ namespace Runway.UnitTests.ViewModels
          var commandMock = new Mock<ILaunchableCommand>();
          commandMock.SetupGet( c => c.CommandText ).Returns( commandName );
 
+         var matchResults = MatchResultHelper.Create( MatchType.Exact, commandMock.Object );
          var commandCatalogMock = new Mock<ICommandCatalog>();
-         commandCatalogMock.Setup( cc => cc.Resolve( currentCommand ) ).Returns( commandMock.Object );
+         commandCatalogMock.Setup( cc => cc.Resolve( currentCommand ) ).Returns( matchResults );
 
          // Act
 
@@ -140,8 +143,9 @@ namespace Runway.UnitTests.ViewModels
          var commandMock = new Mock<ILaunchableCommand>();
          commandMock.SetupGet( c => c.CommandText ).Returns( commandName );
 
+         var matchResults = MatchResultHelper.Create( MatchType.Exact, commandMock.Object );
          var commandCatalogMock = new Mock<ICommandCatalog>();
-         commandCatalogMock.Setup( cc => cc.Resolve( currentCommand ) ).Returns( commandMock.Object );
+         commandCatalogMock.Setup( cc => cc.Resolve( currentCommand ) ).Returns( matchResults );
 
          // Act
 
@@ -165,7 +169,7 @@ namespace Runway.UnitTests.ViewModels
          // Arrange
 
          var commandCatalogMock = new Mock<ICommandCatalog>();
-         commandCatalogMock.Setup( cc => cc.Resolve( command ) ).Returns( CommandCatalog.MissingCommand );
+         commandCatalogMock.Setup( cc => cc.Resolve( command ) ).Returns( new MatchResult[0] );
 
          // Act
 
@@ -187,11 +191,12 @@ namespace Runway.UnitTests.ViewModels
 
          // Arrange
 
-         var launchableCommand = new Mock<ILaunchableCommand>();
-         launchableCommand.SetupGet( lc => lc.CommandText ).Returns( commandText );
+         var commandMock = new Mock<ILaunchableCommand>();
+         commandMock.SetupGet( lc => lc.CommandText ).Returns( commandText );
 
+         var matchResults = MatchResultHelper.Create( MatchType.Exact, commandMock.Object );
          var commandCatalogMock = new Mock<ICommandCatalog>();
-         commandCatalogMock.Setup( cc => cc.Resolve( commandPartialText ) ).Returns( launchableCommand.Object );
+         commandCatalogMock.Setup( cc => cc.Resolve( commandPartialText ) ).Returns( matchResults );
 
          // Act
 
@@ -211,8 +216,9 @@ namespace Runway.UnitTests.ViewModels
 
          var commandMock = new Mock<ILaunchableCommand>();
 
+         var matchResults = MatchResultHelper.Create( MatchType.Exact, commandMock.Object );
          var commandCatalogMock = new Mock<ICommandCatalog>();
-         commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( commandMock.Object );
+         commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( matchResults );
 
          // Act
 

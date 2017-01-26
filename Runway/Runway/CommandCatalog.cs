@@ -6,36 +6,27 @@ namespace Runway
 {
    public class CommandCatalog : ICommandCatalog
    {
-      private static readonly List<ILaunchableCommand> _commandList = new List<ILaunchableCommand>();
+      private readonly List<ILaunchableCommand> _commandList = new List<ILaunchableCommand>();
 
-      private class NullCommand : ILaunchableCommand
-      {
-         public string CommandText => string.Empty;
-
-         public void Launch( object[] parameters )
-         {
-         }
-      }
-
-      public static readonly ILaunchableCommand MissingCommand = new NullCommand();
+      public static readonly MatchResult[] EmptySet = new MatchResult[0];
 
       public void Add( ILaunchableCommand command ) => _commandList.Add( command );
 
-      public ILaunchableCommand Resolve( string commandPartialText )
+      public MatchResult[] Resolve( string searchText )
       {
-         if ( string.IsNullOrEmpty( commandPartialText ) )
+         if ( string.IsNullOrEmpty( searchText ) )
          {
-            return MissingCommand;
+            return EmptySet;
          }
 
-         var commandMatch = _commandList.FirstOrDefault( c => c.CommandText.StartsWith( commandPartialText, StringComparison.InvariantCultureIgnoreCase ) );
+         var results = from c in _commandList
+                       let exactMatch = c.CommandText == searchText
+                       let partialMatch = c.CommandText.StartsWith( searchText, StringComparison.InvariantCultureIgnoreCase )
+                       let matchType = exactMatch ? MatchType.Exact : MatchType.Partial
+                       where exactMatch || partialMatch
+                       select new MatchResult( matchType, c );
 
-         if ( commandMatch == null )
-         {
-            return MissingCommand;
-         }
-
-         return commandMatch;
+         return results.ToArray();
       }
    }
 }
