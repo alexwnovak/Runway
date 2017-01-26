@@ -70,7 +70,7 @@ namespace Runway.UnitTests
       }
 
       [Fact]
-      public void Resolve_SpecifiedCommandDoesNotExist_ReturnsMissingCommand()
+      public void Resolve_SpecifiedCommandDoesNotExist_ReturnsEmptySet()
       {
          // Act
 
