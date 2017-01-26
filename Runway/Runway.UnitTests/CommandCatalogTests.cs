@@ -7,7 +7,7 @@ namespace Runway.UnitTests
    public class CommandCatalogTests
    {
       [Fact]
-      public void Resolve_CommandExists_CommandIsFound()
+      public void Resolve_CommandExists_CommandIsFoundWithExactMatch()
       {
          const string commandText = "foo";
 
@@ -27,6 +27,7 @@ namespace Runway.UnitTests
          // Assert
 
          results.Should().HaveCount( 1 );
+         results[0].MatchType.Should().Be( MatchType.Exact );
          results[0].Command.Should().Be( commandMock.Object );
       }
 
