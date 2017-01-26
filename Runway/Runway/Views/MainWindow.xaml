@@ -43,7 +43,7 @@
          <TextBox x:Name="InputTextBox"
             Text="{Binding CurrentCommandText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
          <TextBox Foreground="#20FFFFFF"
-            Text="{Binding PreviewCommandText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            Text="{Binding PreviewCommandText, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
             Padding="-4,0,0,0" />
       </StackPanel>
    </Grid>

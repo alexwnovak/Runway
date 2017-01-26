@@ -202,6 +202,26 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
+      public void CommandText_SetsCommandText_RaisesPropertyChangeForPreview()
+      {
+         // Arrange
+
+         var commandCatalogMock = new Mock<ICommandCatalog>();
+
+         // Act
+
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+
+         viewModel.MonitorEvents();
+
+         viewModel.CurrentCommandText = "doesntmatter";
+
+         // Assert
+
+         viewModel.ShouldRaisePropertyChangeFor( vm => vm.PreviewCommandText );
+      }
+
+      [Fact]
       public void CommandText_CommandIsFoundForPrefix_PreviewTextIsSetCorrectly()
       {
          const string commandPartialText = "co";

@@ -25,6 +25,7 @@ namespace Runway.ViewModels
             if ( changed )
             {
                CurrentMatchResults = _commandCatalog.Resolve( value );
+               RaisePropertyChanged( () => PreviewCommandText );
             }
          }
       }
