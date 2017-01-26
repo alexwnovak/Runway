@@ -90,14 +90,11 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
-      public void CompleteSuggestionCommand_HasPreviewCommandText_RaisesPropertyChangeForCurrentCommandText()
+      public void CompleteSuggestionCommand_HappyPath_RaisesPropertyChangeForCurrentCommandText()
       {
          // Act
 
-         var viewModel = new MainViewModel( null, null )
-         {
-            PreviewCommandText = "Doesn't matter"
-         };
+         var viewModel = new MainViewModel( null, null );
 
          viewModel.MonitorEvents();
 
@@ -109,14 +106,11 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
-      public void CompleteSuggestionCommand_HasPreviewCommandText_RaisesMoveCaretRequested()
+      public void CompleteSuggestionCommand_HappyPath_RaisesMoveCaretRequested()
       {
          // Act
 
-         var viewModel = new MainViewModel( null, null )
-         {
-            PreviewCommandText = "Doesn't matter"
-         };
+         var viewModel = new MainViewModel( null, null );
 
          viewModel.MonitorEvents();
 
@@ -183,7 +177,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Assert
 
-         viewModel.PreviewCommandText.Should().BeNull();
+         viewModel.PreviewCommandText.Should().BeEmpty();
       }
 
       [Fact]

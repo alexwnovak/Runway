@@ -25,25 +25,20 @@ namespace Runway.ViewModels
             if ( changed )
             {
                CurrentMatchResults = _commandCatalog.Resolve( value );
-
-               if ( CurrentMatchResults.Length > 0 )
-               {
-                  PreviewCommandText = CommandParser.GetCommandSuggestion( value, CurrentMatchResults[0].Command.CommandText );
-               }
             }
          }
       }
 
-      private string _previewCommandText;
       public string PreviewCommandText
       {
          get
          {
-            return _previewCommandText;
-         }
-         set
-         {
-            Set( () => PreviewCommandText, ref _previewCommandText, value );
+            if ( CurrentMatchResults.Length > 0 )
+            {
+               return CommandParser.GetCommandSuggestion( CurrentCommandText, CurrentMatchResults[0].Command.CommandText );
+            }
+
+            return null;
          }
       }
 
@@ -86,9 +81,10 @@ namespace Runway.ViewModels
       private void OnCompleteSuggestionCommand()
       {
          _currentCommandText = CurrentCommandText + PreviewCommandText;
-         PreviewCommandText = null;
 
          RaisePropertyChanged( () => CurrentCommandText );
+         RaisePropertyChanged( () => PreviewCommandText );
+
          OnMoveCaretRequested( this, new MoveCaretEventArgs( CaretPosition.End ) );
       }
 
