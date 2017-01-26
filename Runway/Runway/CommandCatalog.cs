@@ -21,21 +21,26 @@ namespace Runway
 
       public void Add( ILaunchableCommand command ) => _commandList.Add( command );
 
-      public ILaunchableCommand Resolve( string commandPartialText )
+      public MatchResult[] Resolve( string searchText )
       {
-         if ( string.IsNullOrEmpty( commandPartialText ) )
-         {
-            return MissingCommand;
-         }
-
-         var commandMatch = _commandList.FirstOrDefault( c => c.CommandText.StartsWith( commandPartialText, StringComparison.InvariantCultureIgnoreCase ) );
-
-         if ( commandMatch == null )
-         {
-            return MissingCommand;
-         }
-
-         return commandMatch;
+         throw new NotImplementedException();
       }
+
+      //public ILaunchableCommand Resolve( string commandPartialText )
+      //{
+      //   if ( string.IsNullOrEmpty( commandPartialText ) )
+      //   {
+      //      return MissingCommand;
+      //   }
+
+      //   var commandMatch = _commandList.FirstOrDefault( c => c.CommandText.StartsWith( commandPartialText, StringComparison.InvariantCultureIgnoreCase ) );
+
+      //   if ( commandMatch == null )
+      //   {
+      //      return MissingCommand;
+      //   }
+
+      //   return commandMatch;
+      //}
    }
 }

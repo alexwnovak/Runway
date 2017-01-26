@@ -22,11 +22,12 @@ namespace Runway.UnitTests
 
          commandCatalog.Add( commandMock.Object );
 
-         var resolvedCommand = commandCatalog.Resolve( commandText );
+         var results = commandCatalog.Resolve( commandText );
 
          // Assert
 
-         resolvedCommand.Should().Be( commandMock.Object );
+         results.Should().HaveCount( 1 );
+         results[0].Command.Should().Be( commandMock.Object );
       }
 
       [Fact]
@@ -46,25 +47,26 @@ namespace Runway.UnitTests
 
          commandCatalog.Add( commandMock.Object );
 
-         var resolvedCommand = commandCatalog.Resolve( partialCommandText );
+         var results = commandCatalog.Resolve( partialCommandText );
 
          // Assert
 
-         resolvedCommand.Should().Be( commandMock.Object );
+         results.Should().HaveCount( 1 );
+         results[0].Command.Should().Be( commandMock.Object );
       }
 
       [Fact]
-      public void Resolve_PassesNullText_ReturnsMissingCommand()
+      public void Resolve_PassesNullText_ReturnsEmptyResultSet()
       {
          // Act
 
          var commandCatalog = new CommandCatalog();
 
-         var command = commandCatalog.Resolve( null );
+         var results = commandCatalog.Resolve( null );
 
          // Assert
 
-         command.Should().Be( CommandCatalog.MissingCommand );
+         results.Should().HaveCount( 0 );
       }
 
       [Fact]
@@ -74,11 +76,11 @@ namespace Runway.UnitTests
 
          var commandCatalog = new CommandCatalog();
 
-         var command = commandCatalog.Resolve( "doesnotexist" );
+         var results = commandCatalog.Resolve( "doesnotexist" );
 
          // Assert
 
-         command.Should().Be( CommandCatalog.MissingCommand );
+         results.Should().HaveCount( 0 );
       }
    }
 }

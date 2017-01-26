@@ -2,6 +2,6 @@
 {
    public interface ICommandCatalog
    {
-      ILaunchableCommand Resolve( string commandPartialText );
+      MatchResult[] Resolve( string searchText );
    }
 }
