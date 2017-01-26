@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
 using Moq;
+using Xunit;
 using Runway.Services;
 using Runway.UnitTests.Helpers;
 using Runway.ViewModels;
-using Xunit;
 
 namespace Runway.UnitTests.ViewModels
 {
