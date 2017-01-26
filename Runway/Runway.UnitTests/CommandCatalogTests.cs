@@ -66,7 +66,7 @@ namespace Runway.UnitTests
 
          // Assert
 
-         results.Should().HaveCount( 0 );
+         results.Should().BeSameAs( CommandCatalog.EmptySet );
       }
 
       [Fact]

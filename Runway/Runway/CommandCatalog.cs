@@ -8,16 +8,7 @@ namespace Runway
    {
       private static readonly List<ILaunchableCommand> _commandList = new List<ILaunchableCommand>();
 
-      private class NullCommand : ILaunchableCommand
-      {
-         public string CommandText => string.Empty;
-
-         public void Launch( object[] parameters )
-         {
-         }
-      }
-
-      public static readonly ILaunchableCommand MissingCommand = new NullCommand();
+      public static readonly MatchResult[] EmptySet = new MatchResult[0];
 
       public void Add( ILaunchableCommand command ) => _commandList.Add( command );
 
@@ -25,7 +16,7 @@ namespace Runway
       {
          if ( string.IsNullOrEmpty( searchText ) )
          {
-            return new MatchResult[0];
+            return EmptySet;
          }
 
          return _commandList.Where( c => c.CommandText.StartsWith( searchText, StringComparison.InvariantCultureIgnoreCase ) )
