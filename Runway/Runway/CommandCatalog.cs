@@ -32,22 +32,5 @@ namespace Runway
                .Select( c => new MatchResult( MatchType.Exact, c )  )
                .ToArray();
       }
-
-      //public ILaunchableCommand Resolve( string commandPartialText )
-      //{
-      //   if ( string.IsNullOrEmpty( commandPartialText ) )
-      //   {
-      //      return MissingCommand;
-      //   }
-
-      //   var commandMatch = _commandList.FirstOrDefault( c => c.CommandText.StartsWith( commandPartialText, StringComparison.InvariantCultureIgnoreCase ) );
-
-      //   if ( commandMatch == null )
-      //   {
-      //      return MissingCommand;
-      //   }
-
-      //   return commandMatch;
-      //}
    }
 }
