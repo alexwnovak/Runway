@@ -25,7 +25,11 @@ namespace Runway.ViewModels
             if ( changed )
             {
                var matchResults = _commandCatalog.Resolve( value );
-               PreviewCommandText = CommandParser.GetCommandSuggestion( value, matchResults[0].Command.CommandText );
+
+               if ( matchResults.Length > 0 )
+               {
+                  PreviewCommandText = CommandParser.GetCommandSuggestion( value, matchResults[0].Command.CommandText );
+               }
             }
          }
       }
