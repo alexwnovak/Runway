@@ -25,11 +25,7 @@ namespace Runway.ViewModels
             if ( changed )
             {
                var command = _commandCatalog.Resolve( value );
-
-               if ( command != CommandCatalog.MissingCommand )
-               {
-                  PreviewCommandText = CommandParser.GetCommandSuggestion( value, command.CommandText );
-               }
+               PreviewCommandText = CommandParser.GetCommandSuggestion( value, command.CommandText );
             }
          }
       }
@@ -45,6 +41,12 @@ namespace Runway.ViewModels
          {
             Set( () => PreviewCommandText, ref _previewCommandText, value );
          }
+      }
+
+      public ILaunchableCommand CurrentCommand
+      {
+         get;
+         private set;
       }
 
       public ICommand CompleteSuggestionCommand
@@ -79,11 +81,6 @@ namespace Runway.ViewModels
 
       private void OnCompleteSuggestionCommand()
       {
-         if ( string.IsNullOrEmpty( PreviewCommandText ) )
-         {
-            return;
-         }
-
          _currentCommandText = CurrentCommandText + PreviewCommandText;
          PreviewCommandText = null;
 
@@ -93,19 +90,7 @@ namespace Runway.ViewModels
 
       private void OnLaunchCommand()
       {
-         if ( string.IsNullOrEmpty( CurrentCommandText ) )
-         {
-            return;
-         }
-
-         int firstSpace = CurrentCommandText.IndexOf( ' ' );
-
-         if ( firstSpace == -1 )
-         {
-            return;
-         }
-
-         string commandText = CurrentCommandText.Substring( 0, firstSpace );
+         string commandText = CommandParser.ParseCommand( CurrentCommandText );
          string argumentString = CommandParser.ParseArguments( CurrentCommandText );
 
          var launchCommand = _commandCatalog.Resolve( commandText );

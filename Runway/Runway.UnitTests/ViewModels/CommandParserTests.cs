@@ -7,6 +7,22 @@ namespace Runway.UnitTests.ViewModels
    public class CommandParserTests
    {
       [Fact]
+      public void GetCommandSuggestion_CommandTextIsNull_ReturnsNull()
+      {
+         string suggestion = CommandParser.GetCommandSuggestion( "DoesntMatter", null );
+
+         suggestion.Should().BeNull();
+      }
+
+      [Fact]
+      public void GetCommandSuggestion_CommandTextIsEmpty_ReturnsNull()
+      {
+         string suggestion = CommandParser.GetCommandSuggestion( "DoesntMatter", string.Empty );
+
+         suggestion.Should().BeNull();
+      }
+
+      [Fact]
       public void GetCommandSuggestion_TextMatchesCommand_ReturnsNullSuggestion()
       {
          string suggestion = CommandParser.GetCommandSuggestion( "FullCommand", "FullCommand" );
@@ -24,6 +40,68 @@ namespace Runway.UnitTests.ViewModels
          string suggestion = CommandParser.GetCommandSuggestion( partialCommandText, commandText );
 
          suggestion.Should().Be( suggestionText );
+      }
+
+      [Fact]
+      public void ParseCommand_CommandIsNull_ReturnsNull()
+      {
+         string command = CommandParser.ParseCommand( null );
+
+         command.Should().BeNull();
+      }
+
+      [Fact]
+      public void ParseCommand_CommandIsEmpty_ReturnsNull()
+      {
+         string command = CommandParser.ParseCommand( string.Empty );
+
+         command.Should().BeNull();
+      }
+
+      [Fact]
+      public void ParseCommand_HasAWholeCommandWithNoSpace_ReturnsTheCommand()
+      {
+         const string fullCommandText = "copy";
+
+         string command = CommandParser.ParseCommand( fullCommandText );
+
+         command.Should().Be( fullCommandText );
+      }
+
+      [Fact]
+      public void ParseCommand_HasWholeCommandWithTrailingSpace_ReturnsTheCommandWithSpaceRemoved()
+      {
+         const string fullCommandText = "copy";
+
+         string command = CommandParser.ParseCommand( $"{fullCommandText} " );
+
+         command.Should().Be( fullCommandText );
+      }
+
+      [Fact]
+      public void ParseCommand_HasCommandAndArguments_ReturnsCommand()
+      {
+         const string fullCommandText = "copy";
+
+         string command = CommandParser.ParseCommand( $"{fullCommandText} extra stuff after" );
+
+         command.Should().Be( fullCommandText );
+      }
+
+      [Fact]
+      public void ParseArguments_CommandIsNull_ReturnsNull()
+      {
+         string arguments = CommandParser.ParseArguments( null );
+
+         arguments.Should().Be( null );
+      }
+
+      [Fact]
+      public void ParseArguments_CommandIsEmpty_ReturnsNull()
+      {
+         string arguments = CommandParser.ParseArguments( string.Empty );
+
+         arguments.Should().Be( null );
       }
 
       [Fact]

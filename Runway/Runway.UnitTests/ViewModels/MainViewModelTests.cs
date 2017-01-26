@@ -9,6 +9,14 @@ namespace Runway.UnitTests.ViewModels
    public class MainViewModelTests
    {
       [Fact]
+      public void CurrentCommand_NoCommandTextSet_CurrentCommandIsNull()
+      {
+         var viewModel = new MainViewModel( null, null );
+
+         viewModel.CurrentCommand.Should().BeNull();
+      }
+
+      [Fact]
       public void CurrentCommandText_PrefixMatchesCommand_ResolvesPreviewText()
       {
          const string partialCommand = "c";
@@ -55,6 +63,25 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
+      public void CompleteSuggestionCommand_HasPreviewCommandText_RaisesPropertyChangeForCurrentCommandText()
+      {
+         // Act
+
+         var viewModel = new MainViewModel( null, null )
+         {
+            PreviewCommandText = "Doesn't matter"
+         };
+
+         viewModel.MonitorEvents();
+
+         viewModel.CompleteSuggestionCommand.Execute( null );
+
+         // Assert
+
+         viewModel.ShouldRaisePropertyChangeFor( vm => vm.CurrentCommandText );
+      }
+
+      [Fact]
       public void CompleteSuggestionCommand_HasPreviewCommandText_RaisesMoveCaretRequested()
       {
          // Act
@@ -72,6 +99,62 @@ namespace Runway.UnitTests.ViewModels
 
          viewModel.ShouldRaise( nameof( viewModel.MoveCaretRequested ) )
                   .WithArgs<MoveCaretEventArgs>( e => e.CaretPosition == CaretPosition.End );
+      }
+
+      [Fact]
+      public void CompleteSuggestionCommand_HasPartialTextAndSuggestion_SuggestionBecomesTheCommandText()
+      {
+         const string currentCommand = "c";
+         const string commandName = "copy";
+
+         // Arrange
+
+         var commandMock = new Mock<ILaunchableCommand>();
+         commandMock.SetupGet( c => c.CommandText ).Returns( commandName );
+
+         var commandCatalogMock = new Mock<ICommandCatalog>();
+         commandCatalogMock.Setup( cc => cc.Resolve( currentCommand ) ).Returns( commandMock.Object );
+
+         // Act
+
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null )
+         {
+            CurrentCommandText = currentCommand
+         };
+
+         viewModel.CompleteSuggestionCommand.Execute( null );
+
+         // Assert
+
+         viewModel.CurrentCommandText.Should().Be( commandName );
+      }
+
+      [Fact]
+      public void CompleteSuggestionCommand_HasPartialTextAndSuggestion_PreviewTextBecomesNull()
+      {
+         const string currentCommand = "c";
+         const string commandName = "copy";
+
+         // Arrange
+
+         var commandMock = new Mock<ILaunchableCommand>();
+         commandMock.SetupGet( c => c.CommandText ).Returns( commandName );
+
+         var commandCatalogMock = new Mock<ICommandCatalog>();
+         commandCatalogMock.Setup( cc => cc.Resolve( currentCommand ) ).Returns( commandMock.Object );
+
+         // Act
+
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null )
+         {
+            CurrentCommandText = currentCommand
+         };
+
+         viewModel.CompleteSuggestionCommand.Execute( null );
+
+         // Assert
+
+         viewModel.PreviewCommandText.Should().BeNull();
       }
 
       [Fact]
@@ -122,11 +205,14 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
-      public void LaunchCommand_CommandTextIsNull_DoesNotLaunchAnything()
+      public void LaunchCommand_CommandTextIsNull_LaunchesMissingCommandToDoAnything()
       {
          // Arrange
 
+         var commandMock = new Mock<ILaunchableCommand>();
+
          var commandCatalogMock = new Mock<ICommandCatalog>();
+         commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( commandMock.Object );
 
          // Act
 
@@ -136,7 +222,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Assert
 
-         commandCatalogMock.Verify( cc => cc.Resolve( It.IsAny<string>() ), Times.Never() );
+         commandMock.Verify( c => c.Launch( It.IsAny<object[]>() ), Times.Once() );
       }
 
       [Fact]
