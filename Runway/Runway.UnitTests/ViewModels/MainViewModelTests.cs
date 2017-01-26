@@ -10,6 +10,14 @@ namespace Runway.UnitTests.ViewModels
    public class MainViewModelTests
    {
       [Fact]
+      public void CurrentMatchResults_DefaultState_HasNoMatchResults()
+      {
+         var viewModel = new MainViewModel( null, null );
+
+         viewModel.CurrentMatchResults.Should().BeSameAs( CommandCatalog.EmptySet );
+      }
+
+      [Fact]
       public void CurrentCommandText_PrefixMatchesCommand_ResolvesPreviewText()
       {
          const string partialCommand = "c";

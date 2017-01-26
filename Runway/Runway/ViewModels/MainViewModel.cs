@@ -24,11 +24,11 @@ namespace Runway.ViewModels
 
             if ( changed )
             {
-               var matchResults = _commandCatalog.Resolve( value );
+               CurrentMatchResults = _commandCatalog.Resolve( value );
 
-               if ( matchResults.Length > 0 )
+               if ( CurrentMatchResults.Length > 0 )
                {
-                  PreviewCommandText = CommandParser.GetCommandSuggestion( value, matchResults[0].Command.CommandText );
+                  PreviewCommandText = CommandParser.GetCommandSuggestion( value, CurrentMatchResults[0].Command.CommandText );
                }
             }
          }
@@ -46,6 +46,12 @@ namespace Runway.ViewModels
             Set( () => PreviewCommandText, ref _previewCommandText, value );
          }
       }
+
+      public MatchResult[] CurrentMatchResults
+      {
+         get;
+         private set;
+      } = CommandCatalog.EmptySet;
 
       public ICommand CompleteSuggestionCommand
       {
