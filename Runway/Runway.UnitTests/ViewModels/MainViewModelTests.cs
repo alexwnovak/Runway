@@ -1,24 +1,49 @@
 ﻿using FluentAssertions;
 using Moq;
+using Xunit;
 using Runway.Services;
 using Runway.UnitTests.Helpers;
 using Runway.ViewModels;
-using Xunit;
 
 namespace Runway.UnitTests.ViewModels
 {
    public class MainViewModelTests
    {
       [Fact]
-      public void CurrentCommand_NoCommandTextSet_CurrentCommandIsNull()
+      public void CurrentMatchResults_DefaultState_HasNoMatchResults()
       {
          var viewModel = new MainViewModel( null, null );
 
-         viewModel.CurrentCommand.Should().BeNull();
+         viewModel.CurrentMatchResults.Should().BeSameAs( CommandCatalog.EmptySet );
       }
 
       [Fact]
-      public void CurrentCommandText_PrefixMatchesCommand_ResolvesPreviewText()
+      public void CurrentMatchResults_MatchIsFound_MatchIsCached()
+      {
+         const string command = "x";
+
+         // Arrange
+
+         var commandMock = new Mock<ILaunchableCommand>();
+
+         var results = MatchResultHelper.Create( MatchType.Exact, commandMock.Object );
+         var commandCatalogMock = new Mock<ICommandCatalog>();
+         commandCatalogMock.Setup( cc => cc.Resolve( command ) ).Returns( results );
+
+         // Act
+
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+
+         viewModel.CurrentCommandText = command;
+
+         // Assert
+
+         viewModel.CurrentMatchResults.Should().HaveCount( 1 );
+         viewModel.CurrentMatchResults.Should().Contain( m => m.Command == commandMock.Object );
+      }
+
+      [Fact]
+      public void PreviewCommandText_PrefixMatchesCommand_ResolvesPreviewText()
       {
          const string partialCommand = "c";
          const string commandName = "copy";
@@ -45,7 +70,7 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
-      public void CurrentCommandText_PrefixIsNull_PreviewTextIsNull()
+      public void PreviewCommandText_CommandTextIsNull_PreviewTextIsNull()
       {
          // Arrange
 
@@ -65,14 +90,32 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
-      public void CompleteSuggestionCommand_HasPreviewCommandText_RaisesPropertyChangeForCurrentCommandText()
+      public void PreviewCommandText_CommandNotFoundForPrefix_PreviewCommandTextIsNull()
+      {
+         const string command = "SomeCommand";
+
+         // Arrange
+
+         var commandCatalogMock = new Mock<ICommandCatalog>();
+         commandCatalogMock.Setup( cc => cc.Resolve( command ) ).Returns( new MatchResult[0] );
+
+         // Act
+
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+
+         viewModel.CurrentCommandText = command;
+
+         // Assert
+
+         viewModel.PreviewCommandText.Should().BeNull();
+      }
+
+      [Fact]
+      public void CompleteSuggestionCommand_HappyPath_RaisesPropertyChangeForCurrentCommandText()
       {
          // Act
 
-         var viewModel = new MainViewModel( null, null )
-         {
-            PreviewCommandText = "Doesn't matter"
-         };
+         var viewModel = new MainViewModel( null, null );
 
          viewModel.MonitorEvents();
 
@@ -84,14 +127,11 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
-      public void CompleteSuggestionCommand_HasPreviewCommandText_RaisesMoveCaretRequested()
+      public void CompleteSuggestionCommand_HappyPath_RaisesMoveCaretRequested()
       {
          // Act
 
-         var viewModel = new MainViewModel( null, null )
-         {
-            PreviewCommandText = "Doesn't matter"
-         };
+         var viewModel = new MainViewModel( null, null );
 
          viewModel.MonitorEvents();
 
@@ -133,7 +173,7 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
-      public void CompleteSuggestionCommand_HasPartialTextAndSuggestion_PreviewTextBecomesNull()
+      public void CompleteSuggestionCommand_HasPartialTextAndSuggestion_PreviewTextBecomesEmpty()
       {
          const string currentCommand = "c";
          const string commandName = "copy";
@@ -158,28 +198,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Assert
 
-         viewModel.PreviewCommandText.Should().BeNull();
-      }
-
-      [Fact]
-      public void CommandText_CommandNotFoundForPrefix_PreviewCommandTextIsNull()
-      {
-         const string command = "SomeCommand";
-
-         // Arrange
-
-         var commandCatalogMock = new Mock<ICommandCatalog>();
-         commandCatalogMock.Setup( cc => cc.Resolve( command ) ).Returns( new MatchResult[0] );
-
-         // Act
-
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
-
-         viewModel.CurrentCommandText = command;
-
-         // Assert
-
-         viewModel.PreviewCommandText.Should().BeNull();
+         viewModel.PreviewCommandText.Should().BeEmpty();
       }
 
       [Fact]
