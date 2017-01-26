@@ -6,7 +6,7 @@ namespace Runway
 {
    public class CommandCatalog : ICommandCatalog
    {
-      private static readonly List<ILaunchableCommand> _commandList = new List<ILaunchableCommand>();
+      private readonly List<ILaunchableCommand> _commandList = new List<ILaunchableCommand>();
 
       public static readonly MatchResult[] EmptySet = new MatchResult[0];
 
