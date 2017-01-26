@@ -23,7 +23,14 @@ namespace Runway
 
       public MatchResult[] Resolve( string searchText )
       {
-         throw new NotImplementedException();
+         if ( string.IsNullOrEmpty( searchText ) )
+         {
+            return new MatchResult[0];
+         }
+
+         return _commandList.Where( c => c.CommandText.StartsWith( searchText, StringComparison.InvariantCultureIgnoreCase ) )
+               .Select( c => new MatchResult( MatchType.Exact, c )  )
+               .ToArray();
       }
 
       //public ILaunchableCommand Resolve( string commandPartialText )
