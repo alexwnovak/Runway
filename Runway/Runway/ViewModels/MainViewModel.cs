@@ -99,9 +99,12 @@ namespace Runway.ViewModels
          string argumentString = CommandParser.ParseArguments( CurrentCommandText );
 
          var results = _commandCatalog.Resolve( commandText );
-         results[0].Command.Launch( new object[] { argumentString } );
 
-         OnDismissRequested( this, EventArgs.Empty );
+         if ( results.Length > 0 )
+         {
+            results[0].Command.Launch( new object[] { argumentString } );
+            OnDismissRequested( this, EventArgs.Empty );
+         }
       }
    }
 }
