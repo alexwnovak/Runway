@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using Runway.ViewModels;
 
 namespace Runway.Views
@@ -13,9 +14,13 @@ namespace Runway.Views
 
          _viewModel = (MainViewModel) DataContext;
          _viewModel.MoveCaretRequested += OnMoveCaretRequested;
+         _viewModel.DismissRequested += OnDismissRequested;
       }
 
       private void OnMoveCaretRequested( object sender, MoveCaretEventArgs e )
          => InputTextBox.MoveCaret( e.CaretPosition );
+
+      private void OnDismissRequested( object sender, EventArgs e )
+         => Visibility = Visibility.Hidden;
    }
 }

@@ -27,6 +27,10 @@ namespace Runway
          SimpleIoc.Default.Register<IAppService>( () => new AppService() );
       }
 
-      private void OnLaunch( object sender, HotkeyEventArgs e ) => MainWindow.Activate();
+      private void OnLaunch( object sender, HotkeyEventArgs e )
+      {
+         MainWindow.Visibility = Visibility.Visible;
+         MainWindow.Activate();
+      }
    }
 }

@@ -65,6 +65,7 @@ namespace Runway.ViewModels
       }
 
       public event EventHandler<MoveCaretEventArgs> MoveCaretRequested;
+      public event EventHandler DismissRequested;
 
       public MainViewModel( ICommandCatalog commandCatalog, IAppService appService )
       {
@@ -78,6 +79,9 @@ namespace Runway.ViewModels
 
       protected virtual void OnMoveCaretRequested( object sender, MoveCaretEventArgs e )
          => MoveCaretRequested?.Invoke( sender, e );
+
+      protected virtual void OnDismissRequested( object sender, EventArgs e )
+         => DismissRequested?.Invoke( sender, e );
 
       private void OnCompleteSuggestionCommand()
       {
@@ -96,6 +100,8 @@ namespace Runway.ViewModels
 
          var results = _commandCatalog.Resolve( commandText );
          results[0].Command.Launch( new object[] { argumentString } );
+
+         OnDismissRequested( this, EventArgs.Empty );
       }
    }
 }

@@ -271,6 +271,30 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
+      public void LaunchCommand_LaunchesACommand_DismissesTheUI()
+      {
+         // Arrange
+
+         var commandMock = new Mock<ILaunchableCommand>();
+
+         var matchResults = MatchResultHelper.Create( MatchType.Exact, commandMock.Object );
+         var commandCatalogMock = new Mock<ICommandCatalog>();
+         commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( matchResults );
+
+         // Act
+
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+
+         viewModel.MonitorEvents();
+
+         viewModel.LaunchCommand.Execute( null );
+
+         // Assert
+
+         viewModel.ShouldRaise( nameof( viewModel.DismissRequested ) );
+      }
+
+      [Fact]
       public void ExitCommand_ExitCommandIsExecuted_ApplicationExits()
       {
          // Arrange
