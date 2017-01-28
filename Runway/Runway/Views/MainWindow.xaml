@@ -4,6 +4,8 @@
    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
    xmlns:local="clr-namespace:Runway"
+   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+   xmlns:behaviors="clr-namespace:Runway.Behaviors"
    mc:Ignorable="d"
    Title="MainWindow"
    Height="80"
@@ -23,6 +25,10 @@
          </ResourceDictionary.MergedDictionaries>
       </ResourceDictionary>
    </Window.Resources>
+
+   <i:Interaction.Behaviors>
+      <behaviors:WindowPlacementBehavior />
+   </i:Interaction.Behaviors>
 
    <Window.InputBindings>
       <KeyBinding Gesture="Tab" Command="{Binding CompleteSuggestionCommand, Mode=OneTime}" />
