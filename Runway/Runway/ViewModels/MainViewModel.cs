@@ -30,6 +30,9 @@ namespace Runway.ViewModels
             if ( changed )
             {
                CurrentMatchResults = _commandCatalog.Resolve( value );
+
+               Suggestions.Reset( CurrentMatchResults );
+
                RaisePropertyChanged( () => PreviewCommandText );
             }
          }
