@@ -22,6 +22,7 @@ namespace Runway
       {
          var commandCatalog = new CommandCatalog();
          commandCatalog.Add( new CopyLaunchCommand() );
+         commandCatalog.Add( new UninstallCommand() );
 
          SimpleIoc.Default.Register<ICommandCatalog>( () => commandCatalog );
          SimpleIoc.Default.Register<IAppService>( () => new AppService() );
