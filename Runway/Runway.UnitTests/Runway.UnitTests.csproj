@@ -107,6 +107,7 @@
     <Compile Include="CommandCatalogTests.cs" />
     <Compile Include="Helpers\MatchResultHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\BulkObservableCollectionTests.cs" />
     <Compile Include="ViewModels\CommandParserTests.cs" />
     <Compile Include="ViewModels\MainViewModelTests.cs" />
     <Compile Include="Views\TextBoxExtensionsTests.cs" />

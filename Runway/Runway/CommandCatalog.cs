@@ -24,6 +24,7 @@ namespace Runway
                        let partialMatch = c.CommandText.StartsWith( searchText, StringComparison.InvariantCultureIgnoreCase )
                        let matchType = exactMatch ? MatchType.Exact : MatchType.Partial
                        where exactMatch || partialMatch
+                       orderby c.CommandText
                        select new MatchResult( matchType, c );
 
          return results.ToArray();

@@ -11,6 +11,11 @@ namespace Runway.ViewModels
       private readonly ICommandCatalog _commandCatalog;
       private readonly IAppService _appService;
 
+      public BulkObservableCollection<MatchResult> Suggestions
+      {
+         get;
+      } = new BulkObservableCollection<MatchResult>();
+
       private string _currentCommandText;
       public string CurrentCommandText
       {
@@ -25,6 +30,9 @@ namespace Runway.ViewModels
             if ( changed )
             {
                CurrentMatchResults = _commandCatalog.Resolve( value );
+
+               Suggestions.Reset( CurrentMatchResults );
+
                RaisePropertyChanged( () => PreviewCommandText );
             }
          }

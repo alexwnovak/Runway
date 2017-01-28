@@ -173,5 +173,35 @@ namespace Runway.UnitTests
          results.Should().Contain( c => c.Command == commandMock1.Object && c.MatchType == MatchType.Partial );
          results.Should().Contain( c => c.Command == commandMock2.Object && c.MatchType == MatchType.Partial );
       }
+
+      [Fact]
+      public void Resolve_CatalogHasTwoCommands_ReturnedInAlphabeticalOrder()
+      {
+         const string commandText1 = "uninstall";
+         const string commandText2 = "undo";
+
+         // Arrange
+
+         var commandMock1 = new Mock<ILaunchableCommand>();
+         commandMock1.SetupGet( c => c.CommandText ).Returns( commandText1 );
+
+         var commandMock2 = new Mock<ILaunchableCommand>();
+         commandMock2.Setup( c => c.CommandText ).Returns( commandText2 );
+
+         // Act
+
+         var commandCatalog = new CommandCatalog();
+
+         commandCatalog.Add( commandMock1.Object );
+         commandCatalog.Add( commandMock2.Object );
+
+         var results = commandCatalog.Resolve( "u" );
+
+         // Assert
+
+         results.Should().HaveCount( 2 );
+         results[0].Command.CommandText.Should().Be( commandText2 );
+         results[1].Command.CommandText.Should().Be( commandText1 );
+      }
    }
 }

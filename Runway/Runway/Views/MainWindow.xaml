@@ -4,6 +4,8 @@
    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
    xmlns:local="clr-namespace:Runway"
+   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+   xmlns:behaviors="clr-namespace:Runway.Behaviors"
    mc:Ignorable="d"
    Title="MainWindow"
    Height="80"
@@ -24,6 +26,10 @@
       </ResourceDictionary>
    </Window.Resources>
 
+   <i:Interaction.Behaviors>
+      <behaviors:WindowPlacementBehavior />
+   </i:Interaction.Behaviors>
+
    <Window.InputBindings>
       <KeyBinding Gesture="Tab" Command="{Binding CompleteSuggestionCommand, Mode=OneTime}" />
       <KeyBinding Gesture="Enter" Command="{Binding LaunchCommand, Mode=OneTime}" />
@@ -31,7 +37,8 @@
    </Window.InputBindings>
 
    <Grid Margin="10"
-      Background="#252525">
+      Background="#252525"
+      VerticalAlignment="Stretch">
       <Grid.Effect>
          <DropShadowEffect BlurRadius="12"
             ShadowDepth="1"
@@ -39,12 +46,43 @@
             Opacity="0.7"/>
       </Grid.Effect>
 
-      <StackPanel Orientation="Horizontal">
-         <TextBox x:Name="InputTextBox"
-            Text="{Binding CurrentCommandText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-         <TextBox Foreground="#20FFFFFF"
-            Text="{Binding PreviewCommandText, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-            Padding="-4,0,0,0" />
-      </StackPanel>
+      <Grid>
+         <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="5" />
+            <RowDefinition />
+         </Grid.RowDefinitions>
+
+         <StackPanel Orientation="Horizontal">
+            <TextBox x:Name="InputTextBox"
+               Text="{Binding CurrentCommandText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox Foreground="#20FFFFFF"
+               Text="{Binding PreviewCommandText, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+               Padding="-4,0,0,0" />
+         </StackPanel>
+
+         <Rectangle Grid.Row="1"
+            Fill="#666"
+            Height="1"
+            HorizontalAlignment="Stretch"
+            Margin="6,0" />
+
+         <ItemsControl Grid.Row="2"
+            Padding="8"
+            ItemsSource="{Binding Suggestions, Mode=OneWay, IsAsync=True}">
+            <ItemsControl.ItemsPanel>
+               <ItemsPanelTemplate>
+                  <StackPanel />
+               </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+               <DataTemplate>
+                  <TextBlock Text="{Binding Command.CommandText, Mode=OneWay}"
+                     Foreground="White"
+                     FontSize="24" />
+               </DataTemplate>
+            </ItemsControl.ItemTemplate>
+         </ItemsControl>
+      </Grid>
    </Grid>
 </Window>
