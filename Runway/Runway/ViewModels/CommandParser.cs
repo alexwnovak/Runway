@@ -39,14 +39,14 @@ namespace Runway.ViewModels
       {
          if ( string.IsNullOrEmpty( fullCommandText ) )
          {
-            return null;
+            return string.Empty;
          }
 
          int firstSpace = fullCommandText.TrimStart().TrimEnd().IndexOf( ' ' );
 
          if ( firstSpace == -1 )
          {
-            return null;
+            return string.Empty;
          }
 
          return fullCommandText.Substring( firstSpace + 1 );
