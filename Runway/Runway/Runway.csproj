@@ -86,6 +86,7 @@
     </ApplicationDefinition>
     <Compile Include="MatchResult.cs" />
     <Compile Include="MatchType.cs" />
+    <Compile Include="UninstallCommand.cs" />
     <Compile Include="ViewModels\CommandParser.cs" />
     <Compile Include="Views\TextBoxExtensions.cs" />
     <Page Include="Views\MainWindow.xaml">
