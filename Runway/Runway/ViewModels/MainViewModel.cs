@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -12,10 +11,10 @@ namespace Runway.ViewModels
       private readonly ICommandCatalog _commandCatalog;
       private readonly IAppService _appService;
 
-      public ObservableCollection<SuggestionViewModel> Suggestions
+      public BulkObservableCollection<MatchResult> Suggestions
       {
          get;
-      } = new ObservableCollection<SuggestionViewModel>();
+      } = new BulkObservableCollection<MatchResult>();
 
       private string _currentCommandText;
       public string CurrentCommandText
