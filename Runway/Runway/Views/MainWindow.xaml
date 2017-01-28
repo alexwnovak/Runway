@@ -67,22 +67,24 @@
             HorizontalAlignment="Stretch"
             Margin="6,0" />
 
-         <ItemsControl Grid.Row="2"
+         <ListBox Grid.Row="2"
             Padding="8"
-            ItemsSource="{Binding Suggestions, Mode=OneWay, IsAsync=True}">
-            <ItemsControl.ItemsPanel>
+            ItemsSource="{Binding Suggestions, Mode=OneWay, IsAsync=True}"
+            Background="{x:Null}"
+            BorderBrush="{x:Null}">
+            <ListBox.ItemsPanel>
                <ItemsPanelTemplate>
                   <StackPanel />
                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
                <DataTemplate>
                   <TextBlock Text="{Binding Command.CommandText, Mode=OneWay}"
                      Foreground="White"
                      FontSize="24" />
                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-         </ItemsControl>
+            </ListBox.ItemTemplate>
+         </ListBox>
       </Grid>
    </Grid>
 </Window>
