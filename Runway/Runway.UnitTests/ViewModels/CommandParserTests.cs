@@ -89,35 +89,35 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
-      public void ParseArguments_CommandIsNull_ReturnsNull()
+      public void ParseArguments_CommandIsNull_ReturnsEmptyString()
       {
          string arguments = CommandParser.ParseArguments( null );
 
-         arguments.Should().Be( null );
+         arguments.Should().BeEmpty();
       }
 
       [Fact]
-      public void ParseArguments_CommandIsEmpty_ReturnsNull()
+      public void ParseArguments_CommandIsEmpty_ReturnsEmptyString()
       {
          string arguments = CommandParser.ParseArguments( string.Empty );
 
-         arguments.Should().Be( null );
+         arguments.Should().BeEmpty();
       }
 
       [Fact]
-      public void ParseArguments_OnlyHasCommandButNoArguments_ReturnsNull()
+      public void ParseArguments_OnlyHasCommandButNoArguments_ReturnsEmptyString()
       {
          string arguments = CommandParser.ParseArguments( "copy" );
 
-         arguments.Should().BeNull();
+         arguments.Should().BeEmpty();
       }
 
       [Fact]
-      public void ParseArguments_OnlyHasCommandWithATrailingSpaceButNoArguments_ReturnsNull()
+      public void ParseArguments_OnlyHasCommandWithATrailingSpaceButNoArguments_ReturnsEmptyString()
       {
          string arguments = CommandParser.ParseArguments( "copy " );
 
-         arguments.Should().BeNull();
+         arguments.Should().BeEmpty();
       }
 
       [Fact]
