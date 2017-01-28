@@ -37,7 +37,8 @@
    </Window.InputBindings>
 
    <Grid Margin="10"
-      Background="#252525">
+      Background="#252525"
+      VerticalAlignment="Stretch">
       <Grid.Effect>
          <DropShadowEffect BlurRadius="12"
             ShadowDepth="1"
@@ -45,12 +46,30 @@
             Opacity="0.7"/>
       </Grid.Effect>
 
-      <StackPanel Orientation="Horizontal">
-         <TextBox x:Name="InputTextBox"
-            Text="{Binding CurrentCommandText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-         <TextBox Foreground="#20FFFFFF"
-            Text="{Binding PreviewCommandText, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-            Padding="-4,0,0,0" />
-      </StackPanel>
+      <Grid>
+         <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="5" />
+            <RowDefinition />
+         </Grid.RowDefinitions>
+
+         <StackPanel Orientation="Horizontal">
+            <TextBox x:Name="InputTextBox"
+               Text="{Binding CurrentCommandText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox Foreground="#20FFFFFF"
+               Text="{Binding PreviewCommandText, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+               Padding="-4,0,0,0" />
+         </StackPanel>
+
+         <Rectangle Grid.Row="1"
+            Fill="#666"
+            Height="1"
+            HorizontalAlignment="Stretch"
+            Margin="6,0" />
+
+         <Grid Grid.Row="2">
+            <TextBlock>Results</TextBlock>
+         </Grid>
+      </Grid>
    </Grid>
 </Window>
