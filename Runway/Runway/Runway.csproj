@@ -84,6 +84,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Behaviors\WindowPlacementBehavior.cs" />
     <Compile Include="MatchResult.cs" />
     <Compile Include="MatchType.cs" />
     <Compile Include="UninstallCommand.cs" />
