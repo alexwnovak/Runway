@@ -2,11 +2,13 @@
 
 namespace Runway.Commands.Uninstall
 {
-   public class UninstallCommand : ILaunchableCommand
+   public class UninstallCommand : LaunchableCommandBase
    {
-      public string CommandText => "uninstall";
+      public UninstallCommand() : base( "uninstall" )
+      {
+      }
 
-      public void Launch( object[] parameters )
+      public override void Launch( object[] parameters )
       {
          throw new NotImplementedException();
       }
