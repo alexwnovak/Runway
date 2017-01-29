@@ -29,11 +29,7 @@ namespace Runway.ViewModels
 
             if ( changed )
             {
-               CurrentMatchResults = _commandCatalog.Resolve( value );
-
-               Suggestions.Reset( CurrentMatchResults );
-
-               RaisePropertyChanged( () => PreviewCommandText );
+               UpdateCommandText( value );
             }
          }
       }
@@ -83,6 +79,15 @@ namespace Runway.ViewModels
          CompleteSuggestionCommand = new RelayCommand( OnCompleteSuggestionCommand );
          LaunchCommand = new RelayCommand( OnLaunchCommand );
          ExitCommand = new RelayCommand( () => _appService.Exit() );
+      }
+
+      private void UpdateCommandText( string newText )
+      {
+         CurrentMatchResults = _commandCatalog.Resolve( newText );
+
+         Suggestions.Reset( CurrentMatchResults );
+
+         RaisePropertyChanged( () => PreviewCommandText );
       }
 
       protected virtual void OnMoveCaretRequested( object sender, MoveCaretEventArgs e )
