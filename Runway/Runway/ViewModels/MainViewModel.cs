@@ -178,6 +178,11 @@ namespace Runway.ViewModels
 
       private void OnCompleteSuggestionCommand()
       {
+         if ( string.IsNullOrEmpty( PreviewCommandText ) )
+         {
+            return;
+         }
+
          _currentCommandText = PreviewCommandText;
 
          RaisePropertyChanged( () => CurrentCommandText );
