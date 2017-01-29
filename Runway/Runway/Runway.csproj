@@ -91,6 +91,7 @@
     <Compile Include="ViewModels\CommandParser.cs" />
     <Compile Include="ViewModels\BulkObservableCollection.cs" />
     <Compile Include="ViewModels\SuggestionViewModel.cs" />
+    <Compile Include="Views\ListBoxExtensions.cs" />
     <Compile Include="Views\TextBoxExtensions.cs" />
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
