@@ -47,6 +47,19 @@ namespace Runway.ViewModels
          }
       }
 
+      private MatchResult _selectedSuggestion;
+      public MatchResult SelectedSuggestion
+      {
+         get
+         {
+            return _selectedSuggestion;
+         }
+         set
+         {
+            Set( () => SelectedSuggestion, ref _selectedSuggestion, value );
+         }
+      }
+
       public MatchResult[] CurrentMatchResults
       {
          get;
@@ -88,6 +101,11 @@ namespace Runway.ViewModels
          Suggestions.Reset( CurrentMatchResults );
 
          RaisePropertyChanged( () => PreviewCommandText );
+
+         if ( CurrentMatchResults.Length > 0 )
+         {
+            SelectedSuggestion = CurrentMatchResults[0];
+         }
       }
 
       protected virtual void OnMoveCaretRequested( object sender, MoveCaretEventArgs e )

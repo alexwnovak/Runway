@@ -249,6 +249,50 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
+      public void CommandText_MatchesACommand_MarksTheFirstResultAsSelected()
+      {
+         const string commandText = "copy";
+
+         // Arrange
+
+         var commandMock = new Mock<ILaunchableCommand>();
+         commandMock.SetupGet( lc => lc.CommandText ).Returns( commandText );
+
+         var matchResults = MatchResultHelper.Create( MatchType.Exact, commandMock.Object );
+         var commandCatalogMock = new Mock<ICommandCatalog>();
+         commandCatalogMock.Setup( cc => cc.Resolve( commandText ) ).Returns( matchResults );
+
+         // Act
+
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+
+         viewModel.CurrentCommandText = commandText;
+
+         // Assert
+
+         viewModel.SelectedSuggestion.Should().Be( matchResults[0] );
+      }
+
+      [Fact]
+      public void CommandText_DoesNotMatchAnything_NoMatchIsSelected()
+      {
+         // Arrange
+
+         var commandCatalogMock = new Mock<ICommandCatalog>();
+         commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( CommandCatalog.EmptySet );
+
+         // Act
+
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+
+         viewModel.CurrentCommandText = "doesnotmatter";
+
+         // Assert
+
+         viewModel.SelectedSuggestion.Should().Be( null );
+      }
+
+      [Fact]
       public void LaunchCommand_CommandTextIsNull_LaunchesMissingCommandToDoAnything()
       {
          // Arrange
