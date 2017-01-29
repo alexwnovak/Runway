@@ -1,4 +1,6 @@
-﻿namespace Runway
+﻿using System;
+
+namespace Runway.Commands.Uninstall
 {
    public class UninstallCommand : ILaunchableCommand
    {
@@ -6,6 +8,7 @@
 
       public void Launch( object[] parameters )
       {
+         throw new NotImplementedException();
       }
    }
 }
