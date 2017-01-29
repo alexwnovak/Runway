@@ -16,7 +16,8 @@
    ResizeMode="NoResize"
    Background="Transparent"
    FocusManager.FocusedElement="{Binding ElementName=InputTextBox}"
-   DataContext="{Binding Main, Source={StaticResource Locator}}">
+   DataContext="{Binding Main, Source={StaticResource Locator}}"
+   PreviewKeyDown="MainWindow_OnPreviewKeyDown">
 
    <Window.Resources>
       <ResourceDictionary>
@@ -67,7 +68,8 @@
             HorizontalAlignment="Stretch"
             Margin="6,0" />
 
-         <ListBox Grid.Row="2"
+         <ListBox x:Name="SuggestionList"
+            Grid.Row="2"
             Padding="8"
             ItemsSource="{Binding Suggestions, Mode=OneWay, IsAsync=True}"
             Background="{x:Null}"
