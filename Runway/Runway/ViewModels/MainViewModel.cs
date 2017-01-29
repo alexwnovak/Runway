@@ -140,6 +140,8 @@ namespace Runway.ViewModels
          }
 
          SelectedSuggestion = CurrentMatchResults[_selectedIndex];
+
+         OnMoveCaretRequested( this, new MoveCaretEventArgs( CaretPosition.End ) );
       }
 
       private void OnSelectPreviousSuggestionCommand()
