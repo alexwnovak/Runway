@@ -162,6 +162,13 @@ namespace Runway.ViewModels
          }
 
          SelectedSuggestion = CurrentMatchResults[_selectedIndex];
+
+         _currentCommandText = SelectedSuggestion.Command.CommandText;
+
+         RaisePropertyChanged( () => CurrentCommandText );
+         RaisePropertyChanged( () => PreviewCommandText );
+
+         OnMoveCaretRequested( this, new MoveCaretEventArgs( CaretPosition.End ) );
       }
 
       private void OnCompleteSuggestionCommand()

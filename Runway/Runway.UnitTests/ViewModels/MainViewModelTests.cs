@@ -322,6 +322,32 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
+      public void SelectPreviousSuggestionCommand_CommandIsSelected_CaretIsMovedToTheEnd()
+      {
+         // Arrange
+
+         var commandMock = new Mock<ILaunchableCommand>();
+
+         var matchResults = MatchResultHelper.CreatePartial( commandMock.Object );
+         var commandCatalogMock = new Mock<ICommandCatalog>();
+         commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( matchResults );
+
+         // Act
+
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+
+         viewModel.MonitorEvents();
+
+         viewModel.CurrentCommandText = "doesnotmatter";
+         viewModel.SelectPreviousSuggestionCommand.Execute( null );
+
+         // Assert
+
+         viewModel.ShouldRaise( nameof( viewModel.MoveCaretRequested ) )
+            .WithArgs<MoveCaretEventArgs>( e => e.CaretPosition == CaretPosition.End );
+      }
+
+      [Fact]
       public void LaunchCommand_CommandTextIsNull_LaunchesMissingCommandToDoAnything()
       {
          // Arrange
