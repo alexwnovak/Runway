@@ -7,42 +7,6 @@ namespace Runway.UnitTests.ViewModels
    public class CommandParserTests
    {
       [Fact]
-      public void GetCommandSuggestion_CommandTextIsNull_ReturnsNull()
-      {
-         string suggestion = CommandParser.GetCommandSuggestion( "DoesntMatter", null );
-
-         suggestion.Should().BeNull();
-      }
-
-      [Fact]
-      public void GetCommandSuggestion_CommandTextIsEmpty_ReturnsNull()
-      {
-         string suggestion = CommandParser.GetCommandSuggestion( "DoesntMatter", string.Empty );
-
-         suggestion.Should().BeNull();
-      }
-
-      [Fact]
-      public void GetCommandSuggestion_TextMatchesCommand_ReturnsNullSuggestion()
-      {
-         string suggestion = CommandParser.GetCommandSuggestion( "FullCommand", "FullCommand" );
-
-         suggestion.Should().BeEmpty();
-      }
-
-      [Fact]
-      public void GetCommandSuggestion_TextPartiallyMatchesCommand_ReturnsCorrectSuggestion()
-      {
-         const string partialCommandText = "co";
-         const string commandText = "command";
-         const string suggestionText = "mmand";
-
-         string suggestion = CommandParser.GetCommandSuggestion( partialCommandText, commandText );
-
-         suggestion.Should().Be( suggestionText );
-      }
-
-      [Fact]
       public void ParseCommand_CommandIsNull_ReturnsNull()
       {
          string command = CommandParser.ParseCommand( null );

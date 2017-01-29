@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Specialized;
 using System.Windows;
+using System.Windows.Input;
 using Runway.ViewModels;
 
 namespace Runway.Views
@@ -27,5 +28,19 @@ namespace Runway.Views
 
       private void OnSuggestionsChanged( object sender, NotifyCollectionChangedEventArgs e )
          => Height = _viewModel.Suggestions.Count == 0 ? 80 : 500;
+
+      private void MainWindow_OnPreviewKeyDown( object sender, KeyEventArgs e )
+      {
+         if ( e.Key == Key.Down )
+         {
+            _viewModel.SelectNextSuggestionCommand.Execute( null );
+            e.Handled = true;
+         }
+         else if ( e.Key == Key.Up )
+         {
+            _viewModel.SelectPreviousSuggestionCommand.Execute( null );
+            e.Handled = true;
+         }
+      }
    }
 }

@@ -16,7 +16,8 @@
    ResizeMode="NoResize"
    Background="Transparent"
    FocusManager.FocusedElement="{Binding ElementName=InputTextBox}"
-   DataContext="{Binding Main, Source={StaticResource Locator}}">
+   DataContext="{Binding Main, Source={StaticResource Locator}}"
+   PreviewKeyDown="MainWindow_OnPreviewKeyDown">
 
    <Window.Resources>
       <ResourceDictionary>
@@ -53,13 +54,11 @@
             <RowDefinition />
          </Grid.RowDefinitions>
 
-         <StackPanel Orientation="Horizontal">
-            <TextBox x:Name="InputTextBox"
-               Text="{Binding CurrentCommandText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBox Foreground="#20FFFFFF"
-               Text="{Binding PreviewCommandText, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-               Padding="-4,0,0,0" />
-         </StackPanel>
+         <TextBox x:Name="InputTextBox"
+            Text="{Binding CurrentCommandText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+         <TextBox Grid.Row="0"
+            Foreground="#20FFFFFF"
+            Text="{Binding PreviewCommandText, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
 
          <Rectangle Grid.Row="1"
             Fill="#666"
@@ -67,22 +66,52 @@
             HorizontalAlignment="Stretch"
             Margin="6,0" />
 
-         <ItemsControl Grid.Row="2"
+         <ListBox x:Name="SuggestionList"
+            Grid.Row="2"
             Padding="8"
-            ItemsSource="{Binding Suggestions, Mode=OneWay, IsAsync=True}">
-            <ItemsControl.ItemsPanel>
+            ItemsSource="{Binding Suggestions, Mode=OneWay, IsAsync=True}"
+            SelectedItem="{Binding SelectedSuggestion, Mode=TwoWay}"
+            Background="{x:Null}"
+            BorderBrush="{x:Null}">
+            <ListBox.ItemsPanel>
                <ItemsPanelTemplate>
                   <StackPanel />
                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
                <DataTemplate>
                   <TextBlock Text="{Binding Command.CommandText, Mode=OneWay}"
                      Foreground="White"
                      FontSize="24" />
                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-         </ItemsControl>
+            </ListBox.ItemTemplate>
+            <ListBox.ItemContainerStyle>
+               <Style TargetType="ListBoxItem">
+                  <Setter Property="Template">
+                     <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                           <Grid x:Name="ItemBackground">
+                              <ContentPresenter />
+                           </Grid>
+
+                           <ControlTemplate.Triggers>
+                              <Trigger Property="IsSelected" Value="True">
+                                 <Setter TargetName="ItemBackground"
+                                    Property="Background"
+                                    Value="#70802010" />
+                              </Trigger>
+                              <Trigger Property="IsMouseOver" Value="True">
+                                 <Setter TargetName="ItemBackground"
+                                    Property="Background"
+                                    Value="#70108020" />
+                              </Trigger>
+                           </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                     </Setter.Value>
+                  </Setter>
+               </Style>
+            </ListBox.ItemContainerStyle>
+         </ListBox>
       </Grid>
    </Grid>
 </Window>

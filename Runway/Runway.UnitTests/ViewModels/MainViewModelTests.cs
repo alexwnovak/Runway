@@ -43,33 +43,6 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
-      public void PreviewCommandText_PrefixMatchesCommand_ResolvesPreviewText()
-      {
-         const string partialCommand = "c";
-         const string commandName = "copy";
-
-         // Arrange
-
-         var commandMock = new Mock<ILaunchableCommand>();
-         commandMock.SetupGet( c => c.CommandText ).Returns( commandName );
-
-         var matchResults = MatchResultHelper.Create( MatchType.Exact, commandMock.Object );
-         var commandCatalogMock = new Mock<ICommandCatalog>();
-         commandCatalogMock.Setup( cc => cc.Resolve( partialCommand ) ).Returns( matchResults );
-
-         // Act
-
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null )
-         {
-            CurrentCommandText = partialCommand
-         };
-
-         // Assert
-
-         viewModel.PreviewCommandText.Should().Be( "opy" );
-      }
-
-      [Fact]
       public void PreviewCommandText_CommandTextIsNull_PreviewTextIsNull()
       {
          // Arrange
@@ -173,35 +146,6 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
-      public void CompleteSuggestionCommand_HasPartialTextAndSuggestion_PreviewTextBecomesEmpty()
-      {
-         const string currentCommand = "c";
-         const string commandName = "copy";
-
-         // Arrange
-
-         var commandMock = new Mock<ILaunchableCommand>();
-         commandMock.SetupGet( c => c.CommandText ).Returns( commandName );
-
-         var matchResults = MatchResultHelper.Create( MatchType.Exact, commandMock.Object );
-         var commandCatalogMock = new Mock<ICommandCatalog>();
-         commandCatalogMock.Setup( cc => cc.Resolve( currentCommand ) ).Returns( matchResults );
-
-         // Act
-
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null )
-         {
-            CurrentCommandText = currentCommand
-         };
-
-         viewModel.CompleteSuggestionCommand.Execute( null );
-
-         // Assert
-
-         viewModel.PreviewCommandText.Should().BeEmpty();
-      }
-
-      [Fact]
       public void CommandText_SetsCommandText_RaisesPropertyChangeForPreview()
       {
          // Arrange
@@ -226,7 +170,6 @@ namespace Runway.UnitTests.ViewModels
       {
          const string commandPartialText = "co";
          const string commandText = "command";
-         const string previewCommandText = "mmand";
 
          // Arrange
 
@@ -245,17 +188,68 @@ namespace Runway.UnitTests.ViewModels
 
          // Assert
 
-         viewModel.PreviewCommandText.Should().Be( previewCommandText );
+         viewModel.PreviewCommandText.Should().Be( commandText );
       }
 
       [Fact]
-      public void LaunchCommand_CommandTextIsNull_LaunchesMissingCommandToDoAnything()
+      public void CommandText_MatchesACommand_MarksTheFirstResultAsSelected()
       {
+         const string commandText = "copy";
+
          // Arrange
 
          var commandMock = new Mock<ILaunchableCommand>();
+         commandMock.SetupGet( lc => lc.CommandText ).Returns( commandText );
 
          var matchResults = MatchResultHelper.Create( MatchType.Exact, commandMock.Object );
+         var commandCatalogMock = new Mock<ICommandCatalog>();
+         commandCatalogMock.Setup( cc => cc.Resolve( commandText ) ).Returns( matchResults );
+
+         // Act
+
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+
+         viewModel.CurrentCommandText = commandText;
+
+         // Assert
+
+         viewModel.SelectedSuggestion.Should().Be( matchResults[0] );
+      }
+
+      [Fact]
+      public void CommandText_DoesNotMatchAnything_NoMatchIsSelected()
+      {
+         // Arrange
+
+         var commandCatalogMock = new Mock<ICommandCatalog>();
+         commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( CommandCatalog.EmptySet );
+
+         // Act
+
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+
+         viewModel.CurrentCommandText = "doesnotmatter";
+
+         // Assert
+
+         viewModel.SelectedSuggestion.Should().Be( null );
+      }
+
+      [Fact]
+      public void SelectNextSuggestionCommand_FirstCommandIsSelected_SecondCommandBecomesSelected()
+      {
+         const string commandText1 = "uninstall";
+         const string commandText2 = "undo";
+
+         // Arrange
+
+         var commandMock1 = new Mock<ILaunchableCommand>();
+         commandMock1.SetupGet( c => c.CommandText ).Returns( commandText1 );
+
+         var commandMock2 = new Mock<ILaunchableCommand>();
+         commandMock2.Setup( c => c.CommandText ).Returns( commandText2 );
+
+         var matchResults = MatchResultHelper.CreatePartial( commandMock1.Object, commandMock2.Object );
          var commandCatalogMock = new Mock<ICommandCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( matchResults );
 
@@ -263,11 +257,94 @@ namespace Runway.UnitTests.ViewModels
 
          var viewModel = new MainViewModel( commandCatalogMock.Object, null );
 
-         viewModel.LaunchCommand.Execute( null );
+         viewModel.CurrentCommandText = "u";
+         viewModel.SelectNextSuggestionCommand.Execute( null );
 
          // Assert
 
-         commandMock.Verify( c => c.Launch( It.IsAny<object[]>() ), Times.Once() );
+         viewModel.SelectedSuggestion.Command.Should().Be( commandMock2.Object );
+      }
+
+      [Fact]
+      public void SelectNextSuggestionCommand_CommandIsSelected_CaretIsMovedToTheEnd()
+      {
+         // Arrange
+
+         var commandMock = new Mock<ILaunchableCommand>();
+
+         var matchResults = MatchResultHelper.CreatePartial( commandMock.Object );
+         var commandCatalogMock = new Mock<ICommandCatalog>();
+         commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( matchResults );
+
+         // Act
+
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+
+         viewModel.MonitorEvents();
+
+         viewModel.CurrentCommandText = "doesnotmatter";
+         viewModel.SelectNextSuggestionCommand.Execute( null );
+
+         // Assert
+
+         viewModel.ShouldRaise( nameof( viewModel.MoveCaretRequested ) )
+            .WithArgs<MoveCaretEventArgs>( e => e.CaretPosition == CaretPosition.End );
+      }
+
+      [Fact]
+      public void SelectPreviousSuggestionCommand_FirstCommandIsSelected_SecondCommandBecomesSelected()
+      {
+         const string commandText1 = "uninstall";
+         const string commandText2 = "undo";
+
+         // Arrange
+
+         var commandMock1 = new Mock<ILaunchableCommand>();
+         commandMock1.SetupGet( c => c.CommandText ).Returns( commandText1 );
+
+         var commandMock2 = new Mock<ILaunchableCommand>();
+         commandMock2.Setup( c => c.CommandText ).Returns( commandText2 );
+
+         var matchResults = MatchResultHelper.CreatePartial( commandMock1.Object, commandMock2.Object );
+         var commandCatalogMock = new Mock<ICommandCatalog>();
+         commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( matchResults );
+
+         // Act
+
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+
+         viewModel.CurrentCommandText = "u";
+         viewModel.SelectPreviousSuggestionCommand.Execute( null );
+
+         // Assert
+
+         viewModel.SelectedSuggestion.Command.Should().Be( commandMock2.Object );
+      }
+
+      [Fact]
+      public void SelectPreviousSuggestionCommand_CommandIsSelected_CaretIsMovedToTheEnd()
+      {
+         // Arrange
+
+         var commandMock = new Mock<ILaunchableCommand>();
+
+         var matchResults = MatchResultHelper.CreatePartial( commandMock.Object );
+         var commandCatalogMock = new Mock<ICommandCatalog>();
+         commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( matchResults );
+
+         // Act
+
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+
+         viewModel.MonitorEvents();
+
+         viewModel.CurrentCommandText = "doesnotmatter";
+         viewModel.SelectPreviousSuggestionCommand.Execute( null );
+
+         // Assert
+
+         viewModel.ShouldRaise( nameof( viewModel.MoveCaretRequested ) )
+            .WithArgs<MoveCaretEventArgs>( e => e.CaretPosition == CaretPosition.End );
       }
 
       [Fact]
@@ -284,6 +361,7 @@ namespace Runway.UnitTests.ViewModels
          // Act
 
          var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+         viewModel.CurrentCommandText = "doesnotmatter";
 
          viewModel.MonitorEvents();
 
@@ -313,6 +391,37 @@ namespace Runway.UnitTests.ViewModels
          // Assert
 
          viewModel.ShouldNotRaise( nameof( viewModel.DismissRequested ) );
+      }
+
+      [Fact]
+      public void LaunchCommand_SelectedASuggestion_LaunchesTheSuggestion()
+      {
+         const string commandText1 = "uninstall";
+         const string commandText2 = "undo";
+
+         // Arrange
+
+         var commandMock1 = new Mock<ILaunchableCommand>();
+         commandMock1.SetupGet( c => c.CommandText ).Returns( commandText1 );
+
+         var commandMock2 = new Mock<ILaunchableCommand>();
+         commandMock2.Setup( c => c.CommandText ).Returns( commandText2 );
+
+         var matchResults = MatchResultHelper.CreatePartial( commandMock1.Object, commandMock2.Object );
+         var commandCatalogMock = new Mock<ICommandCatalog>();
+         commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( matchResults );
+
+         // Act
+
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+
+         viewModel.CurrentCommandText = "u";
+         viewModel.SelectPreviousSuggestionCommand.Execute( null );
+         viewModel.LaunchCommand.Execute( null );
+
+         // Assert
+
+         commandMock2.Verify( c => c.Launch( It.IsAny<object[]>() ), Times.Once() );
       }
 
       [Fact]
