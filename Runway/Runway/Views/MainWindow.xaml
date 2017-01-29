@@ -72,6 +72,7 @@
             Grid.Row="2"
             Padding="8"
             ItemsSource="{Binding Suggestions, Mode=OneWay, IsAsync=True}"
+            SelectedItem="{Binding SelectedSuggestion, Mode=TwoWay}"
             Background="{x:Null}"
             BorderBrush="{x:Null}">
             <ListBox.ItemsPanel>
