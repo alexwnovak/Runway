@@ -33,12 +33,12 @@ namespace Runway.Views
       {
          if ( e.Key == Key.Down )
          {
-            SuggestionList.SelectNext();
+            _viewModel.SelectNextSuggestionCommand.Execute( null );
             e.Handled = true;
          }
          else if ( e.Key == Key.Up )
          {
-            SuggestionList.SelectPrevious();
+            _viewModel.SelectPreviousSuggestionCommand.Execute( null );
             e.Handled = true;
          }
       }
