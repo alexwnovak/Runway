@@ -96,7 +96,14 @@
 
                            <ControlTemplate.Triggers>
                               <Trigger Property="IsSelected" Value="True">
-                                 <Setter TargetName="ItemBackground" Property="Background" Value="#70802010" />
+                                 <Setter TargetName="ItemBackground"
+                                    Property="Background"
+                                    Value="#70802010" />
+                              </Trigger>
+                              <Trigger Property="IsMouseOver" Value="True">
+                                 <Setter TargetName="ItemBackground"
+                                    Property="Background"
+                                    Value="#70108020" />
                               </Trigger>
                            </ControlTemplate.Triggers>
                         </ControlTemplate>
