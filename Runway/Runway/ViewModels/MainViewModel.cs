@@ -113,13 +113,14 @@ namespace Runway.ViewModels
 
          Suggestions.Reset( CurrentMatchResults );
 
-         RaisePropertyChanged( () => PreviewCommandText );
-
          if ( CurrentMatchResults.Length > 0 )
          {
             _selectedIndex = 0;
             SelectedSuggestion = CurrentMatchResults[_selectedIndex];
          }
+
+         RaisePropertyChanged( () => PreviewCommandText );
+
       }
 
       protected virtual void OnMoveCaretRequested( object sender, MoveCaretEventArgs e )
