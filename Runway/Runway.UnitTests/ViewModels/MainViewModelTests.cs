@@ -348,28 +348,6 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
-      public void LaunchCommand_CommandTextIsNull_LaunchesMissingCommandToDoAnything()
-      {
-         // Arrange
-
-         var commandMock = new Mock<ILaunchableCommand>();
-
-         var matchResults = MatchResultHelper.Create( MatchType.Exact, commandMock.Object );
-         var commandCatalogMock = new Mock<ICommandCatalog>();
-         commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( matchResults );
-
-         // Act
-
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
-
-         viewModel.LaunchCommand.Execute( null );
-
-         // Assert
-
-         commandMock.Verify( c => c.Launch( It.IsAny<object[]>() ), Times.Once() );
-      }
-
-      [Fact]
       public void LaunchCommand_LaunchesACommand_DismissesTheUI()
       {
          // Arrange
@@ -383,6 +361,7 @@ namespace Runway.UnitTests.ViewModels
          // Act
 
          var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+         viewModel.CurrentCommandText = "doesnotmatter";
 
          viewModel.MonitorEvents();
 
@@ -412,6 +391,37 @@ namespace Runway.UnitTests.ViewModels
          // Assert
 
          viewModel.ShouldNotRaise( nameof( viewModel.DismissRequested ) );
+      }
+
+      [Fact]
+      public void LaunchCommand_SelectedASuggestion_LaunchesTheSuggestion()
+      {
+         const string commandText1 = "uninstall";
+         const string commandText2 = "undo";
+
+         // Arrange
+
+         var commandMock1 = new Mock<ILaunchableCommand>();
+         commandMock1.SetupGet( c => c.CommandText ).Returns( commandText1 );
+
+         var commandMock2 = new Mock<ILaunchableCommand>();
+         commandMock2.Setup( c => c.CommandText ).Returns( commandText2 );
+
+         var matchResults = MatchResultHelper.CreatePartial( commandMock1.Object, commandMock2.Object );
+         var commandCatalogMock = new Mock<ICommandCatalog>();
+         commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( matchResults );
+
+         // Act
+
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+
+         viewModel.CurrentCommandText = "u";
+         viewModel.SelectPreviousSuggestionCommand.Execute( null );
+         viewModel.LaunchCommand.Execute( null );
+
+         // Assert
+
+         commandMock2.Verify( c => c.Launch( It.IsAny<object[]>() ), Times.Once() );
       }
 
       [Fact]

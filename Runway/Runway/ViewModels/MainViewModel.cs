@@ -120,7 +120,6 @@ namespace Runway.ViewModels
          }
 
          RaisePropertyChanged( () => PreviewCommandText );
-
       }
 
       protected virtual void OnMoveCaretRequested( object sender, MoveCaretEventArgs e )
@@ -183,6 +182,11 @@ namespace Runway.ViewModels
 
       private void OnLaunchCommand()
       {
+         if ( SelectedSuggestion == null )
+         {
+            return;
+         }
+
          string commandText = CommandParser.ParseCommand( CurrentCommandText );
          string argumentString = CommandParser.ParseArguments( CurrentCommandText );
 
@@ -190,7 +194,7 @@ namespace Runway.ViewModels
 
          if ( results.Length > 0 )
          {
-            results[0].Command.Launch( new object[] { argumentString } );
+            SelectedSuggestion.Command.Launch( new object[] { argumentString } );
             OnDismissRequested( this, EventArgs.Empty );
          }
       }
