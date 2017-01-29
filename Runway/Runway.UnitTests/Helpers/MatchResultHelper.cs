@@ -1,4 +1,6 @@
-﻿namespace Runway.UnitTests.Helpers
+﻿using System.Linq;
+
+namespace Runway.UnitTests.Helpers
 {
    public static class MatchResultHelper
    {
@@ -9,5 +11,8 @@
             new MatchResult( matchType, command )
          };
       }
+
+      public static MatchResult[] CreatePartial( params ILaunchableCommand[] commands )
+         => commands.Select( c => new MatchResult( MatchType.Partial, c ) ).ToArray();
    }
 }
