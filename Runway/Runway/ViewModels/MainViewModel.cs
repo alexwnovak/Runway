@@ -194,6 +194,8 @@ namespace Runway.ViewModels
       private void OnSpacePressedCommand()
       {
          CompleteSuggestionCommand.Execute( null );
+
+         CurrentCommandText += " ";
       }
 
       private void OnLaunchCommand()

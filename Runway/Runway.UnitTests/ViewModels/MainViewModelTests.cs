@@ -425,7 +425,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Assert
 
-         viewModel.CurrentCommandText.Should().Be( commandText );
+         viewModel.CurrentCommandText.Should().Be( commandText + " " );
       }
 
       [Fact]
