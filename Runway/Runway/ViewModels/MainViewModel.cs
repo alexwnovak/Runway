@@ -72,6 +72,11 @@ namespace Runway.ViewModels
          get;
       }
 
+      public ICommand SelectPreviousSuggestionCommand
+      {
+         get;
+      }
+
       public ICommand CompleteSuggestionCommand
       {
          get;
@@ -96,6 +101,7 @@ namespace Runway.ViewModels
          _appService = appService;
 
          SelectNextSuggestionCommand = new RelayCommand( OnSelectNextSuggestionCommand );
+         SelectPreviousSuggestionCommand = new RelayCommand( OnSelectPreviousSuggestionCommand );
          CompleteSuggestionCommand = new RelayCommand( OnCompleteSuggestionCommand );
          LaunchCommand = new RelayCommand( OnLaunchCommand );
          ExitCommand = new RelayCommand( () => _appService.Exit() );
@@ -131,6 +137,20 @@ namespace Runway.ViewModels
          else
          {
             _selectedIndex++;
+         }
+
+         SelectedSuggestion = CurrentMatchResults[_selectedIndex];
+      }
+
+      private void OnSelectPreviousSuggestionCommand()
+      {
+         if ( _selectedIndex - 1 < 0 )
+         {
+            _selectedIndex = CurrentMatchResults.Length - 1;
+         }
+         else
+         {
+            _selectedIndex--;
          }
 
          SelectedSuggestion = CurrentMatchResults[_selectedIndex];
