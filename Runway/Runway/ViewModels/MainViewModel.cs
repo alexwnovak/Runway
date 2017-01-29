@@ -47,6 +47,7 @@ namespace Runway.ViewModels
          }
       }
 
+      private int _selectedIndex;
       private MatchResult _selectedSuggestion;
       public MatchResult SelectedSuggestion
       {
@@ -65,6 +66,11 @@ namespace Runway.ViewModels
          get;
          private set;
       } = CommandCatalog.EmptySet;
+
+      public ICommand SelectNextSuggestionCommand
+      {
+         get;
+      }
 
       public ICommand CompleteSuggestionCommand
       {
@@ -89,6 +95,7 @@ namespace Runway.ViewModels
          _commandCatalog = commandCatalog;
          _appService = appService;
 
+         SelectNextSuggestionCommand = new RelayCommand( OnSelectNextSuggestionCommand );
          CompleteSuggestionCommand = new RelayCommand( OnCompleteSuggestionCommand );
          LaunchCommand = new RelayCommand( OnLaunchCommand );
          ExitCommand = new RelayCommand( () => _appService.Exit() );
@@ -104,7 +111,8 @@ namespace Runway.ViewModels
 
          if ( CurrentMatchResults.Length > 0 )
          {
-            SelectedSuggestion = CurrentMatchResults[0];
+            _selectedIndex = 0;
+            SelectedSuggestion = CurrentMatchResults[_selectedIndex];
          }
       }
 
@@ -113,6 +121,20 @@ namespace Runway.ViewModels
 
       protected virtual void OnDismissRequested( object sender, EventArgs e )
          => DismissRequested?.Invoke( sender, e );
+
+      private void OnSelectNextSuggestionCommand()
+      {
+         if ( _selectedIndex + 1 >= CurrentMatchResults.Length )
+         {
+            _selectedIndex = 0;
+         }
+         else
+         {
+            _selectedIndex++;
+         }
+
+         SelectedSuggestion = CurrentMatchResults[_selectedIndex];
+      }
 
       private void OnCompleteSuggestionCommand()
       {

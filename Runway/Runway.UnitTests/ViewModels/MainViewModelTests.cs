@@ -293,6 +293,36 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
+      public void SelectNextSuggestionCommand_FirstCommandIsSelected_SecondCommandBecomesSelected()
+      {
+         const string commandText1 = "uninstall";
+         const string commandText2 = "undo";
+
+         // Arrange
+
+         var commandMock1 = new Mock<ILaunchableCommand>();
+         commandMock1.SetupGet( c => c.CommandText ).Returns( commandText1 );
+
+         var commandMock2 = new Mock<ILaunchableCommand>();
+         commandMock2.Setup( c => c.CommandText ).Returns( commandText2 );
+
+         var matchResults = MatchResultHelper.CreatePartial( commandMock1.Object, commandMock2.Object );
+         var commandCatalogMock = new Mock<ICommandCatalog>();
+         commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( matchResults );
+
+         // Act
+
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+
+         viewModel.CurrentCommandText = "u";
+         viewModel.SelectNextSuggestionCommand.Execute( null );
+
+         // Assert
+
+         viewModel.SelectedSuggestion.Command.Should().Be( commandMock2.Object );
+      }
+
+      [Fact]
       public void LaunchCommand_CommandTextIsNull_LaunchesMissingCommandToDoAnything()
       {
          // Arrange
