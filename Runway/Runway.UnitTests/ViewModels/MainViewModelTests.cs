@@ -348,6 +348,36 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
+      public void SpacePressedCommand_HasPartialCommandTextAndSuggestion_AutoCompletesSuggestion()
+      {
+         const string commandText = "copy";
+         const string partialText = "c";
+         
+         // Arrange
+
+         var commandMock = new Mock<ILaunchableCommand>();
+         commandMock.SetupGet( c => c.CommandText ).Returns( commandText );
+
+         var matchResults = MatchResultHelper.CreatePartial( commandMock.Object );
+         var commandCatalogMock = new Mock<ICommandCatalog>();
+         commandCatalogMock.Setup( cc => cc.Resolve( partialText ) ).Returns( matchResults );
+
+         // Act
+
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+
+         viewModel.MonitorEvents();
+
+         viewModel.CurrentCommandText = partialText;
+
+         viewModel.SpacePressedCommand.Execute( null );
+
+         // Assert
+
+         viewModel.CurrentCommandText.Should().Be( commandText );
+      }
+
+      [Fact]
       public void LaunchCommand_LaunchesACommand_DismissesTheUI()
       {
          // Arrange
