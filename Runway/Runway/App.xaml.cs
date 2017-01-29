@@ -3,7 +3,7 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight.Ioc;
 using NHotkey;
 using NHotkey.Wpf;
-using Runway.Commands.UninstallCommand;
+using Runway.Commands.Uninstall;
 using Runway.Services;
 
 namespace Runway
