@@ -54,13 +54,11 @@
             <RowDefinition />
          </Grid.RowDefinitions>
 
-         <StackPanel Orientation="Horizontal">
-            <TextBox x:Name="InputTextBox"
-               Text="{Binding CurrentCommandText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBox Foreground="#20FFFFFF"
-               Text="{Binding PreviewCommandText, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-               Padding="-4,0,0,0" />
-         </StackPanel>
+         <TextBox x:Name="InputTextBox"
+            Text="{Binding CurrentCommandText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+         <TextBox Grid.Row="0"
+            Foreground="#20FFFFFF"
+            Text="{Binding PreviewCommandText, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
 
          <Rectangle Grid.Row="1"
             Fill="#666"
