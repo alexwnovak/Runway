@@ -43,33 +43,6 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
-      public void PreviewCommandText_PrefixMatchesCommand_ResolvesPreviewText()
-      {
-         const string partialCommand = "c";
-         const string commandName = "copy";
-
-         // Arrange
-
-         var commandMock = new Mock<ILaunchableCommand>();
-         commandMock.SetupGet( c => c.CommandText ).Returns( commandName );
-
-         var matchResults = MatchResultHelper.Create( MatchType.Exact, commandMock.Object );
-         var commandCatalogMock = new Mock<ICommandCatalog>();
-         commandCatalogMock.Setup( cc => cc.Resolve( partialCommand ) ).Returns( matchResults );
-
-         // Act
-
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null )
-         {
-            CurrentCommandText = partialCommand
-         };
-
-         // Assert
-
-         viewModel.PreviewCommandText.Should().Be( "opy" );
-      }
-
-      [Fact]
       public void PreviewCommandText_CommandTextIsNull_PreviewTextIsNull()
       {
          // Arrange
@@ -173,35 +146,6 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
-      public void CompleteSuggestionCommand_HasPartialTextAndSuggestion_PreviewTextBecomesEmpty()
-      {
-         const string currentCommand = "c";
-         const string commandName = "copy";
-
-         // Arrange
-
-         var commandMock = new Mock<ILaunchableCommand>();
-         commandMock.SetupGet( c => c.CommandText ).Returns( commandName );
-
-         var matchResults = MatchResultHelper.Create( MatchType.Exact, commandMock.Object );
-         var commandCatalogMock = new Mock<ICommandCatalog>();
-         commandCatalogMock.Setup( cc => cc.Resolve( currentCommand ) ).Returns( matchResults );
-
-         // Act
-
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null )
-         {
-            CurrentCommandText = currentCommand
-         };
-
-         viewModel.CompleteSuggestionCommand.Execute( null );
-
-         // Assert
-
-         viewModel.PreviewCommandText.Should().BeEmpty();
-      }
-
-      [Fact]
       public void CommandText_SetsCommandText_RaisesPropertyChangeForPreview()
       {
          // Arrange
@@ -226,7 +170,6 @@ namespace Runway.UnitTests.ViewModels
       {
          const string commandPartialText = "co";
          const string commandText = "command";
-         const string previewCommandText = "mmand";
 
          // Arrange
 
@@ -245,7 +188,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Assert
 
-         viewModel.PreviewCommandText.Should().Be( previewCommandText );
+         viewModel.PreviewCommandText.Should().Be( commandText );
       }
 
       [Fact]
