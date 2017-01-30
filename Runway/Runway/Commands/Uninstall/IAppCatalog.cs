@@ -2,6 +2,6 @@
 {
    public interface IAppCatalog
    {
-      void Find( string name );
+      AppEntry[] Find( string name );
    }
 }
