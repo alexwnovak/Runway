@@ -2,9 +2,11 @@
 {
    public class AppCatalog : IAppCatalog
    {
+      public static AppEntry[] EmptyResults = new AppEntry[0];
+
       public AppEntry[] Find( string name )
       {
-         throw new System.NotImplementedException();
+         return EmptyResults;
       }
    }
 }
