@@ -24,7 +24,7 @@ namespace Runway.Commands.Uninstall
          {
             string displayName = _registry.GetValueFromLocalMachine( subKey, "DisplayName" );
 
-            if ( displayName == name )
+            if ( displayName.StartsWith( name ) )
             {
                var appEntry = new AppEntry( displayName, $@"{uninstallKeyName}\{subKey}" );
 

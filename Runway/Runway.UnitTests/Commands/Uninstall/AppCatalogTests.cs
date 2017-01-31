@@ -80,5 +80,35 @@ namespace Runway.UnitTests.Commands.Uninstall
 
          results.Should().HaveCount( 0 );
       }
+
+      [Fact]
+      public void Find_HasTwoAppsAndSearchesWithPartialText_ReturnsBoth()
+      {
+         const string appName1 = "notepad";
+         const string path1 = "subKeyPath";
+
+         const string appName2 = "notepad++";
+         const string path2 = "subKeyPath2";
+
+         // Arrange
+
+         var registryResults = ArrayHelper.Create( path1, path2 );
+
+         var registryMock = new Mock<IRegistry>();
+         registryMock.Setup( r => r.GetSubKeysFromLocalMachine( It.IsAny<string>() ) ).Returns( registryResults );
+
+         registryMock.Setup( r => r.GetValueFromLocalMachine( path1, "DisplayName" ) ).Returns( appName1 );
+         registryMock.Setup( r => r.GetValueFromLocalMachine( path2, "DisplayName" ) ).Returns( appName2 );
+
+         // Act
+
+         var appCatalog = new AppCatalog( registryMock.Object );
+
+         var results = appCatalog.Find( "n" );
+
+         // Assert
+
+         results.Should().HaveCount( 2 );
+      }
    }
 }
