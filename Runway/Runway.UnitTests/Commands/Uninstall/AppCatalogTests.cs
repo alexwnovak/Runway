@@ -54,5 +54,31 @@ namespace Runway.UnitTests.Commands.Uninstall
          results[0].Name.Should().Be( appName );
          results[0].Path.Should().EndWith( path );
       }
+
+      [Fact]
+      public void Find_HasOneAppAndSearchesForSomethingElse_ReturnsAnEmptySet()
+      {
+         const string appName = "notepad";
+         const string path = "subKeyPath";
+
+         // Arrange
+
+         var registryResults = ArrayHelper.Create( path );
+
+         var registryMock = new Mock<IRegistry>();
+         registryMock.Setup( r => r.GetSubKeysFromLocalMachine( It.IsAny<string>() ) ).Returns( registryResults );
+
+         registryMock.Setup( r => r.GetValueFromLocalMachine( path, "DisplayName" ) ).Returns( appName );
+
+         // Act
+
+         var appCatalog = new AppCatalog( registryMock.Object );
+
+         var results = appCatalog.Find( "doesnotexist" );
+
+         // Assert
+
+         results.Should().HaveCount( 0 );
+      }
    }
 }
