@@ -22,9 +22,9 @@ namespace Runway.Commands.Uninstall
 
          foreach ( string subKey in subKeys )
          {
-            var values = _registry.GetValuesFromLocalMachine( subKey, "DisplayName", "UninstallString" );
+            string displayName = _registry.GetValueFromLocalMachine( subKey, "DisplayName" );
 
-            var appEntry = new AppEntry( values.Item1, values.Item2 );
+            var appEntry = new AppEntry( displayName, $@"{uninstallKeyName}\{subKey}" );
 
             appEntries.Add( appEntry );
          }

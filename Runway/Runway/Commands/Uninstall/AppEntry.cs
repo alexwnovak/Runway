@@ -7,15 +7,15 @@
          get;
       }
 
-      public string Id
+      public string Path
       {
          get;
       }
 
-      public AppEntry( string name, string id )
+      public AppEntry( string name, string path )
       {
          Name = name;
-         Id = id;
+         Path = path;
       }
    }
 }

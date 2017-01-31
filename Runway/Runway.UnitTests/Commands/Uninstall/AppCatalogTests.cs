@@ -31,18 +31,16 @@ namespace Runway.UnitTests.Commands.Uninstall
       public void Find_SearchesForAppByName_FindsApp()
       {
          const string appName = "notepad";
-         const string uninstallString = "uninstall string";
-         const string id = "AppId";
+         const string path = "subKeyPath";
          
          // Arrange
 
-         var registryResults = ArrayHelper.Create( id );
+         var registryResults = ArrayHelper.Create( path );
 
          var registryMock = new Mock<IRegistry>();
          registryMock.Setup( r => r.GetSubKeysFromLocalMachine( It.IsAny<string>() ) ).Returns( registryResults );
 
-         var values = new Tuple<string, string>( appName, uninstallString );
-         registryMock.Setup( r => r.GetValuesFromLocalMachine( id, "DisplayName", "UninstallString" ) ).Returns( values );
+         registryMock.Setup( r => r.GetValueFromLocalMachine( path, "DisplayName" ) ).Returns( appName );
 
          // Act
 
@@ -54,6 +52,7 @@ namespace Runway.UnitTests.Commands.Uninstall
 
          results.Should().HaveCount( 1 );
          results[0].Name.Should().Be( appName );
+         results[0].Path.Should().EndWith( path );
       }
    }
 }
