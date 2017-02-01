@@ -17,7 +17,7 @@ namespace Runway.UnitTests.Commands.Uninstall
 
          // Act
 
-         var appCatalog = new AppCatalog( registryMock.Object );
+         var appCatalog = new AppCatalog( registryMock.Object, null );
 
          var results = appCatalog.Find( "notepad" );
 
@@ -43,7 +43,7 @@ namespace Runway.UnitTests.Commands.Uninstall
 
          // Act
 
-         var appCatalog = new AppCatalog( registryMock.Object );
+         var appCatalog = new AppCatalog( registryMock.Object, null );
 
          var results = appCatalog.Find( appName );
 
@@ -71,7 +71,7 @@ namespace Runway.UnitTests.Commands.Uninstall
 
          // Act
 
-         var appCatalog = new AppCatalog( registryMock.Object );
+         var appCatalog = new AppCatalog( registryMock.Object, null );
 
          var results = appCatalog.Find( "doesnotexist" );
 
@@ -101,7 +101,7 @@ namespace Runway.UnitTests.Commands.Uninstall
 
          // Act
 
-         var appCatalog = new AppCatalog( registryMock.Object );
+         var appCatalog = new AppCatalog( registryMock.Object, null );
 
          var results = appCatalog.Find( "n" );
 

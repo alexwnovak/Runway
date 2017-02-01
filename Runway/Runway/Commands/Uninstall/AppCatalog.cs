@@ -8,10 +8,12 @@ namespace Runway.Commands.Uninstall
       public static AppEntry[] EmptyResults = new AppEntry[0];
 
       private readonly IRegistry _registry;
+      private readonly IProcess _process;
 
-      public AppCatalog( IRegistry registry )
+      public AppCatalog( IRegistry registry, IProcess process )
       {
          _registry = registry;
+         _process = process;
       }
 
       public AppEntry[] Find( string name )
