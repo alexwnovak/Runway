@@ -1,6 +1,12 @@
-﻿namespace Runway.Commands.Uninstall
+﻿using System;
+
+namespace Runway.Commands.Uninstall
 {
-   public class UninstallStringParser
+   public static class UninstallStringParser
    {
+      public static Tuple<string, string> Parse( string wholeLine )
+      {
+         return new Tuple<string, string>( wholeLine, string.Empty );
+      }
    }
 }
