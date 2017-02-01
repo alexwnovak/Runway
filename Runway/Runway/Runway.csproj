@@ -91,6 +91,7 @@
     <Compile Include="Commands\Uninstall\IProcess.cs" />
     <Compile Include="Commands\Uninstall\IRegistry.cs" />
     <Compile Include="Commands\Uninstall\ProcessAdapter.cs" />
+    <Compile Include="Commands\Uninstall\RegistryAdapter.cs" />
     <Compile Include="Commands\Uninstall\UninstallCommand.cs" />
     <Compile Include="MatchResult.cs" />
     <Compile Include="MatchType.cs" />
