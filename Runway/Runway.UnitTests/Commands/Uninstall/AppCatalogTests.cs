@@ -114,7 +114,9 @@ namespace Runway.UnitTests.Commands.Uninstall
       public void Uninstall_PassesAppPath_StartsCorrespondingUninstallString()
       {
          const string path = "path";
-         const string uninstallString = "msiexec /u";
+         const string uninstallCommand = @"C:\Program Files\Notepad++\Notepad++.exe";
+         const string uninstallArgument = "/uninstall";
+         string uninstallString = $"\"{uninstallCommand}\" {uninstallArgument}";
 
          // Arrange
 
@@ -131,7 +133,7 @@ namespace Runway.UnitTests.Commands.Uninstall
 
          // Assert
 
-         processMock.Verify( p => p.Start( uninstallString ), Times.Once() );
+         processMock.Verify( p => p.Start( uninstallCommand, uninstallArgument ), Times.Once() );
       }
    }
 }

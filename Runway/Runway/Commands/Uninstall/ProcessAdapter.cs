@@ -4,6 +4,6 @@ namespace Runway.Commands.Uninstall
 {
    public class ProcessAdapter : IProcess
    {
-      public void Start( string path ) => Process.Start( path );
+      public void Start( string path, string arguments ) => Process.Start( path, arguments );
    }
 }

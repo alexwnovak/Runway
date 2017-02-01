@@ -42,7 +42,13 @@ namespace Runway.Commands.Uninstall
       {
          string uninstallString = _registry.GetValueFromLocalMachine( path, "UninstallString" );
 
-         _process.Start( uninstallString );
+         int firstQuoteIndex = uninstallString.IndexOf( '"' );
+         int secondQuoteIndex = uninstallString.IndexOf( '"', firstQuoteIndex + 1 );
+
+         string command = uninstallString.Substring( firstQuoteIndex + 1, secondQuoteIndex - firstQuoteIndex - 1 );
+         string arguments = uninstallString.Substring( secondQuoteIndex + 1 ).Trim();
+
+         _process.Start( command, arguments );
       }
    }
 }
