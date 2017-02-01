@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Runway.Commands.Uninstall
 {
@@ -33,6 +34,11 @@ namespace Runway.Commands.Uninstall
          }
          
          return appEntries.ToArray();
+      }
+
+      public void Uninstall( string path )
+      {
+         throw new NotImplementedException();
       }
    }
 }
