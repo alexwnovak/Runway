@@ -109,5 +109,29 @@ namespace Runway.UnitTests.Commands.Uninstall
 
          results.Should().HaveCount( 2 );
       }
+
+      [Fact]
+      public void Uninstall_PassesAppPath_StartsCorrespondingUninstallString()
+      {
+         const string path = "path";
+         const string uninstallString = "msiexec /u";
+
+         // Arrange
+
+         var processMock = new Mock<IProcess>();
+         
+         var registryMock = new Mock<IRegistry>();
+         registryMock.Setup( r => r.GetValueFromLocalMachine( path, "UninstallString" ) ).Returns( uninstallString );
+
+         // Act
+
+         var appCatalog = new AppCatalog( registryMock.Object, processMock.Object );
+
+         appCatalog.Uninstall( path );
+
+         // Assert
+
+         processMock.Verify( p => p.Start( uninstallString ), Times.Once() );
+      }
    }
 }

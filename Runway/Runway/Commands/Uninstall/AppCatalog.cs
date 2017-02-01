@@ -40,7 +40,9 @@ namespace Runway.Commands.Uninstall
 
       public void Uninstall( string path )
       {
-         throw new NotImplementedException();
+         string uninstallString = _registry.GetValueFromLocalMachine( path, "UninstallString" );
+
+         _process.Start( uninstallString );
       }
    }
 }
