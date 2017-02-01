@@ -1,10 +1,9 @@
-﻿namespace Runway.Commands.Uninstall
+﻿using System.Diagnostics;
+
+namespace Runway.Commands.Uninstall
 {
    public class ProcessAdapter : IProcess
    {
-      public void Start( string path )
-      {
-         throw new System.NotImplementedException();
-      }
+      public void Start( string path ) => Process.Start( path );
    }
 }
