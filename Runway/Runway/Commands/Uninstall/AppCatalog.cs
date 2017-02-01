@@ -29,7 +29,7 @@ namespace Runway.Commands.Uninstall
 
             if ( displayName.StartsWith( name ) )
             {
-               var appEntry = new AppEntry( displayName, $@"{uninstallKeyName}\{subKey}" );
+               var appEntry = new AppEntry( displayName, subKey );
 
                appEntries.Add( appEntry );
             }
