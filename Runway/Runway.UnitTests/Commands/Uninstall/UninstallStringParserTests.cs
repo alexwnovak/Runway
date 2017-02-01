@@ -28,5 +28,18 @@ namespace Runway.UnitTests.Commands.Uninstall
          result.Item1.Should().Be( command );
          result.Item2.Should().BeEmpty();
       }
+
+      [Fact]
+      public void Parse_CommandIsEnclosedInQuotesAndHasAnArgument_GetsTheCommandAndArgumentWithNoQuotes()
+      {
+         const string command = @"C:\Program Files (x86)\Dropbox\Client\DropboxUninstaller.exe";
+         const string argument = "/InstallType:MACHINE";
+         string wholeLine = $@"""{command}"" {argument}";
+
+         var result = UninstallStringParser.Parse( wholeLine );
+
+         result.Item1.Should().Be( command );
+         result.Item2.Should().Be( argument );
+      }
    }
 }
