@@ -41,5 +41,18 @@ namespace Runway.UnitTests.Commands.Uninstall
          result.Item1.Should().Be( command );
          result.Item2.Should().Be( argument );
       }
+
+      [Fact]
+      public void Parse_CommandIsEnclosedInQuotesAndHasMultipleArguments_GetsCommandWithNoQuotesAndAllArguments()
+      {
+         const string command = @"C:\Program Files (x86)\Google\Chrome\Application\55.0.2883.87\Installer\setup.exe";
+         const string argument = "--uninstall --multi-install --chrome --system-level";
+         string wholeLine = $@"""{command}"" {argument}";
+
+         var result = UninstallStringParser.Parse( wholeLine );
+
+         result.Item1.Should().Be( command );
+         result.Item2.Should().Be( argument );
+      }
    }
 }
