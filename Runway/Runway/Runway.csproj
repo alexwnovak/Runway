@@ -93,6 +93,7 @@
     <Compile Include="Commands\Uninstall\ProcessAdapter.cs" />
     <Compile Include="Commands\Uninstall\RegistryAdapter.cs" />
     <Compile Include="Commands\Uninstall\UninstallCommand.cs" />
+    <Compile Include="Commands\Uninstall\UninstallStringParser.cs" />
     <Compile Include="MatchResult.cs" />
     <Compile Include="MatchType.cs" />
     <Compile Include="ViewModels\CommandParser.cs" />

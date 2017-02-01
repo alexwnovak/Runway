@@ -106,6 +106,7 @@
   <ItemGroup>
     <Compile Include="CommandCatalogTests.cs" />
     <Compile Include="Commands\Uninstall\AppCatalogTests.cs" />
+    <Compile Include="Commands\Uninstall\UninstallStringParserTests.cs" />
     <Compile Include="Helpers\ArrayHelper.cs" />
     <Compile Include="Helpers\MatchResultHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
