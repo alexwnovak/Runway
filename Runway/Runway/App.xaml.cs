@@ -27,6 +27,10 @@ namespace Runway
 
          SimpleIoc.Default.Register<ICommandCatalog>( () => commandCatalog );
          SimpleIoc.Default.Register<IAppService>( () => new AppService() );
+         SimpleIoc.Default.Register<IAppCatalog, AppCatalog>();
+         SimpleIoc.Default.Register<IRegistry, RegistryAdapter>();
+         SimpleIoc.Default.Register<IProcess, ProcessAdapter>();
+         SimpleIoc.Default.Register<UninstallCommand>();
       }
 
       private void OnLaunch( object sender, HotkeyEventArgs e )
