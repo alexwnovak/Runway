@@ -27,7 +27,7 @@ namespace Runway.Commands.Uninstall
          {
             string displayName = _registry.GetValueFromLocalMachine( subKey, "DisplayName" );
 
-            if ( displayName.StartsWith( name ) )
+            if ( !string.IsNullOrEmpty( displayName ) && displayName.StartsWith( name, StringComparison.InvariantCultureIgnoreCase ) )
             {
                var appEntry = new AppEntry( displayName, subKey );
 
@@ -37,18 +37,14 @@ namespace Runway.Commands.Uninstall
          
          return appEntries.ToArray();
       }
-
+      
       public void Uninstall( string path )
       {
          string uninstallString = _registry.GetValueFromLocalMachine( path, "UninstallString" );
 
-         int firstQuoteIndex = uninstallString.IndexOf( '"' );
-         int secondQuoteIndex = uninstallString.IndexOf( '"', firstQuoteIndex + 1 );
+         var parsedUninstallString = UninstallStringParser.Parse( uninstallString );
 
-         string command = uninstallString.Substring( firstQuoteIndex + 1, secondQuoteIndex - firstQuoteIndex - 1 );
-         string arguments = uninstallString.Substring( secondQuoteIndex + 1 ).Trim();
-
-         _process.Start( command, arguments );
+         _process.Start( parsedUninstallString.Item1, parsedUninstallString.Item2 );
       }
    }
 }
