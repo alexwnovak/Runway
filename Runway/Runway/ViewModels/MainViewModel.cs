@@ -11,10 +11,10 @@ namespace Runway.ViewModels
       private readonly ICommandCatalog _commandCatalog;
       private readonly IAppService _appService;
 
-      public BulkObservableCollection<MatchResult> Suggestions
+      public BulkObservableCollection<IMatchResult> Suggestions
       {
          get;
-      } = new BulkObservableCollection<MatchResult>();
+      } = new BulkObservableCollection<IMatchResult>();
 
       private string _currentCommandText;
       public string CurrentCommandText
@@ -48,8 +48,8 @@ namespace Runway.ViewModels
       }
 
       private int _selectedIndex;
-      private MatchResult _selectedSuggestion;
-      public MatchResult SelectedSuggestion
+      private IMatchResult _selectedSuggestion;
+      public IMatchResult SelectedSuggestion
       {
          get
          {
@@ -61,7 +61,7 @@ namespace Runway.ViewModels
          }
       }
 
-      public MatchResult[] CurrentMatchResults
+      public IMatchResult[] CurrentMatchResults
       {
          get;
          private set;

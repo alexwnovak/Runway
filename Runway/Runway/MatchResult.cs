@@ -1,6 +1,6 @@
 ﻿namespace Runway
 {
-   public class MatchResult
+   public class MatchResult : IMatchResult
    {
       public MatchType MatchType
       {
