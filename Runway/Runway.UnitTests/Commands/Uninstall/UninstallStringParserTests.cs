@@ -54,5 +54,18 @@ namespace Runway.UnitTests.Commands.Uninstall
          result.Item1.Should().Be( command );
          result.Item2.Should().Be( argument );
       }
+
+      [Fact]
+      public void Parse_CommandHasNoQuotesOrSpacesButHasAnArgument_ReturnsBoth()
+      {
+         const string command = "MsiExec.exe";
+         const string argument = "/I{0017BF37-5FC6-4025-A766-7F63AAED92FA}";
+         string wholeLine = $"{command} {argument}";
+
+         var result = UninstallStringParser.Parse( wholeLine );
+
+         result.Item1.Should().Be( command );
+         result.Item2.Should().Be( argument );
+      }
    }
 }

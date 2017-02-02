@@ -6,21 +6,38 @@ namespace Runway.Commands.Uninstall
    {
       public static Tuple<string, string> Parse( string wholeLine )
       {
-         string command;
-         int spaceIndent = 0;
+         const string exeSearchPattern = ".exe";
+         int exeIndex = wholeLine.IndexOf( exeSearchPattern, StringComparison.InvariantCultureIgnoreCase ) + exeSearchPattern.Length;
 
-         if ( wholeLine.StartsWith( "\"" ) )
+         int commandStartIndex = 0;
+         bool hasQuotes = false;
+
+         if ( wholeLine[0] == '"' )
          {
-            int nextQuoteIndex = wholeLine.IndexOf( '"', 1 );
-            command = wholeLine.Substring( 1, nextQuoteIndex - 1 );
-            spaceIndent = 2;
-         }
-         else
-         {
-            command = wholeLine;
+            commandStartIndex = 1;
+            hasQuotes = true;
          }
 
-         string argument = wholeLine.Substring( command.Length + spaceIndent ).TrimStart();
+         int commandEndIndex = exeIndex;
+
+         while ( commandEndIndex < wholeLine.Length && wholeLine[commandEndIndex] != '"' && wholeLine[commandEndIndex] != ' ' )
+         {
+            commandEndIndex++;
+         }
+
+         string command = wholeLine.Substring( commandStartIndex, commandEndIndex - commandStartIndex );
+
+         if ( hasQuotes )
+         {
+            exeIndex++;
+         }
+
+         if ( exeIndex < wholeLine.Length - 1 )
+         {
+            exeIndex++;
+         }
+
+         string argument = wholeLine.Substring( exeIndex );
 
          return new Tuple<string, string>( command, argument );
       }
