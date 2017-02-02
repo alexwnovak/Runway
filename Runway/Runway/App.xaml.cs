@@ -31,6 +31,8 @@ namespace Runway
          SimpleIoc.Default.Register<IRegistry, RegistryAdapter>();
          SimpleIoc.Default.Register<IProcess, ProcessAdapter>();
          SimpleIoc.Default.Register<UninstallCommand>();
+
+         commandCatalog.Add( SimpleIoc.Default.GetInstance<UninstallCommand>() );
       }
 
       private void OnLaunch( object sender, HotkeyEventArgs e )
