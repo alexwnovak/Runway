@@ -24,9 +24,9 @@ namespace Runway.UnitTests.ViewModels
 
          // Arrange
 
-         var commandMock = new Mock<ILaunchableCommand>();
+         var matchResultMock = new Mock<IMatchResult>();
+         var results = ArrayHelper.Create( matchResultMock.Object );
 
-         var results = MatchResultHelper.Create( MatchType.Exact, commandMock.Object );
          var commandCatalogMock = new Mock<ICommandCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( command ) ).Returns( results );
 
@@ -39,7 +39,7 @@ namespace Runway.UnitTests.ViewModels
          // Assert
 
          viewModel.CurrentMatchResults.Should().HaveCount( 1 );
-         viewModel.CurrentMatchResults.Should().Contain( m => m.Command == commandMock.Object );
+         viewModel.CurrentMatchResults[0].Should().Be( matchResultMock.Object );
       }
 
       [Fact]
@@ -289,18 +289,12 @@ namespace Runway.UnitTests.ViewModels
       [Fact]
       public void SelectNextSuggestionCommand_FirstCommandIsSelected_SecondCommandBecomesSelected()
       {
-         const string commandText1 = "uninstall";
-         const string commandText2 = "undo";
-
          // Arrange
 
-         var commandMock1 = new Mock<ILaunchableCommand>();
-         commandMock1.SetupGet( c => c.CommandText ).Returns( commandText1 );
+         var matchResultMock1 = new Mock<IMatchResult>();
+         var matchResultMock2 = new Mock<IMatchResult>();
+         var matchResults = ArrayHelper.Create( matchResultMock1.Object, matchResultMock2.Object );
 
-         var commandMock2 = new Mock<ILaunchableCommand>();
-         commandMock2.Setup( c => c.CommandText ).Returns( commandText2 );
-
-         var matchResults = MatchResultHelper.CreatePartial( commandMock1.Object, commandMock2.Object );
          var commandCatalogMock = new Mock<ICommandCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( matchResults );
 
@@ -313,7 +307,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Assert
 
-         viewModel.SelectedSuggestion.Command.Should().Be( commandMock2.Object );
+         viewModel.SelectedSuggestion.Should().Be( matchResultMock2.Object );
       }
 
       [Fact]
@@ -350,13 +344,13 @@ namespace Runway.UnitTests.ViewModels
 
          // Arrange
 
-         var commandMock1 = new Mock<ILaunchableCommand>();
-         commandMock1.SetupGet( c => c.CommandText ).Returns( commandText1 );
+         var matchResultMock1 = new Mock<IMatchResult>();
+         matchResultMock1.SetupGet( mr => mr.DisplayText ).Returns( commandText1 );
 
-         var commandMock2 = new Mock<ILaunchableCommand>();
-         commandMock2.Setup( c => c.CommandText ).Returns( commandText2 );
+         var matchResultMock2 = new Mock<IMatchResult>();
+         matchResultMock2.SetupGet( mr => mr.DisplayText ).Returns( commandText2 );
 
-         var matchResults = MatchResultHelper.CreatePartial( commandMock1.Object, commandMock2.Object );
+         var matchResults = ArrayHelper.Create( matchResultMock1.Object, matchResultMock2.Object );
          var commandCatalogMock = new Mock<ICommandCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( matchResults );
 
@@ -369,7 +363,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Assert
 
-         viewModel.SelectedSuggestion.Command.Should().Be( commandMock2.Object );
+         viewModel.SelectedSuggestion.Should().Be( matchResultMock2.Object );
       }
 
       [Fact]

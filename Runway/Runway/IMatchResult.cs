@@ -7,9 +7,11 @@
          get;
       }
 
-      ILaunchableCommand Command
+      string DisplayText
       {
          get;
       }
+
+      void Activate( object[] parameters );
    }
 }

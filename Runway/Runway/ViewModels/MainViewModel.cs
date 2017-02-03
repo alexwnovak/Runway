@@ -40,7 +40,7 @@ namespace Runway.ViewModels
          {
             if ( CurrentMatchResults.Length > 0 )
             {
-               return CurrentMatchResults[_selectedIndex].Command.CommandText;
+               return CurrentMatchResults[_selectedIndex].DisplayText;
             }
 
             return null;
@@ -147,7 +147,7 @@ namespace Runway.ViewModels
 
          SelectedSuggestion = CurrentMatchResults[_selectedIndex];
 
-         _currentCommandText = SelectedSuggestion.Command.CommandText;
+         _currentCommandText = SelectedSuggestion.DisplayText;
 
          RaisePropertyChanged( () => CurrentCommandText );
          RaisePropertyChanged( () => PreviewCommandText );
@@ -168,7 +168,7 @@ namespace Runway.ViewModels
 
          SelectedSuggestion = CurrentMatchResults[_selectedIndex];
 
-         _currentCommandText = SelectedSuggestion.Command.CommandText;
+         _currentCommandText = SelectedSuggestion.DisplayText;
 
          RaisePropertyChanged( () => CurrentCommandText );
          RaisePropertyChanged( () => PreviewCommandText );
@@ -212,7 +212,7 @@ namespace Runway.ViewModels
 
          if ( results.Length > 0 )
          {
-            SelectedSuggestion.Command.Launch( new object[] { argumentString } );
+            SelectedSuggestion.Activate( new object[] { argumentString } );
             OnDismissRequested( this, EventArgs.Empty );
          }
       }

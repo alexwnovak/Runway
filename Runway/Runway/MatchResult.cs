@@ -7,6 +7,8 @@
          get;
       }
 
+      public string DisplayText => Command.CommandText;
+
       public ILaunchableCommand Command
       {
          get;
@@ -17,5 +19,7 @@
          MatchType = matchType;
          Command = command;
       }
+
+      public void Activate( object[] parameters ) => Command.Launch( parameters );
    }
 }
