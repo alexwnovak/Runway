@@ -34,7 +34,7 @@ namespace Runway.UnitTests.ViewModels
 
          var viewModel = new MainViewModel( commandCatalogMock.Object, null );
 
-         viewModel.CurrentCommandText = command;
+         viewModel.InputText = command;
 
          // Assert
 
@@ -54,7 +54,7 @@ namespace Runway.UnitTests.ViewModels
 
          var viewModel = new MainViewModel( commandCatalogMock.Object, null )
          {
-            CurrentCommandText = null
+            InputText = null
          };
 
          // Assert
@@ -76,7 +76,7 @@ namespace Runway.UnitTests.ViewModels
 
          var viewModel = new MainViewModel( commandCatalogMock.Object, null );
 
-         viewModel.CurrentCommandText = command;
+         viewModel.InputText = command;
 
          // Assert
 
@@ -100,7 +100,7 @@ namespace Runway.UnitTests.ViewModels
          // Act
 
          var viewModel = new MainViewModel( commandCatalogMock.Object, null );
-         viewModel.CurrentCommandText = command;
+         viewModel.InputText = command;
 
          viewModel.MonitorEvents();
 
@@ -108,7 +108,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Assert
 
-         viewModel.ShouldRaisePropertyChangeFor( vm => vm.CurrentCommandText );
+         viewModel.ShouldRaisePropertyChangeFor( vm => vm.InputText );
       }
 
       [Fact]
@@ -128,7 +128,7 @@ namespace Runway.UnitTests.ViewModels
          // Act
 
          var viewModel = new MainViewModel( commandCatalogMock.Object, null );
-         viewModel.CurrentCommandText = command;
+         viewModel.InputText = command;
 
          viewModel.MonitorEvents();
 
@@ -159,14 +159,14 @@ namespace Runway.UnitTests.ViewModels
 
          var viewModel = new MainViewModel( commandCatalogMock.Object, null )
          {
-            CurrentCommandText = currentCommand
+            InputText = currentCommand
          };
 
          viewModel.CompleteSuggestionCommand.Execute( null );
 
          // Assert
 
-         viewModel.CurrentCommandText.Should().Be( commandName );
+         viewModel.InputText.Should().Be( commandName );
       }
 
       [Fact]
@@ -183,7 +183,7 @@ namespace Runway.UnitTests.ViewModels
 
          var viewModel = new MainViewModel( commandCatalogMock.Object, null )
          {
-            CurrentCommandText = currentCommand
+            InputText = currentCommand
          };
 
          viewModel.MonitorEvents();
@@ -192,12 +192,12 @@ namespace Runway.UnitTests.ViewModels
 
          // Assert
 
-         viewModel.CurrentCommandText.Should().Be( currentCommand );
+         viewModel.InputText.Should().Be( currentCommand );
          viewModel.ShouldNotRaise( nameof( viewModel.MoveCaretRequested ) );
       }
 
       [Fact]
-      public void CommandText_SetsCommandText_RaisesPropertyChangeForPreview()
+      public void InputText_SetsCommandText_RaisesPropertyChangeForPreview()
       {
          // Arrange
 
@@ -209,7 +209,7 @@ namespace Runway.UnitTests.ViewModels
 
          viewModel.MonitorEvents();
 
-         viewModel.CurrentCommandText = "doesntmatter";
+         viewModel.InputText = "doesntmatter";
 
          // Assert
 
@@ -217,15 +217,15 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
-      public void CommandText_CommandIsFoundForPrefix_PreviewTextIsSetCorrectly()
+      public void InputText_CommandIsFoundForPrefix_PreviewTextIsSetCorrectly()
       {
          const string commandPartialText = "co";
-         const string commandText = "command";
+         const string inputText = "command";
 
          // Arrange
 
          var commandMock = new Mock<ILaunchableCommand>();
-         commandMock.SetupGet( lc => lc.CommandText ).Returns( commandText );
+         commandMock.SetupGet( lc => lc.CommandText ).Returns( inputText );
 
          var matchResults = MatchResultHelper.Create( MatchType.Exact, commandMock.Object );
          var commandCatalogMock = new Mock<ICommandCatalog>();
@@ -235,32 +235,32 @@ namespace Runway.UnitTests.ViewModels
 
          var viewModel = new MainViewModel( commandCatalogMock.Object, null );
 
-         viewModel.CurrentCommandText = commandPartialText;
+         viewModel.InputText = commandPartialText;
 
          // Assert
 
-         viewModel.PreviewCommandText.Should().Be( commandText );
+         viewModel.PreviewCommandText.Should().Be( inputText );
       }
 
       [Fact]
-      public void CommandText_MatchesACommand_MarksTheFirstResultAsSelected()
+      public void InputText_MatchesACommand_MarksTheFirstResultAsSelected()
       {
-         const string commandText = "copy";
+         const string inputText = "copy";
 
          // Arrange
 
          var commandMock = new Mock<ILaunchableCommand>();
-         commandMock.SetupGet( lc => lc.CommandText ).Returns( commandText );
+         commandMock.SetupGet( lc => lc.CommandText ).Returns( inputText );
 
          var matchResults = MatchResultHelper.Create( MatchType.Exact, commandMock.Object );
          var commandCatalogMock = new Mock<ICommandCatalog>();
-         commandCatalogMock.Setup( cc => cc.Resolve( commandText ) ).Returns( matchResults );
+         commandCatalogMock.Setup( cc => cc.Resolve( inputText ) ).Returns( matchResults );
 
          // Act
 
          var viewModel = new MainViewModel( commandCatalogMock.Object, null );
 
-         viewModel.CurrentCommandText = commandText;
+         viewModel.InputText = inputText;
 
          // Assert
 
@@ -268,7 +268,7 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
-      public void CommandText_DoesNotMatchAnything_NoMatchIsSelected()
+      public void InputText_DoesNotMatchAnything_NoMatchIsSelected()
       {
          // Arrange
 
@@ -279,7 +279,7 @@ namespace Runway.UnitTests.ViewModels
 
          var viewModel = new MainViewModel( commandCatalogMock.Object, null );
 
-         viewModel.CurrentCommandText = "doesnotmatter";
+         viewModel.InputText = "doesnotmatter";
 
          // Assert
 
@@ -302,7 +302,7 @@ namespace Runway.UnitTests.ViewModels
 
          var viewModel = new MainViewModel( commandCatalogMock.Object, null );
 
-         viewModel.CurrentCommandText = "u";
+         viewModel.InputText = "u";
          viewModel.SelectNextSuggestionCommand.Execute( null );
 
          // Assert
@@ -327,7 +327,7 @@ namespace Runway.UnitTests.ViewModels
 
          viewModel.MonitorEvents();
 
-         viewModel.CurrentCommandText = "doesnotmatter";
+         viewModel.InputText = "doesnotmatter";
          viewModel.SelectNextSuggestionCommand.Execute( null );
 
          // Assert
@@ -358,7 +358,7 @@ namespace Runway.UnitTests.ViewModels
 
          var viewModel = new MainViewModel( commandCatalogMock.Object, null );
 
-         viewModel.CurrentCommandText = "u";
+         viewModel.InputText = "u";
          viewModel.SelectPreviousSuggestionCommand.Execute( null );
 
          // Assert
@@ -383,7 +383,7 @@ namespace Runway.UnitTests.ViewModels
 
          viewModel.MonitorEvents();
 
-         viewModel.CurrentCommandText = "doesnotmatter";
+         viewModel.InputText = "doesnotmatter";
          viewModel.SelectPreviousSuggestionCommand.Execute( null );
 
          // Assert
@@ -413,13 +413,13 @@ namespace Runway.UnitTests.ViewModels
 
          viewModel.MonitorEvents();
 
-         viewModel.CurrentCommandText = partialText;
+         viewModel.InputText = partialText;
 
          viewModel.SpacePressedCommand.Execute( null );
 
          // Assert
 
-         viewModel.CurrentCommandText.Should().Be( commandText + " " );
+         viewModel.InputText.Should().Be( commandText + " " );
       }
 
       [Fact]
@@ -436,7 +436,7 @@ namespace Runway.UnitTests.ViewModels
          // Act
 
          var viewModel = new MainViewModel( commandCatalogMock.Object, null );
-         viewModel.CurrentCommandText = "doesnotmatter";
+         viewModel.InputText = "doesnotmatter";
 
          viewModel.MonitorEvents();
 
@@ -490,7 +490,7 @@ namespace Runway.UnitTests.ViewModels
 
          var viewModel = new MainViewModel( commandCatalogMock.Object, null );
 
-         viewModel.CurrentCommandText = "u";
+         viewModel.InputText = "u";
          viewModel.SelectPreviousSuggestionCommand.Execute( null );
          viewModel.LaunchCommand.Execute( null );
 

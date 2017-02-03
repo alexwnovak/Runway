@@ -55,7 +55,7 @@
          </Grid.RowDefinitions>
 
          <TextBox x:Name="InputTextBox"
-            Text="{Binding CurrentCommandText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            Text="{Binding InputText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
          <TextBox Grid.Row="0"
             Foreground="#20FFFFFF"
             Text="{Binding PreviewCommandText, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />

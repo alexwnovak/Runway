@@ -16,16 +16,16 @@ namespace Runway.ViewModels
          get;
       } = new BulkObservableCollection<IMatchResult>();
 
-      private string _currentCommandText;
-      public string CurrentCommandText
+      private string _inputText;
+      public string InputText
       {
          get
          {
-            return _currentCommandText;
+            return _inputText;
          }
          set
          {
-            bool changed = Set( () => CurrentCommandText, ref _currentCommandText, value );
+            bool changed = Set( () => InputText, ref _inputText, value );
 
             if ( changed )
             {
@@ -147,9 +147,9 @@ namespace Runway.ViewModels
 
          SelectedSuggestion = CurrentMatchResults[_selectedIndex];
 
-         _currentCommandText = SelectedSuggestion.DisplayText;
+         _inputText = SelectedSuggestion.DisplayText;
 
-         RaisePropertyChanged( () => CurrentCommandText );
+         RaisePropertyChanged( () => InputText );
          RaisePropertyChanged( () => PreviewCommandText );
 
          OnMoveCaretRequested( this, new MoveCaretEventArgs( CaretPosition.End ) );
@@ -168,9 +168,9 @@ namespace Runway.ViewModels
 
          SelectedSuggestion = CurrentMatchResults[_selectedIndex];
 
-         _currentCommandText = SelectedSuggestion.DisplayText;
+         _inputText = SelectedSuggestion.DisplayText;
 
-         RaisePropertyChanged( () => CurrentCommandText );
+         RaisePropertyChanged( () => InputText );
          RaisePropertyChanged( () => PreviewCommandText );
 
          OnMoveCaretRequested( this, new MoveCaretEventArgs( CaretPosition.End ) );
@@ -183,9 +183,9 @@ namespace Runway.ViewModels
             return;
          }
 
-         _currentCommandText = PreviewCommandText;
+         _inputText = PreviewCommandText;
 
-         RaisePropertyChanged( () => CurrentCommandText );
+         RaisePropertyChanged( () => InputText );
          RaisePropertyChanged( () => PreviewCommandText );
 
          OnMoveCaretRequested( this, new MoveCaretEventArgs( CaretPosition.End ) );
@@ -195,7 +195,7 @@ namespace Runway.ViewModels
       {
          CompleteSuggestionCommand.Execute( null );
 
-         CurrentCommandText += " ";
+         InputText += " ";
       }
 
       private void OnLaunchCommand()
@@ -205,8 +205,8 @@ namespace Runway.ViewModels
             return;
          }
 
-         string commandText = CommandParser.ParseCommand( CurrentCommandText );
-         string argumentString = CommandParser.ParseArguments( CurrentCommandText );
+         string commandText = CommandParser.ParseCommand( InputText );
+         string argumentString = CommandParser.ParseArguments( InputText );
 
          var results = _commandCatalog.Resolve( commandText );
 
