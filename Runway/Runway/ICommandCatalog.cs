@@ -2,6 +2,6 @@
 {
    public interface ICommandCatalog
    {
-      MatchResult[] Resolve( string searchText );
+      IMatchResult[] Resolve( string searchText );
    }
 }

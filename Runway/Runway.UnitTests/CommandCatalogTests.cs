@@ -28,7 +28,7 @@ namespace Runway.UnitTests
 
          results.Should().HaveCount( 1 );
          results[0].MatchType.Should().Be( MatchType.Exact );
-         results[0].Command.Should().Be( commandMock.Object );
+         results[0].DisplayText.Should().Be( commandText );
       }
 
       [Fact]
@@ -54,7 +54,7 @@ namespace Runway.UnitTests
 
          results.Should().HaveCount( 1 );
          results[0].MatchType.Should().Be( MatchType.Partial );
-         results[0].Command.Should().Be( commandMock.Object );
+         results[0].DisplayText.Should().Be( commandText );
       }
 
       [Fact]
@@ -111,8 +111,8 @@ namespace Runway.UnitTests
          // Assert
 
          results.Should().HaveCount( 2 );
-         results.Should().Contain( c => c.Command == commandMock1.Object && c.MatchType == MatchType.Exact );
-         results.Should().Contain( c => c.Command == commandMock2.Object && c.MatchType == MatchType.Partial );
+         results.Should().Contain( c => c.DisplayText == commandText1 && c.MatchType == MatchType.Exact );
+         results.Should().Contain( c => c.DisplayText == commandText2 && c.MatchType == MatchType.Partial );
       }
 
       [Fact]
@@ -141,7 +141,7 @@ namespace Runway.UnitTests
          // Assert
 
          results.Should().HaveCount( 1 );
-         results.Should().Contain( c => c.Command == commandMock1.Object && c.MatchType == MatchType.Exact );
+         results.Should().Contain( c => c.DisplayText == commandText1 && c.MatchType == MatchType.Exact );
       }
 
       [Fact]
@@ -170,8 +170,8 @@ namespace Runway.UnitTests
          // Assert
 
          results.Should().HaveCount( 2 );
-         results.Should().Contain( c => c.Command == commandMock1.Object && c.MatchType == MatchType.Partial );
-         results.Should().Contain( c => c.Command == commandMock2.Object && c.MatchType == MatchType.Partial );
+         results.Should().Contain( c => c.DisplayText == commandText1 && c.MatchType == MatchType.Partial );
+         results.Should().Contain( c => c.DisplayText == commandText2 && c.MatchType == MatchType.Partial );
       }
 
       [Fact]
@@ -200,8 +200,8 @@ namespace Runway.UnitTests
          // Assert
 
          results.Should().HaveCount( 2 );
-         results[0].Command.CommandText.Should().Be( commandText2 );
-         results[1].Command.CommandText.Should().Be( commandText1 );
+         results[0].DisplayText.Should().Be( commandText2 );
+         results[1].DisplayText.Should().Be( commandText1 );
       }
    }
 }

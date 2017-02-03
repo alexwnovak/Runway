@@ -11,10 +11,10 @@ namespace Runway.ViewModels
       private readonly ICommandCatalog _commandCatalog;
       private readonly IAppService _appService;
 
-      public BulkObservableCollection<MatchResult> Suggestions
+      public BulkObservableCollection<IMatchResult> Suggestions
       {
          get;
-      } = new BulkObservableCollection<MatchResult>();
+      } = new BulkObservableCollection<IMatchResult>();
 
       private string _currentCommandText;
       public string CurrentCommandText
@@ -40,7 +40,7 @@ namespace Runway.ViewModels
          {
             if ( CurrentMatchResults.Length > 0 )
             {
-               return CurrentMatchResults[_selectedIndex].Command.CommandText;
+               return CurrentMatchResults[_selectedIndex].DisplayText;
             }
 
             return null;
@@ -48,8 +48,8 @@ namespace Runway.ViewModels
       }
 
       private int _selectedIndex;
-      private MatchResult _selectedSuggestion;
-      public MatchResult SelectedSuggestion
+      private IMatchResult _selectedSuggestion;
+      public IMatchResult SelectedSuggestion
       {
          get
          {
@@ -61,7 +61,7 @@ namespace Runway.ViewModels
          }
       }
 
-      public MatchResult[] CurrentMatchResults
+      public IMatchResult[] CurrentMatchResults
       {
          get;
          private set;
@@ -147,7 +147,7 @@ namespace Runway.ViewModels
 
          SelectedSuggestion = CurrentMatchResults[_selectedIndex];
 
-         _currentCommandText = SelectedSuggestion.Command.CommandText;
+         _currentCommandText = SelectedSuggestion.DisplayText;
 
          RaisePropertyChanged( () => CurrentCommandText );
          RaisePropertyChanged( () => PreviewCommandText );
@@ -168,7 +168,7 @@ namespace Runway.ViewModels
 
          SelectedSuggestion = CurrentMatchResults[_selectedIndex];
 
-         _currentCommandText = SelectedSuggestion.Command.CommandText;
+         _currentCommandText = SelectedSuggestion.DisplayText;
 
          RaisePropertyChanged( () => CurrentCommandText );
          RaisePropertyChanged( () => PreviewCommandText );
@@ -212,7 +212,7 @@ namespace Runway.ViewModels
 
          if ( results.Length > 0 )
          {
-            SelectedSuggestion.Command.Launch( new object[] { argumentString } );
+            SelectedSuggestion.Activate( new object[] { argumentString } );
             OnDismissRequested( this, EventArgs.Empty );
          }
       }

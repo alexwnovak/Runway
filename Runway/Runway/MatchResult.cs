@@ -1,11 +1,13 @@
 ﻿namespace Runway
 {
-   public class MatchResult
+   public class MatchResult : IMatchResult
    {
       public MatchType MatchType
       {
          get;
       }
+
+      public string DisplayText => Command.CommandText;
 
       public ILaunchableCommand Command
       {
@@ -17,5 +19,7 @@
          MatchType = matchType;
          Command = command;
       }
+
+      public void Activate( object[] parameters ) => Command.Launch( parameters );
    }
 }
