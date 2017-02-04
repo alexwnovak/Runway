@@ -98,6 +98,7 @@
     <Compile Include="Input\IInputController.cs" />
     <Compile Include="Input\IInputFrame.cs" />
     <Compile Include="Input\InputController.cs" />
+    <Compile Include="Input\InputFrame.cs" />
     <Compile Include="MatchResult.cs" />
     <Compile Include="MatchType.cs" />
     <Compile Include="ViewModels\CommandParser.cs" />
