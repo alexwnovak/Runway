@@ -11,6 +11,50 @@ namespace Runway.UnitTests.ViewModels
    public class MainViewModelTests
    {
       [Fact]
+      public void InputText_SetsInputText_PassesInputToInputController()
+      {
+         const string text = "input text here";
+
+         // Arrange
+
+         var commandCatalogMock = new Mock<ICommandCatalog>();
+         var appServiceMock = new Mock<IAppService>();
+         var inputControllerMock = new Mock<IInputController>();
+
+         // Act
+
+         var viewModel = new MainViewModel( commandCatalogMock.Object, appServiceMock.Object, inputControllerMock.Object );
+
+         viewModel.InputText = text;
+
+         // Assert
+
+         inputControllerMock.VerifySet( ic => ic.InputText = text );
+      }
+
+      [Fact]
+      public void InputText_SetsInputText_RaisesNotifyPropertyChangedForInputText()
+      {
+         // Arrange
+
+         var commandCatalogMock = new Mock<ICommandCatalog>();
+         var appServiceMock = new Mock<IAppService>();
+         var inputControllerMock = new Mock<IInputController>();
+
+         // Act
+
+         var viewModel = new MainViewModel( commandCatalogMock.Object, appServiceMock.Object, inputControllerMock.Object );
+
+         viewModel.MonitorEvents();
+
+         viewModel.InputText = "doesntmatter";
+
+         // Assert
+
+         viewModel.ShouldRaisePropertyChangeFor( vm => vm.InputText );
+      }
+
+      [Fact]
       public void CurrentMatchResults_DefaultState_HasNoMatchResults()
       {
          var appServiceMock = new Mock<IAppService>();
@@ -218,50 +262,6 @@ namespace Runway.UnitTests.ViewModels
 
          viewModel.InputText.Should().Be( currentCommand );
          viewModel.ShouldNotRaise( nameof( viewModel.MoveCaretRequested ) );
-      }
-
-      [Fact]
-      public void InputText_SetsInputText_PassesInputToInputController()
-      {
-         const string text = "input text here";
-
-         // Arrange
-
-         var commandCatalogMock = new Mock<ICommandCatalog>();
-         var appServiceMock = new Mock<IAppService>();
-         var inputControllerMock = new Mock<IInputController>();
-
-         // Act
-
-         var viewModel = new MainViewModel( commandCatalogMock.Object, appServiceMock.Object, inputControllerMock.Object );
-
-         viewModel.InputText = text;
-
-         // Assert
-
-         inputControllerMock.VerifySet( ic => ic.InputText = text );
-      }
-
-      [Fact]
-      public void InputText_SetsInputText_RaisesNotifyPropertyChangedForInputText()
-      {
-         // Arrange
-
-         var commandCatalogMock = new Mock<ICommandCatalog>();
-         var appServiceMock = new Mock<IAppService>();
-         var inputControllerMock = new Mock<IInputController>();
-
-         // Act
-
-         var viewModel = new MainViewModel( commandCatalogMock.Object, appServiceMock.Object, inputControllerMock.Object );
-
-         viewModel.MonitorEvents();
-
-         viewModel.InputText = "doesntmatter";
-
-         // Assert
-
-         viewModel.ShouldRaisePropertyChangeFor( vm => vm.InputText );
       }
 
       [Fact]
