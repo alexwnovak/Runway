@@ -151,14 +151,14 @@ namespace Runway.ViewModels
       {
          if ( _selectedIndex - 1 < 0 )
          {
-            //_selectedIndex = CurrentMatchResults.Length - 1;
+            _selectedIndex = Suggestions.Count - 1;
          }
          else
          {
             _selectedIndex--;
          }
 
-         //SelectedSuggestion = CurrentMatchResults[_selectedIndex];
+         SelectedSuggestion = Suggestions[_selectedIndex];
 
          _inputText = SelectedSuggestion.DisplayText;
 

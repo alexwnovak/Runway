@@ -392,23 +392,15 @@ namespace Runway.UnitTests.ViewModels
       [Fact]
       public void SelectPreviousSuggestionCommand_FirstCommandIsSelected_SecondCommandBecomesSelected()
       {
-         const string commandText1 = "uninstall";
-         const string commandText2 = "undo";
-
          // Arrange
 
          var matchResultMock1 = new Mock<IMatchResult>();
-         matchResultMock1.SetupGet( mr => mr.DisplayText ).Returns( commandText1 );
-
          var matchResultMock2 = new Mock<IMatchResult>();
-         matchResultMock2.SetupGet( mr => mr.DisplayText ).Returns( commandText2 );
-
          var matchResults = ArrayHelper.Create( matchResultMock1.Object, matchResultMock2.Object );
-         var commandCatalogMock = new Mock<ISearchCatalog>();
-         commandCatalogMock.Setup( cc => cc.Search( It.IsAny<string>() ) ).Returns( matchResults );
 
          var appServiceMock = new Mock<IAppService>();
          var inputControllerMock = new Mock<IInputController>();
+         inputControllerMock.Setup( ic => ic.MatchResults ).Returns( matchResults );
 
          // Act
 
@@ -427,14 +419,12 @@ namespace Runway.UnitTests.ViewModels
       {
          // Arrange
 
-         var commandMock = new Mock<ILaunchableCommand>();
-
-         var matchResults = MatchResultHelper.CreatePartial( commandMock.Object );
-         var commandCatalogMock = new Mock<ISearchCatalog>();
-         commandCatalogMock.Setup( cc => cc.Search( It.IsAny<string>() ) ).Returns( matchResults );
+         var matchResultMock = new Mock<IMatchResult>();
+         var matchResults = ArrayHelper.Create( matchResultMock.Object );
 
          var appServiceMock = new Mock<IAppService>();
          var inputControllerMock = new Mock<IInputController>();
+         inputControllerMock.SetupGet( ic => ic.MatchResults ).Returns( matchResults );
 
          // Act
 
@@ -456,7 +446,7 @@ namespace Runway.UnitTests.ViewModels
       {
          const string commandText = "copy";
          const string partialText = "c";
-         
+
          // Arrange
 
          var commandMock = new Mock<ILaunchableCommand>();
