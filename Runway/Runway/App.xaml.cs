@@ -25,7 +25,7 @@ namespace Runway
          var commandCatalog = new CommandCatalog();
          commandCatalog.Add( new CopyLaunchCommand() );
 
-         SimpleIoc.Default.Register<ICommandCatalog>( () => commandCatalog );
+         SimpleIoc.Default.Register<ISearchCatalog>( () => commandCatalog );
          SimpleIoc.Default.Register<IAppService>( () => new AppService() );
          SimpleIoc.Default.Register<IInputController, InputController>();
          SimpleIoc.Default.Register<IAppCatalog, AppCatalog>();

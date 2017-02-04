@@ -17,7 +17,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Arrange
 
-         var commandCatalogMock = new Mock<ICommandCatalog>();
+         var commandCatalogMock = new Mock<ISearchCatalog>();
          var appServiceMock = new Mock<IAppService>();
          var inputControllerMock = new Mock<IInputController>();
 
@@ -37,7 +37,7 @@ namespace Runway.UnitTests.ViewModels
       {
          // Arrange
 
-         var commandCatalogMock = new Mock<ICommandCatalog>();
+         var commandCatalogMock = new Mock<ISearchCatalog>();
          var appServiceMock = new Mock<IAppService>();
          var inputControllerMock = new Mock<IInputController>();
 
@@ -61,7 +61,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Arrange
 
-         var commandCatalogMock = new Mock<ICommandCatalog>();
+         var commandCatalogMock = new Mock<ISearchCatalog>();
          var appServiceMock = new Mock<IAppService>();
          var inputControllerMock = new Mock<IInputController>();
          inputControllerMock.SetupGet( ic => ic.InputText ).Returns( expectedInputString );
@@ -97,7 +97,7 @@ namespace Runway.UnitTests.ViewModels
          var matchResultMock = new Mock<IMatchResult>();
          var results = ArrayHelper.Create( matchResultMock.Object );
 
-         var commandCatalogMock = new Mock<ICommandCatalog>();
+         var commandCatalogMock = new Mock<ISearchCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( command ) ).Returns( results );
 
          var appServiceMock = new Mock<IAppService>();
@@ -120,7 +120,7 @@ namespace Runway.UnitTests.ViewModels
       {
          // Arrange
 
-         var commandCatalogMock = new Mock<ICommandCatalog>();
+         var commandCatalogMock = new Mock<ISearchCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( null ) ).Returns<ILaunchableCommand>( null );
 
          var appServiceMock = new Mock<IAppService>();
@@ -145,7 +145,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Arrange
 
-         var commandCatalogMock = new Mock<ICommandCatalog>();
+         var commandCatalogMock = new Mock<ISearchCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( command ) ).Returns( new MatchResult[0] );
 
          var appServiceMock = new Mock<IAppService>();
@@ -173,7 +173,7 @@ namespace Runway.UnitTests.ViewModels
          commandMock.SetupGet( c => c.CommandText ).Returns( command );
 
          var results = MatchResultHelper.Create( MatchType.Exact, commandMock.Object );
-         var commandCatalogMock = new Mock<ICommandCatalog>();
+         var commandCatalogMock = new Mock<ISearchCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( command ) ).Returns( results );
 
          var appServiceMock = new Mock<IAppService>();
@@ -204,7 +204,7 @@ namespace Runway.UnitTests.ViewModels
          commandMock.SetupGet( c => c.CommandText ).Returns( command );
 
          var results = MatchResultHelper.Create( MatchType.Exact, commandMock.Object );
-         var commandCatalogMock = new Mock<ICommandCatalog>();
+         var commandCatalogMock = new Mock<ISearchCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( command ) ).Returns( results );
 
          var appServiceMock = new Mock<IAppService>();
@@ -237,7 +237,7 @@ namespace Runway.UnitTests.ViewModels
          commandMock.SetupGet( c => c.CommandText ).Returns( commandName );
 
          var matchResults = MatchResultHelper.Create( MatchType.Exact, commandMock.Object );
-         var commandCatalogMock = new Mock<ICommandCatalog>();
+         var commandCatalogMock = new Mock<ISearchCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( currentCommand ) ).Returns( matchResults );
 
          var appServiceMock = new Mock<IAppService>();
@@ -264,7 +264,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Arrange
 
-         var commandCatalogMock = new Mock<ICommandCatalog>();
+         var commandCatalogMock = new Mock<ISearchCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( CommandCatalog.EmptySet );
 
          var appServiceMock = new Mock<IAppService>();
@@ -292,7 +292,7 @@ namespace Runway.UnitTests.ViewModels
       {
          // Arrange
 
-         var commandCatalogMock = new Mock<ICommandCatalog>();
+         var commandCatalogMock = new Mock<ISearchCatalog>();
          var appServiceMock = new Mock<IAppService>();
          var inputControllerMock = new Mock<IInputController>();
 
@@ -321,7 +321,7 @@ namespace Runway.UnitTests.ViewModels
          commandMock.SetupGet( lc => lc.CommandText ).Returns( inputText );
 
          var matchResults = MatchResultHelper.Create( MatchType.Exact, commandMock.Object );
-         var commandCatalogMock = new Mock<ICommandCatalog>();
+         var commandCatalogMock = new Mock<ISearchCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( commandPartialText ) ).Returns( matchResults );
 
          var appServiceMock = new Mock<IAppService>();
@@ -349,7 +349,7 @@ namespace Runway.UnitTests.ViewModels
          commandMock.SetupGet( lc => lc.CommandText ).Returns( inputText );
 
          var matchResults = MatchResultHelper.Create( MatchType.Exact, commandMock.Object );
-         var commandCatalogMock = new Mock<ICommandCatalog>();
+         var commandCatalogMock = new Mock<ISearchCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( inputText ) ).Returns( matchResults );
 
          var appServiceMock = new Mock<IAppService>();
@@ -371,7 +371,7 @@ namespace Runway.UnitTests.ViewModels
       {
          // Arrange
 
-         var commandCatalogMock = new Mock<ICommandCatalog>();
+         var commandCatalogMock = new Mock<ISearchCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( CommandCatalog.EmptySet );
 
          var appServiceMock = new Mock<IAppService>();
@@ -397,7 +397,7 @@ namespace Runway.UnitTests.ViewModels
          var matchResultMock2 = new Mock<IMatchResult>();
          var matchResults = ArrayHelper.Create( matchResultMock1.Object, matchResultMock2.Object );
 
-         var commandCatalogMock = new Mock<ICommandCatalog>();
+         var commandCatalogMock = new Mock<ISearchCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( matchResults );
 
          var appServiceMock = new Mock<IAppService>();
@@ -423,7 +423,7 @@ namespace Runway.UnitTests.ViewModels
          var commandMock = new Mock<ILaunchableCommand>();
 
          var matchResults = MatchResultHelper.CreatePartial( commandMock.Object );
-         var commandCatalogMock = new Mock<ICommandCatalog>();
+         var commandCatalogMock = new Mock<ISearchCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( matchResults );
 
          var appServiceMock = new Mock<IAppService>();
@@ -459,7 +459,7 @@ namespace Runway.UnitTests.ViewModels
          matchResultMock2.SetupGet( mr => mr.DisplayText ).Returns( commandText2 );
 
          var matchResults = ArrayHelper.Create( matchResultMock1.Object, matchResultMock2.Object );
-         var commandCatalogMock = new Mock<ICommandCatalog>();
+         var commandCatalogMock = new Mock<ISearchCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( matchResults );
 
          var appServiceMock = new Mock<IAppService>();
@@ -485,7 +485,7 @@ namespace Runway.UnitTests.ViewModels
          var commandMock = new Mock<ILaunchableCommand>();
 
          var matchResults = MatchResultHelper.CreatePartial( commandMock.Object );
-         var commandCatalogMock = new Mock<ICommandCatalog>();
+         var commandCatalogMock = new Mock<ISearchCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( matchResults );
 
          var appServiceMock = new Mock<IAppService>();
@@ -518,7 +518,7 @@ namespace Runway.UnitTests.ViewModels
          commandMock.SetupGet( c => c.CommandText ).Returns( commandText );
 
          var matchResults = MatchResultHelper.CreatePartial( commandMock.Object );
-         var commandCatalogMock = new Mock<ICommandCatalog>();
+         var commandCatalogMock = new Mock<ISearchCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( partialText ) ).Returns( matchResults );
 
          var appServiceMock = new Mock<IAppService>();
@@ -547,7 +547,7 @@ namespace Runway.UnitTests.ViewModels
          var commandMock = new Mock<ILaunchableCommand>();
 
          var matchResults = MatchResultHelper.Create( MatchType.Exact, commandMock.Object );
-         var commandCatalogMock = new Mock<ICommandCatalog>();
+         var commandCatalogMock = new Mock<ISearchCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( matchResults );
 
          var appServiceMock = new Mock<IAppService>();
@@ -572,7 +572,7 @@ namespace Runway.UnitTests.ViewModels
       {
          // Arrange
 
-         var commandCatalogMock = new Mock<ICommandCatalog>();
+         var commandCatalogMock = new Mock<ISearchCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( CommandCatalog.EmptySet );
 
          var appServiceMock = new Mock<IAppService>();
@@ -606,7 +606,7 @@ namespace Runway.UnitTests.ViewModels
          commandMock2.Setup( c => c.CommandText ).Returns( commandText2 );
 
          var matchResults = MatchResultHelper.CreatePartial( commandMock1.Object, commandMock2.Object );
-         var commandCatalogMock = new Mock<ICommandCatalog>();
+         var commandCatalogMock = new Mock<ISearchCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( matchResults );
 
          var appServiceMock = new Mock<IAppService>();

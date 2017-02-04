@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Runway
 {
-   public class CommandCatalog : ICommandCatalog
+   public class CommandCatalog : ISearchCatalog
    {
       private readonly List<ILaunchableCommand> _commandList = new List<ILaunchableCommand>();
 

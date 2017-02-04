@@ -1,6 +1,6 @@
 ﻿namespace Runway
 {
-   public interface ICommandCatalog
+   public interface ISearchCatalog
    {
       IMatchResult[] Resolve( string searchText );
    }

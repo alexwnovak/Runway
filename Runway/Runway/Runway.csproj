@@ -113,7 +113,7 @@
     </Compile>
     <Compile Include="CommandCatalog.cs" />
     <Compile Include="CopyLaunchCommand.cs" />
-    <Compile Include="ICommandCatalog.cs" />
+    <Compile Include="ISearchCatalog.cs" />
     <Compile Include="ILaunchableCommand.cs" />
     <Compile Include="LaunchableCommandBase.cs" />
     <Compile Include="Services\AppService.cs" />

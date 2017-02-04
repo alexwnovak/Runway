@@ -9,7 +9,7 @@ namespace Runway.ViewModels
 {
    public class MainViewModel : ViewModelBase
    {
-      private readonly ICommandCatalog _commandCatalog;
+      private readonly ISearchCatalog _commandCatalog;
       private readonly IInputController _inputController;
 
       public BulkObservableCollection<IMatchResult> Suggestions
@@ -104,7 +104,7 @@ namespace Runway.ViewModels
       public event EventHandler<MoveCaretEventArgs> MoveCaretRequested;
       public event EventHandler DismissRequested;
 
-      public MainViewModel( ICommandCatalog commandCatalog, IAppService appService, IInputController inputController )
+      public MainViewModel( ISearchCatalog commandCatalog, IAppService appService, IInputController inputController )
       {
          _commandCatalog = commandCatalog;
          _inputController = inputController;
