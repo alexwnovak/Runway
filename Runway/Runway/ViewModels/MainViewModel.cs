@@ -9,7 +9,6 @@ namespace Runway.ViewModels
 {
    public class MainViewModel : ViewModelBase
    {
-      private readonly ISearchCatalog _commandCatalog;
       private readonly IInputController _inputController;
 
       public BulkObservableCollection<IMatchResult> Suggestions
@@ -100,9 +99,8 @@ namespace Runway.ViewModels
       public event EventHandler<MoveCaretEventArgs> MoveCaretRequested;
       public event EventHandler DismissRequested;
 
-      public MainViewModel( ISearchCatalog commandCatalog, IAppService appService, IInputController inputController )
+      public MainViewModel( IAppService appService, IInputController inputController )
       {
-         _commandCatalog = commandCatalog;
          _inputController = inputController;
 
          SelectNextSuggestionCommand = new RelayCommand( OnSelectNextSuggestionCommand );
@@ -115,7 +113,7 @@ namespace Runway.ViewModels
 
       private void UpdateCommandText( string newText )
       {
-         CurrentMatchResults = _commandCatalog.Search( newText );
+         //CurrentMatchResults = _commandCatalog.Search( newText );
 
          Suggestions.Reset( CurrentMatchResults );
 
@@ -208,13 +206,13 @@ namespace Runway.ViewModels
          string commandText = CommandParser.ParseCommand( InputText );
          string argumentString = CommandParser.ParseArguments( InputText );
 
-         var results = _commandCatalog.Search( commandText );
+         //var results = _commandCatalog.Search( commandText );
 
-         if ( results.Length > 0 )
-         {
-            SelectedSuggestion.Activate( new object[] { argumentString } );
-            OnDismissRequested( this, EventArgs.Empty );
-         }
+         //if ( results.Length > 0 )
+         //{
+         //   SelectedSuggestion.Activate( new object[] { argumentString } );
+         //   OnDismissRequested( this, EventArgs.Empty );
+         //}
       }
    }
 }
