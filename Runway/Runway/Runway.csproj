@@ -96,6 +96,7 @@
     <Compile Include="Commands\Uninstall\UninstallStringParser.cs" />
     <Compile Include="IMatchResult.cs" />
     <Compile Include="Input\IInputController.cs" />
+    <Compile Include="Input\IInputFrame.cs" />
     <Compile Include="Input\InputController.cs" />
     <Compile Include="MatchResult.cs" />
     <Compile Include="MatchType.cs" />
