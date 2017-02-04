@@ -128,16 +128,16 @@ namespace Runway.ViewModels
 
       private void OnSelectNextSuggestionCommand()
       {
-         //if ( _selectedIndex + 1 >= CurrentMatchResults.Length )
-         //{
-         //   _selectedIndex = 0;
-         //}
-         //else
-         //{
-         //   _selectedIndex++;
-         //}
+         if ( _selectedIndex + 1 >= Suggestions.Count )
+         {
+            _selectedIndex = 0;
+         }
+         else
+         {
+            _selectedIndex++;
+         }
 
-         //SelectedSuggestion = CurrentMatchResults[_selectedIndex];
+         SelectedSuggestion = Suggestions[_selectedIndex];
 
          _inputText = SelectedSuggestion.DisplayText;
 

@@ -346,17 +346,15 @@ namespace Runway.UnitTests.ViewModels
          var matchResultMock2 = new Mock<IMatchResult>();
          var matchResults = ArrayHelper.Create( matchResultMock1.Object, matchResultMock2.Object );
 
-         var commandCatalogMock = new Mock<ISearchCatalog>();
-         commandCatalogMock.Setup( cc => cc.Search( It.IsAny<string>() ) ).Returns( matchResults );
-
          var appServiceMock = new Mock<IAppService>();
          var inputControllerMock = new Mock<IInputController>();
+         inputControllerMock.SetupGet( ic => ic.MatchResults ).Returns( matchResults );
 
          // Act
 
          var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object );
 
-         viewModel.InputText = "u";
+         viewModel.InputText = "doesntmatter";
          viewModel.SelectNextSuggestionCommand.Execute( null );
 
          // Assert
@@ -369,14 +367,12 @@ namespace Runway.UnitTests.ViewModels
       {
          // Arrange
 
-         var commandMock = new Mock<ILaunchableCommand>();
-
-         var matchResults = MatchResultHelper.CreatePartial( commandMock.Object );
-         var commandCatalogMock = new Mock<ISearchCatalog>();
-         commandCatalogMock.Setup( cc => cc.Search( It.IsAny<string>() ) ).Returns( matchResults );
+         var matchResultMock = new Mock<IMatchResult>();
+         var matchResults = ArrayHelper.Create( matchResultMock.Object );
 
          var appServiceMock = new Mock<IAppService>();
          var inputControllerMock = new Mock<IInputController>();
+         inputControllerMock.SetupGet( ic => ic.MatchResults ).Returns( matchResults );
 
          // Act
 
