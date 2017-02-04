@@ -28,6 +28,9 @@ namespace Runway.ViewModels
          {
             bool changed = Set( () => InputText, ref _inputText, value );
 
+            _inputController.InputText = value;
+            RaisePropertyChanged();
+
             if ( changed )
             {
                UpdateCommandText( value );

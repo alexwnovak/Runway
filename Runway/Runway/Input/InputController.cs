@@ -2,5 +2,10 @@
 {
    public class InputController : IInputController
    {
+      public string InputText
+      {
+         get;
+         set;
+      }
    }
 }
