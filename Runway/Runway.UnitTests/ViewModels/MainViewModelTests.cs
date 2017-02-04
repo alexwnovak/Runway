@@ -55,6 +55,29 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
+      public void InputText_ReadsInputText_InputTextComesFromInputController()
+      {
+         const string expectedInputString = "input text";
+
+         // Arrange
+
+         var commandCatalogMock = new Mock<ICommandCatalog>();
+         var appServiceMock = new Mock<IAppService>();
+         var inputControllerMock = new Mock<IInputController>();
+         inputControllerMock.SetupGet( ic => ic.InputText ).Returns( expectedInputString );
+
+         // Act
+
+         var viewModel = new MainViewModel( commandCatalogMock.Object, appServiceMock.Object, inputControllerMock.Object );
+
+         string inputText = viewModel.InputText;
+
+         // Assert
+
+         inputText.Should().Be( expectedInputString );
+      }
+
+      [Fact]
       public void CurrentMatchResults_DefaultState_HasNoMatchResults()
       {
          var appServiceMock = new Mock<IAppService>();

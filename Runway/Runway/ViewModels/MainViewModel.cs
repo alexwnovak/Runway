@@ -22,7 +22,7 @@ namespace Runway.ViewModels
       {
          get
          {
-            return _inputText;
+            return _inputController.InputText;
          }
          set
          {
