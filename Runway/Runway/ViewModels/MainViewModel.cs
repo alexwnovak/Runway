@@ -26,10 +26,12 @@ namespace Runway.ViewModels
          set
          {
             _inputController.InputText = value;
-
             RaisePropertyChanged();
 
-            Suggestions.Reset( _inputController.MatchResults  );
+            Suggestions.Reset( _inputController.MatchResults );
+
+            _selectedIndex = 0;
+            SelectedSuggestion = Suggestions[0];
          }
       }
 

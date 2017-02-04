@@ -75,6 +75,30 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
+      public void InputText_RetrievesMatches_SetsSelectedSuggestionToFirstResult()
+      {
+         // Arrange
+
+         var appServiceMock = new Mock<IAppService>();
+
+         var matchResultMock = new Mock<IMatchResult>();
+         var matchResults = ArrayHelper.Create( matchResultMock.Object );
+
+         var inputControllerMock = new Mock<IInputController>();
+         inputControllerMock.SetupGet( ic => ic.MatchResults ).Returns( matchResults );
+
+         // Act
+
+         var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object );
+
+         viewModel.InputText = "doesntmatter";
+
+         // Assert
+
+         viewModel.SelectedSuggestion.Should().Be( matchResultMock.Object );
+      }
+
+      [Fact]
       public void CurrentMatchResults_DefaultState_HasNoMatchResults()
       {
          var appServiceMock = new Mock<IAppService>();
