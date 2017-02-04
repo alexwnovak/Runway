@@ -12,7 +12,7 @@ namespace Runway
 
       public void Add( ILaunchableCommand command ) => _commandList.Add( command );
 
-      public IMatchResult[] Resolve( string searchText )
+      public IMatchResult[] Search( string searchText )
       {
          if ( string.IsNullOrEmpty( searchText ) )
          {

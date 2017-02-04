@@ -119,7 +119,7 @@ namespace Runway.ViewModels
 
       private void UpdateCommandText( string newText )
       {
-         CurrentMatchResults = _commandCatalog.Resolve( newText );
+         CurrentMatchResults = _commandCatalog.Search( newText );
 
          Suggestions.Reset( CurrentMatchResults );
 
@@ -212,7 +212,7 @@ namespace Runway.ViewModels
          string commandText = CommandParser.ParseCommand( InputText );
          string argumentString = CommandParser.ParseArguments( InputText );
 
-         var results = _commandCatalog.Resolve( commandText );
+         var results = _commandCatalog.Search( commandText );
 
          if ( results.Length > 0 )
          {

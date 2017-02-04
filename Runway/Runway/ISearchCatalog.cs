@@ -2,6 +2,6 @@
 {
    public interface ISearchCatalog
    {
-      IMatchResult[] Resolve( string searchText );
+      IMatchResult[] Search( string searchText );
    }
 }
