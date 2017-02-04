@@ -60,12 +60,6 @@ namespace Runway.ViewModels
          }
       }
 
-      public IMatchResult[] CurrentMatchResults
-      {
-         get;
-         private set;
-      } = CommandCatalog.EmptySet;
-
       public ICommand SelectNextSuggestionCommand
       {
          get;
@@ -115,13 +109,13 @@ namespace Runway.ViewModels
       {
          //CurrentMatchResults = _commandCatalog.Search( newText );
 
-         Suggestions.Reset( CurrentMatchResults );
+         //Suggestions.Reset( CurrentMatchResults );
 
-         if ( CurrentMatchResults.Length > 0 )
-         {
-            _selectedIndex = 0;
-            SelectedSuggestion = CurrentMatchResults[_selectedIndex];
-         }
+         //if ( CurrentMatchResults.Length > 0 )
+         //{
+         //   _selectedIndex = 0;
+         //   SelectedSuggestion = CurrentMatchResults[_selectedIndex];
+         //}
 
          RaisePropertyChanged( () => PreviewCommandText );
       }
@@ -134,16 +128,16 @@ namespace Runway.ViewModels
 
       private void OnSelectNextSuggestionCommand()
       {
-         if ( _selectedIndex + 1 >= CurrentMatchResults.Length )
-         {
-            _selectedIndex = 0;
-         }
-         else
-         {
-            _selectedIndex++;
-         }
+         //if ( _selectedIndex + 1 >= CurrentMatchResults.Length )
+         //{
+         //   _selectedIndex = 0;
+         //}
+         //else
+         //{
+         //   _selectedIndex++;
+         //}
 
-         SelectedSuggestion = CurrentMatchResults[_selectedIndex];
+         //SelectedSuggestion = CurrentMatchResults[_selectedIndex];
 
          _inputText = SelectedSuggestion.DisplayText;
 
@@ -157,14 +151,14 @@ namespace Runway.ViewModels
       {
          if ( _selectedIndex - 1 < 0 )
          {
-            _selectedIndex = CurrentMatchResults.Length - 1;
+            //_selectedIndex = CurrentMatchResults.Length - 1;
          }
          else
          {
             _selectedIndex--;
          }
 
-         SelectedSuggestion = CurrentMatchResults[_selectedIndex];
+         //SelectedSuggestion = CurrentMatchResults[_selectedIndex];
 
          _inputText = SelectedSuggestion.DisplayText;
 

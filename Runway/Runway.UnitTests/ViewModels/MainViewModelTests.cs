@@ -166,44 +166,6 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
-      public void CurrentMatchResults_DefaultState_HasNoMatchResults()
-      {
-         var appServiceMock = new Mock<IAppService>();
-
-         var viewModel = new MainViewModel( appServiceMock.Object, null );
-
-         viewModel.CurrentMatchResults.Should().BeSameAs( CommandCatalog.EmptySet );
-      }
-
-      [Fact]
-      public void CurrentMatchResults_MatchIsFound_MatchIsCached()
-      {
-         const string command = "x";
-
-         // Arrange
-
-         var matchResultMock = new Mock<IMatchResult>();
-         var results = ArrayHelper.Create( matchResultMock.Object );
-
-         var commandCatalogMock = new Mock<ISearchCatalog>();
-         commandCatalogMock.Setup( cc => cc.Search( command ) ).Returns( results );
-
-         var appServiceMock = new Mock<IAppService>();
-         var inputControllerMock = new Mock<IInputController>();
-
-         // Act
-
-         var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object );
-
-         viewModel.InputText = command;
-
-         // Assert
-
-         viewModel.CurrentMatchResults.Should().HaveCount( 1 );
-         viewModel.CurrentMatchResults[0].Should().Be( matchResultMock.Object );
-      }
-
-      [Fact]
       public void PreviewCommandText_CommandTextIsNull_PreviewTextIsNull()
       {
          // Arrange
