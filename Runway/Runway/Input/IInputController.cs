@@ -12,5 +12,10 @@
       {
          get;
       }
+
+      IMatchResult[] MatchResults
+      {
+         get;
+      }
    }
 }
