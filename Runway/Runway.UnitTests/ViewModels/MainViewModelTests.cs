@@ -374,34 +374,6 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
-      public void InputText_MatchesACommand_MarksTheFirstResultAsSelected()
-      {
-         const string inputText = "copy";
-
-         // Arrange
-
-         var commandMock = new Mock<ILaunchableCommand>();
-         commandMock.SetupGet( lc => lc.CommandText ).Returns( inputText );
-
-         var matchResults = MatchResultHelper.Create( MatchType.Exact, commandMock.Object );
-         var commandCatalogMock = new Mock<ISearchCatalog>();
-         commandCatalogMock.Setup( cc => cc.Search( inputText ) ).Returns( matchResults );
-
-         var appServiceMock = new Mock<IAppService>();
-         var inputControllerMock = new Mock<IInputController>();
-
-         // Act
-
-         var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object );
-
-         viewModel.InputText = inputText;
-
-         // Assert
-
-         viewModel.SelectedSuggestion.Should().Be( matchResults[0] );
-      }
-
-      [Fact]
       public void SelectNextSuggestionCommand_FirstCommandIsSelected_SecondCommandBecomesSelected()
       {
          // Arrange
