@@ -26,15 +26,11 @@ namespace Runway.ViewModels
          }
          set
          {
-            bool changed = Set( () => InputText, ref _inputText, value );
-
             _inputController.InputText = value;
+
             RaisePropertyChanged();
 
-            if ( changed )
-            {
-               UpdateCommandText( value );
-            }
+            Suggestions.Reset( _inputController.MatchResults  );
          }
       }
 
@@ -42,7 +38,7 @@ namespace Runway.ViewModels
       {
          get
          {
-            if ( CurrentMatchResults.Length > 0 )
+            if ( CurrentMatchResults?.Length > 0 )
             {
                return CurrentMatchResults[_selectedIndex].DisplayText;
             }
