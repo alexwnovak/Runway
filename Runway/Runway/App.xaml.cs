@@ -4,6 +4,7 @@ using GalaSoft.MvvmLight.Ioc;
 using NHotkey;
 using NHotkey.Wpf;
 using Runway.Commands.Uninstall;
+using Runway.Input;
 using Runway.Services;
 
 namespace Runway
@@ -26,6 +27,7 @@ namespace Runway
 
          SimpleIoc.Default.Register<ICommandCatalog>( () => commandCatalog );
          SimpleIoc.Default.Register<IAppService>( () => new AppService() );
+         SimpleIoc.Default.Register<IInputController, InputController>();
          SimpleIoc.Default.Register<IAppCatalog, AppCatalog>();
          SimpleIoc.Default.Register<IRegistry, RegistryAdapter>();
          SimpleIoc.Default.Register<IProcess, ProcessAdapter>();
