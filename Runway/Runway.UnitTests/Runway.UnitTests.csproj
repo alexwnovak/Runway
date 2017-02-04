@@ -110,6 +110,7 @@
     <Compile Include="Helpers\ArrayHelper.cs" />
     <Compile Include="Helpers\MatchResultHelper.cs" />
     <Compile Include="Input\InputControllerTests.cs" />
+    <Compile Include="Input\InputFrameTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\BulkObservableCollectionTests.cs" />
     <Compile Include="ViewModels\CommandParserTests.cs" />
