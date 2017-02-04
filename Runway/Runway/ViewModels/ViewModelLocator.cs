@@ -11,6 +11,6 @@ namespace Runway.ViewModels
          SimpleIoc.Default.Register<MainViewModel>();
       }
 
-      public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
+      public MainViewModel Main => SimpleIoc.Default.GetInstance<MainViewModel>();
    }
 }
