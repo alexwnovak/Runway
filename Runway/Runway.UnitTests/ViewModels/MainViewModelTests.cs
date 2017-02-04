@@ -12,7 +12,9 @@ namespace Runway.UnitTests.ViewModels
       [Fact]
       public void CurrentMatchResults_DefaultState_HasNoMatchResults()
       {
-         var viewModel = new MainViewModel( null, null, null );
+         var appServiceMock = new Mock<IAppService>();
+
+         var viewModel = new MainViewModel( null, appServiceMock.Object, null );
 
          viewModel.CurrentMatchResults.Should().BeSameAs( CommandCatalog.EmptySet );
       }
@@ -30,9 +32,11 @@ namespace Runway.UnitTests.ViewModels
          var commandCatalogMock = new Mock<ICommandCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( command ) ).Returns( results );
 
+         var appServiceMock = new Mock<IAppService>();
+
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null );
+         var viewModel = new MainViewModel( commandCatalogMock.Object, appServiceMock.Object, null );
 
          viewModel.InputText = command;
 
@@ -50,9 +54,11 @@ namespace Runway.UnitTests.ViewModels
          var commandCatalogMock = new Mock<ICommandCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( null ) ).Returns<ILaunchableCommand>( null );
 
+         var appServiceMock = new Mock<IAppService>();
+
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null )
+         var viewModel = new MainViewModel( commandCatalogMock.Object, appServiceMock.Object, null )
          {
             InputText = null
          };
@@ -72,9 +78,11 @@ namespace Runway.UnitTests.ViewModels
          var commandCatalogMock = new Mock<ICommandCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( command ) ).Returns( new MatchResult[0] );
 
+         var appServiceMock = new Mock<IAppService>();
+
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null );
+         var viewModel = new MainViewModel( commandCatalogMock.Object, appServiceMock.Object, null );
 
          viewModel.InputText = command;
 
@@ -97,9 +105,11 @@ namespace Runway.UnitTests.ViewModels
          var commandCatalogMock = new Mock<ICommandCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( command ) ).Returns( results );
 
+         var appServiceMock = new Mock<IAppService>();
+
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null );
+         var viewModel = new MainViewModel( commandCatalogMock.Object, appServiceMock.Object, null );
          viewModel.InputText = command;
 
          viewModel.MonitorEvents();
@@ -125,9 +135,11 @@ namespace Runway.UnitTests.ViewModels
          var commandCatalogMock = new Mock<ICommandCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( command ) ).Returns( results );
 
+         var appServiceMock = new Mock<IAppService>();
+
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null );
+         var viewModel = new MainViewModel( commandCatalogMock.Object, appServiceMock.Object, null );
          viewModel.InputText = command;
 
          viewModel.MonitorEvents();
@@ -155,9 +167,11 @@ namespace Runway.UnitTests.ViewModels
          var commandCatalogMock = new Mock<ICommandCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( currentCommand ) ).Returns( matchResults );
 
+         var appServiceMock = new Mock<IAppService>();
+
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null )
+         var viewModel = new MainViewModel( commandCatalogMock.Object, appServiceMock.Object, null )
          {
             InputText = currentCommand
          };
@@ -179,9 +193,11 @@ namespace Runway.UnitTests.ViewModels
          var commandCatalogMock = new Mock<ICommandCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( CommandCatalog.EmptySet );
 
+         var appServiceMock = new Mock<IAppService>();
+
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null )
+         var viewModel = new MainViewModel( commandCatalogMock.Object, appServiceMock.Object, null )
          {
             InputText = currentCommand
          };
@@ -202,10 +218,11 @@ namespace Runway.UnitTests.ViewModels
          // Arrange
 
          var commandCatalogMock = new Mock<ICommandCatalog>();
+         var appServiceMock = new Mock<IAppService>();
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null );
+         var viewModel = new MainViewModel( commandCatalogMock.Object, appServiceMock.Object, null );
 
          viewModel.MonitorEvents();
 
@@ -231,9 +248,11 @@ namespace Runway.UnitTests.ViewModels
          var commandCatalogMock = new Mock<ICommandCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( commandPartialText ) ).Returns( matchResults );
 
+         var appServiceMock = new Mock<IAppService>();
+
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null );
+         var viewModel = new MainViewModel( commandCatalogMock.Object, appServiceMock.Object, null );
 
          viewModel.InputText = commandPartialText;
 
@@ -256,9 +275,11 @@ namespace Runway.UnitTests.ViewModels
          var commandCatalogMock = new Mock<ICommandCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( inputText ) ).Returns( matchResults );
 
+         var appServiceMock = new Mock<IAppService>();
+
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null );
+         var viewModel = new MainViewModel( commandCatalogMock.Object, appServiceMock.Object, null );
 
          viewModel.InputText = inputText;
 
@@ -275,9 +296,11 @@ namespace Runway.UnitTests.ViewModels
          var commandCatalogMock = new Mock<ICommandCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( CommandCatalog.EmptySet );
 
+         var appServiceMock = new Mock<IAppService>();
+
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null );
+         var viewModel = new MainViewModel( commandCatalogMock.Object, appServiceMock.Object, null );
 
          viewModel.InputText = "doesnotmatter";
 
@@ -298,9 +321,11 @@ namespace Runway.UnitTests.ViewModels
          var commandCatalogMock = new Mock<ICommandCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( matchResults );
 
+         var appServiceMock = new Mock<IAppService>();
+
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null );
+         var viewModel = new MainViewModel( commandCatalogMock.Object, appServiceMock.Object, null );
 
          viewModel.InputText = "u";
          viewModel.SelectNextSuggestionCommand.Execute( null );
@@ -321,9 +346,11 @@ namespace Runway.UnitTests.ViewModels
          var commandCatalogMock = new Mock<ICommandCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( matchResults );
 
+         var appServiceMock = new Mock<IAppService>();
+
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null );
+         var viewModel = new MainViewModel( commandCatalogMock.Object, appServiceMock.Object, null );
 
          viewModel.MonitorEvents();
 
@@ -354,9 +381,11 @@ namespace Runway.UnitTests.ViewModels
          var commandCatalogMock = new Mock<ICommandCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( matchResults );
 
+         var appServiceMock = new Mock<IAppService>();
+
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null );
+         var viewModel = new MainViewModel( commandCatalogMock.Object, appServiceMock.Object, null );
 
          viewModel.InputText = "u";
          viewModel.SelectPreviousSuggestionCommand.Execute( null );
@@ -377,9 +406,11 @@ namespace Runway.UnitTests.ViewModels
          var commandCatalogMock = new Mock<ICommandCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( matchResults );
 
+         var appServiceMock = new Mock<IAppService>();
+
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null );
+         var viewModel = new MainViewModel( commandCatalogMock.Object, appServiceMock.Object, null );
 
          viewModel.MonitorEvents();
 
@@ -407,9 +438,11 @@ namespace Runway.UnitTests.ViewModels
          var commandCatalogMock = new Mock<ICommandCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( partialText ) ).Returns( matchResults );
 
+         var appServiceMock = new Mock<IAppService>();
+
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null );
+         var viewModel = new MainViewModel( commandCatalogMock.Object, appServiceMock.Object, null );
 
          viewModel.MonitorEvents();
 
@@ -433,9 +466,11 @@ namespace Runway.UnitTests.ViewModels
          var commandCatalogMock = new Mock<ICommandCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( matchResults );
 
+         var appServiceMock = new Mock<IAppService>();
+
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null );
+         var viewModel = new MainViewModel( commandCatalogMock.Object, appServiceMock.Object, null );
          viewModel.InputText = "doesnotmatter";
 
          viewModel.MonitorEvents();
@@ -455,9 +490,11 @@ namespace Runway.UnitTests.ViewModels
          var commandCatalogMock = new Mock<ICommandCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( CommandCatalog.EmptySet );
 
+         var appServiceMock = new Mock<IAppService>();
+
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null );
+         var viewModel = new MainViewModel( commandCatalogMock.Object, appServiceMock.Object, null );
 
          viewModel.MonitorEvents();
 
@@ -486,9 +523,11 @@ namespace Runway.UnitTests.ViewModels
          var commandCatalogMock = new Mock<ICommandCatalog>();
          commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( matchResults );
 
+         var appServiceMock = new Mock<IAppService>();
+
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null );
+         var viewModel = new MainViewModel( commandCatalogMock.Object, appServiceMock.Object, null );
 
          viewModel.InputText = "u";
          viewModel.SelectPreviousSuggestionCommand.Execute( null );

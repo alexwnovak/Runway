@@ -10,7 +10,6 @@ namespace Runway.ViewModels
    public class MainViewModel : ViewModelBase
    {
       private readonly ICommandCatalog _commandCatalog;
-      private readonly IAppService _appService;
       private readonly IInputController _inputController;
 
       public BulkObservableCollection<IMatchResult> Suggestions
@@ -105,7 +104,6 @@ namespace Runway.ViewModels
       public MainViewModel( ICommandCatalog commandCatalog, IAppService appService, IInputController inputController )
       {
          _commandCatalog = commandCatalog;
-         _appService = appService;
          _inputController = inputController;
 
          SelectNextSuggestionCommand = new RelayCommand( OnSelectNextSuggestionCommand );
@@ -113,7 +111,7 @@ namespace Runway.ViewModels
          CompleteSuggestionCommand = new RelayCommand( OnCompleteSuggestionCommand );
          SpacePressedCommand = new RelayCommand( OnSpacePressedCommand );
          LaunchCommand = new RelayCommand( OnLaunchCommand );
-         ExitCommand = new RelayCommand( () => _appService.Exit() );
+         ExitCommand = new RelayCommand( appService.Exit );
       }
 
       private void UpdateCommandText( string newText )
