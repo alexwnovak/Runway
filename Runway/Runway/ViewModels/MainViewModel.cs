@@ -43,18 +43,7 @@ namespace Runway.ViewModels
          }
       }
 
-      public string PreviewCommandText
-      {
-         get
-         {
-            if ( CurrentMatchResults?.Length > 0 )
-            {
-               return CurrentMatchResults[_selectedIndex].DisplayText;
-            }
-
-            return null;
-         }
-      }
+      public string PreviewCommandText => SelectedSuggestion?.DisplayText;
 
       private int _selectedIndex;
       private IMatchResult _selectedSuggestion;
@@ -67,6 +56,7 @@ namespace Runway.ViewModels
          set
          {
             Set( () => SelectedSuggestion, ref _selectedSuggestion, value );
+            RaisePropertyChanged( () => PreviewCommandText );
          }
       }
 

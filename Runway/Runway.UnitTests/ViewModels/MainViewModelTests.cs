@@ -118,6 +118,54 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
+      public void InputText_SetsCommandText_RaisesPropertyChangeForPreview()
+      {
+         // Arrange
+
+         var appServiceMock = new Mock<IAppService>();
+         var inputControllerMock = new Mock<IInputController>();
+
+         // Act
+
+         var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object );
+
+         viewModel.MonitorEvents();
+
+         viewModel.InputText = "doesntmatter";
+
+         // Assert
+
+         viewModel.ShouldRaisePropertyChangeFor( vm => vm.PreviewCommandText );
+      }
+
+      [Fact]
+      public void InputText_CommandIsFoundForPrefix_PreviewTextIsSetCorrectly()
+      {
+         const string inputText = "command";
+
+         // Arrange
+
+         var appServiceMock = new Mock<IAppService>();
+
+         var matchResultMock = new Mock<IMatchResult>();
+         matchResultMock.SetupGet( mr => mr.DisplayText ).Returns( inputText );
+         var matchResults = ArrayHelper.Create( matchResultMock.Object );
+
+         var inputControllerMock = new Mock<IInputController>();
+         inputControllerMock.SetupGet( ic => ic.MatchResults ).Returns( matchResults );
+
+         // Act
+
+         var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object );
+
+         viewModel.InputText = inputText;
+
+         // Assert
+
+         viewModel.PreviewCommandText.Should().Be( inputText );
+      }
+
+      [Fact]
       public void CurrentMatchResults_DefaultState_HasNoMatchResults()
       {
          var appServiceMock = new Mock<IAppService>();
@@ -325,52 +373,6 @@ namespace Runway.UnitTests.ViewModels
 
          viewModel.InputText.Should().Be( currentCommand );
          viewModel.ShouldNotRaise( nameof( viewModel.MoveCaretRequested ) );
-      }
-
-      [Fact]
-      public void InputText_SetsCommandText_RaisesPropertyChangeForPreview()
-      {
-         // Arrange
-
-         var appServiceMock = new Mock<IAppService>();
-         var inputControllerMock = new Mock<IInputController>();
-
-         // Act
-
-         var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object );
-
-         viewModel.MonitorEvents();
-
-         viewModel.InputText = "doesntmatter";
-
-         // Assert
-
-         viewModel.ShouldRaisePropertyChangeFor( vm => vm.PreviewCommandText );
-      }
-
-      [Fact]
-      public void InputText_CommandIsFoundForPrefix_PreviewTextIsSetCorrectly()
-      {
-         const string commandPartialText = "co";
-         const string inputText = "command";
-
-         // Arrange
-
-         var commandMock = new Mock<ILaunchableCommand>();
-         commandMock.SetupGet( lc => lc.CommandText ).Returns( inputText );
-
-         var appServiceMock = new Mock<IAppService>();
-         var inputControllerMock = new Mock<IInputController>();
-
-         // Act
-
-         var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object );
-
-         viewModel.InputText = commandPartialText;
-
-         // Assert
-
-         viewModel.PreviewCommandText.Should().Be( inputText );
       }
 
       [Fact]
