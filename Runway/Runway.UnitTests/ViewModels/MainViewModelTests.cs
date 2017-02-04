@@ -99,6 +99,25 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
+      public void InputText_DoesNotMatchAnything_NoMatchIsSelected()
+      {
+         // Arrange
+
+         var appServiceMock = new Mock<IAppService>();
+         var inputControllerMock = new Mock<IInputController>();
+
+         // Act
+
+         var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object );
+
+         viewModel.InputText = "doesnotmatter";
+
+         // Assert
+
+         viewModel.SelectedSuggestion.Should().Be( null );
+      }
+
+      [Fact]
       public void CurrentMatchResults_DefaultState_HasNoMatchResults()
       {
          var appServiceMock = new Mock<IAppService>();
@@ -380,28 +399,6 @@ namespace Runway.UnitTests.ViewModels
          // Assert
 
          viewModel.SelectedSuggestion.Should().Be( matchResults[0] );
-      }
-
-      [Fact]
-      public void InputText_DoesNotMatchAnything_NoMatchIsSelected()
-      {
-         // Arrange
-
-         var commandCatalogMock = new Mock<ISearchCatalog>();
-         commandCatalogMock.Setup( cc => cc.Search( It.IsAny<string>() ) ).Returns( CommandCatalog.EmptySet );
-
-         var appServiceMock = new Mock<IAppService>();
-         var inputControllerMock = new Mock<IInputController>();
-
-         // Act
-
-         var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object );
-
-         viewModel.InputText = "doesnotmatter";
-
-         // Assert
-
-         viewModel.SelectedSuggestion.Should().Be( null );
       }
 
       [Fact]

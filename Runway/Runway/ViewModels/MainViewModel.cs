@@ -30,8 +30,16 @@ namespace Runway.ViewModels
 
             Suggestions.Reset( _inputController.MatchResults );
 
-            _selectedIndex = 0;
-            SelectedSuggestion = Suggestions[0];
+            if ( _inputController.MatchResults.Length == 0 )
+            {
+               _selectedIndex = -1;
+               SelectedSuggestion = null;
+            }
+            else
+            {
+               _selectedIndex = 0;
+               SelectedSuggestion = Suggestions[0];
+            }
          }
       }
 
