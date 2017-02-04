@@ -12,7 +12,7 @@ namespace Runway.UnitTests.ViewModels
       [Fact]
       public void CurrentMatchResults_DefaultState_HasNoMatchResults()
       {
-         var viewModel = new MainViewModel( null, null );
+         var viewModel = new MainViewModel( null, null, null );
 
          viewModel.CurrentMatchResults.Should().BeSameAs( CommandCatalog.EmptySet );
       }
@@ -32,7 +32,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null );
 
          viewModel.InputText = command;
 
@@ -52,7 +52,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null )
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null )
          {
             InputText = null
          };
@@ -74,7 +74,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null );
 
          viewModel.InputText = command;
 
@@ -99,7 +99,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null );
          viewModel.InputText = command;
 
          viewModel.MonitorEvents();
@@ -127,7 +127,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null );
          viewModel.InputText = command;
 
          viewModel.MonitorEvents();
@@ -157,7 +157,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null )
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null )
          {
             InputText = currentCommand
          };
@@ -181,7 +181,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null )
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null )
          {
             InputText = currentCommand
          };
@@ -205,7 +205,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null );
 
          viewModel.MonitorEvents();
 
@@ -233,7 +233,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null );
 
          viewModel.InputText = commandPartialText;
 
@@ -258,7 +258,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null );
 
          viewModel.InputText = inputText;
 
@@ -277,7 +277,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null );
 
          viewModel.InputText = "doesnotmatter";
 
@@ -300,7 +300,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null );
 
          viewModel.InputText = "u";
          viewModel.SelectNextSuggestionCommand.Execute( null );
@@ -323,7 +323,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null );
 
          viewModel.MonitorEvents();
 
@@ -356,7 +356,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null );
 
          viewModel.InputText = "u";
          viewModel.SelectPreviousSuggestionCommand.Execute( null );
@@ -379,7 +379,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null );
 
          viewModel.MonitorEvents();
 
@@ -409,7 +409,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null );
 
          viewModel.MonitorEvents();
 
@@ -435,7 +435,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null );
          viewModel.InputText = "doesnotmatter";
 
          viewModel.MonitorEvents();
@@ -457,7 +457,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null );
 
          viewModel.MonitorEvents();
 
@@ -488,7 +488,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+         var viewModel = new MainViewModel( commandCatalogMock.Object, null, null );
 
          viewModel.InputText = "u";
          viewModel.SelectPreviousSuggestionCommand.Execute( null );
@@ -508,7 +508,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Act
 
-         var viewModel = new MainViewModel( null, appService.Object );
+         var viewModel = new MainViewModel( null, appService.Object, null );
 
          viewModel.ExitCommand.Execute( null );
 

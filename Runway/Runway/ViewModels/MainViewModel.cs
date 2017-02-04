@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using Runway.Input;
 using Runway.Services;
 
 namespace Runway.ViewModels
@@ -10,6 +11,7 @@ namespace Runway.ViewModels
    {
       private readonly ICommandCatalog _commandCatalog;
       private readonly IAppService _appService;
+      private readonly IInputController _inputController;
 
       public BulkObservableCollection<IMatchResult> Suggestions
       {
@@ -100,10 +102,11 @@ namespace Runway.ViewModels
       public event EventHandler<MoveCaretEventArgs> MoveCaretRequested;
       public event EventHandler DismissRequested;
 
-      public MainViewModel( ICommandCatalog commandCatalog, IAppService appService )
+      public MainViewModel( ICommandCatalog commandCatalog, IAppService appService, IInputController inputController )
       {
          _commandCatalog = commandCatalog;
          _appService = appService;
+         _inputController = inputController;
 
          SelectNextSuggestionCommand = new RelayCommand( OnSelectNextSuggestionCommand );
          SelectPreviousSuggestionCommand = new RelayCommand( OnSelectPreviousSuggestionCommand );
