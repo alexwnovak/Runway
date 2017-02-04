@@ -7,5 +7,10 @@
          get;
          set;
       }
+
+      IInputFrame CurrentInputFrame
+      {
+         get;
+      }
    }
 }
