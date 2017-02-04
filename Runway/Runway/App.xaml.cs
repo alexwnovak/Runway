@@ -27,7 +27,10 @@ namespace Runway
 
          SimpleIoc.Default.Register<ISearchCatalog>( () => commandCatalog );
          SimpleIoc.Default.Register<IAppService>( () => new AppService() );
-         SimpleIoc.Default.Register<IInputController, InputController>();
+
+         var inputController = new InputController( new InputFrame( commandCatalog ) );
+         SimpleIoc.Default.Register<IInputController>( () => inputController );
+
          SimpleIoc.Default.Register<IAppCatalog, AppCatalog>();
          SimpleIoc.Default.Register<IRegistry, RegistryAdapter>();
          SimpleIoc.Default.Register<IProcess, ProcessAdapter>();
