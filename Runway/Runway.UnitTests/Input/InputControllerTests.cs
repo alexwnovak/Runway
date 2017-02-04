@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System;
+using Xunit;
 using FluentAssertions;
 using Moq;
 using Runway.Input;
@@ -19,6 +20,14 @@ namespace Runway.UnitTests.Input
          var inputController = new InputController( inputFrameMock.Object );
 
          inputController.CurrentInputFrame.Should().Be( inputFrameMock.Object );
+      }
+
+      [Fact]
+      public void Constructor_InitialFrameIsNull_ThrowsArgumentNullException()
+      {
+         Action constructor = () => new InputController( null );
+
+         constructor.ShouldThrow<ArgumentNullException>();
       }
    }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Runway.Input
 {
@@ -16,6 +17,11 @@ namespace Runway.Input
 
       public InputController( IInputFrame initialInputFrame )
       {
+         if ( initialInputFrame == null )
+         {
+            throw new ArgumentNullException( nameof( initialInputFrame ) );
+         }
+
          _inputFrames.Push( initialInputFrame );
       }
    }
