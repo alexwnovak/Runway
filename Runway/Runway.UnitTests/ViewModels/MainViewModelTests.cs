@@ -242,26 +242,25 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
-      public void CompleteSuggestionCommand_HappyPath_RaisesMoveCaretRequested()
+      public void CompleteSuggestionCommand_CompletesTheSelectedSuggestion_RaisesMoveCaretRequested()
       {
-         const string command = "SomeCommand";
+         const string command = "somecommand";
 
          // Arrange
 
-         var commandMock = new Mock<ILaunchableCommand>();
-         commandMock.SetupGet( c => c.CommandText ).Returns( command );
-
-         var results = MatchResultHelper.Create( MatchType.Exact, commandMock.Object );
-         var commandCatalogMock = new Mock<ISearchCatalog>();
-         commandCatalogMock.Setup( cc => cc.Search( command ) ).Returns( results );
+         var matchResultMock = new Mock<IMatchResult>();
+         matchResultMock.SetupGet( mr => mr.DisplayText ).Returns( command );
+         var results = ArrayHelper.Create( matchResultMock.Object );
 
          var appServiceMock = new Mock<IAppService>();
          var inputControllerMock = new Mock<IInputController>();
+         inputControllerMock.SetupAllProperties();
+         inputControllerMock.Setup( ic => ic.MatchResults ).Returns( results );
 
          // Act
 
          var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object );
-         viewModel.InputText = command;
+         viewModel.InputText = "s";
 
          viewModel.MonitorEvents();
 

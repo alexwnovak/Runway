@@ -156,10 +156,6 @@ namespace Runway.ViewModels
          }
 
          InputText = SelectedSuggestion.DisplayText;
-
-         RaisePropertyChanged( () => InputText );
-         RaisePropertyChanged( () => PreviewCommandText );
-
          OnMoveCaretRequested( this, new MoveCaretEventArgs( CaretPosition.End ) );
       }
 
