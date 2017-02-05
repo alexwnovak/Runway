@@ -155,6 +155,8 @@ namespace Runway.ViewModels
             return;
          }
 
+         InputText = SelectedSuggestion.DisplayText;
+
          RaisePropertyChanged( () => InputText );
          RaisePropertyChanged( () => PreviewCommandText );
 
