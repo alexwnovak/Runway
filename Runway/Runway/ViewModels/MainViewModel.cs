@@ -150,7 +150,7 @@ namespace Runway.ViewModels
 
       private void OnCompleteSuggestionCommand()
       {
-         if ( string.IsNullOrEmpty( PreviewCommandText ) )
+         if ( SelectedSuggestion == null )
          {
             return;
          }

@@ -273,49 +273,15 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
-      public void CompleteSuggestionCommand_HasPartialTextAndSuggestion_SuggestionBecomesTheCommandText()
-      {
-         const string currentCommand = "c";
-         const string commandName = "copy";
-
-         // Arrange
-
-         var commandMock = new Mock<ILaunchableCommand>();
-         commandMock.SetupGet( c => c.CommandText ).Returns( commandName );
-
-         var matchResults = MatchResultHelper.Create( MatchType.Exact, commandMock.Object );
-         var commandCatalogMock = new Mock<ISearchCatalog>();
-         commandCatalogMock.Setup( cc => cc.Search( currentCommand ) ).Returns( matchResults );
-
-         var appServiceMock = new Mock<IAppService>();
-         var inputControllerMock = new Mock<IInputController>();
-
-         // Act
-
-         var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object )
-         {
-            InputText = currentCommand
-         };
-
-         viewModel.CompleteSuggestionCommand.Execute( null );
-
-         // Assert
-
-         viewModel.InputText.Should().Be( commandName );
-      }
-
-      [Fact]
-      public void CompleteSuggestionCommand_TextMatchesNoSuggestion_DoesNotTryToComplete()
+      public void CompleteSuggestionCommand_TextMatchesNoSuggestion_InputTextDoesNotChange()
       {
          const string currentCommand = "c";
 
          // Arrange
 
-         var commandCatalogMock = new Mock<ISearchCatalog>();
-         commandCatalogMock.Setup( cc => cc.Search( It.IsAny<string>() ) ).Returns( CommandCatalog.EmptySet );
-
          var appServiceMock = new Mock<IAppService>();
          var inputControllerMock = new Mock<IInputController>();
+         inputControllerMock.SetupAllProperties();
 
          // Act
 
@@ -331,7 +297,6 @@ namespace Runway.UnitTests.ViewModels
          // Assert
 
          viewModel.InputText.Should().Be( currentCommand );
-         viewModel.ShouldNotRaise( nameof( viewModel.MoveCaretRequested ) );
       }
 
       [Fact]
