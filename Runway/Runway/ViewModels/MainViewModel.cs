@@ -16,7 +16,6 @@ namespace Runway.ViewModels
          get;
       } = new BulkObservableCollection<IMatchResult>();
 
-      private string _inputText;
       public string InputText
       {
          get
@@ -105,21 +104,6 @@ namespace Runway.ViewModels
          ExitCommand = new RelayCommand( appService.Exit );
       }
 
-      private void UpdateCommandText( string newText )
-      {
-         //CurrentMatchResults = _commandCatalog.Search( newText );
-
-         //Suggestions.Reset( CurrentMatchResults );
-
-         //if ( CurrentMatchResults.Length > 0 )
-         //{
-         //   _selectedIndex = 0;
-         //   SelectedSuggestion = CurrentMatchResults[_selectedIndex];
-         //}
-
-         RaisePropertyChanged( () => PreviewCommandText );
-      }
-
       protected virtual void OnMoveCaretRequested( object sender, MoveCaretEventArgs e )
          => MoveCaretRequested?.Invoke( sender, e );
 
@@ -138,8 +122,6 @@ namespace Runway.ViewModels
          }
 
          SelectedSuggestion = Suggestions[_selectedIndex];
-
-         _inputText = SelectedSuggestion.DisplayText;
 
          RaisePropertyChanged( () => InputText );
          RaisePropertyChanged( () => PreviewCommandText );
@@ -160,8 +142,6 @@ namespace Runway.ViewModels
 
          SelectedSuggestion = Suggestions[_selectedIndex];
 
-         _inputText = SelectedSuggestion.DisplayText;
-
          RaisePropertyChanged( () => InputText );
          RaisePropertyChanged( () => PreviewCommandText );
 
@@ -174,8 +154,6 @@ namespace Runway.ViewModels
          {
             return;
          }
-
-         _inputText = PreviewCommandText;
 
          RaisePropertyChanged( () => InputText );
          RaisePropertyChanged( () => PreviewCommandText );
