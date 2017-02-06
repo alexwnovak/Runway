@@ -173,20 +173,9 @@ namespace Runway.ViewModels
             return;
          }
 
-         string commandText = CommandParser.ParseCommand( InputText );
-         string argumentString = CommandParser.ParseArguments( InputText );
-
          SelectedSuggestion.Activate( null );
 
          OnDismissRequested( this, EventArgs.Empty );
-
-         //var results = _commandCatalog.Search( commandText );
-
-         //if ( results.Length > 0 )
-         //{
-         //   SelectedSuggestion.Activate( new object[] { argumentString } );
-         //   OnDismissRequested( this, EventArgs.Empty );
-         //}
       }
    }
 }
