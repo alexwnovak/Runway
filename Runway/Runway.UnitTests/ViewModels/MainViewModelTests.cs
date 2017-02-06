@@ -411,21 +411,18 @@ namespace Runway.UnitTests.ViewModels
 
          // Arrange
 
-         var commandMock = new Mock<ILaunchableCommand>();
-         commandMock.SetupGet( c => c.CommandText ).Returns( commandText );
-
-         var matchResults = MatchResultHelper.CreatePartial( commandMock.Object );
-         var commandCatalogMock = new Mock<ISearchCatalog>();
-         commandCatalogMock.Setup( cc => cc.Search( partialText ) ).Returns( matchResults );
+         var matchResultMock = new Mock<IMatchResult>();
+         matchResultMock.SetupGet( mr => mr.DisplayText ).Returns( commandText );
+         var matchResults = ArrayHelper.Create( matchResultMock.Object );
 
          var appServiceMock = new Mock<IAppService>();
          var inputControllerMock = new Mock<IInputController>();
+         inputControllerMock.SetupAllProperties();
+         inputControllerMock.SetupGet( ic => ic.MatchResults ).Returns( matchResults );
 
          // Act
 
          var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object );
-
-         viewModel.MonitorEvents();
 
          viewModel.InputText = partialText;
 
