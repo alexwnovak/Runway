@@ -7,7 +7,7 @@ namespace Runway.UnitTests
    public class CommandCatalogTests
    {
       [Fact]
-      public void Resolve_CommandExists_CommandIsFoundWithExactMatch()
+      public void Search_CommandExists_CommandIsFoundWithExactMatch()
       {
          const string commandText = "foo";
 
@@ -22,7 +22,7 @@ namespace Runway.UnitTests
 
          commandCatalog.Add( commandMock.Object );
 
-         var results = commandCatalog.Resolve( commandText );
+         var results = commandCatalog.Search( commandText );
 
          // Assert
 
@@ -32,7 +32,7 @@ namespace Runway.UnitTests
       }
 
       [Fact]
-      public void Resolve_CommandExists_CommandIsFoundByPartialNameMatch()
+      public void Search_CommandExists_CommandIsFoundByPartialNameMatch()
       {
          const string partialCommandText = "c";
          const string commandText = "copy";
@@ -48,7 +48,7 @@ namespace Runway.UnitTests
 
          commandCatalog.Add( commandMock.Object );
 
-         var results = commandCatalog.Resolve( partialCommandText );
+         var results = commandCatalog.Search( partialCommandText );
 
          // Assert
 
@@ -58,13 +58,13 @@ namespace Runway.UnitTests
       }
 
       [Fact]
-      public void Resolve_PassesNullText_ReturnsEmptyResultSet()
+      public void Search_PassesNullText_ReturnsEmptyResultSet()
       {
          // Act
 
          var commandCatalog = new CommandCatalog();
 
-         var results = commandCatalog.Resolve( null );
+         var results = commandCatalog.Search( null );
 
          // Assert
 
@@ -72,13 +72,13 @@ namespace Runway.UnitTests
       }
 
       [Fact]
-      public void Resolve_SpecifiedCommandDoesNotExist_ReturnsEmptySet()
+      public void Search_SpecifiedCommandDoesNotExist_ReturnsEmptySet()
       {
          // Act
 
          var commandCatalog = new CommandCatalog();
 
-         var results = commandCatalog.Resolve( "doesnotexist" );
+         var results = commandCatalog.Search( "doesnotexist" );
 
          // Assert
 
@@ -86,7 +86,7 @@ namespace Runway.UnitTests
       }
 
       [Fact]
-      public void Resolve_CatalogHasTwoCommands_FindsAnExactMatchAndAPartialMatch()
+      public void Search_CatalogHasTwoCommands_FindsAnExactMatchAndAPartialMatch()
       {
          const string commandText1 = "co";
          const string commandText2 = "copy";
@@ -106,7 +106,7 @@ namespace Runway.UnitTests
          commandCatalog.Add( commandMock1.Object );
          commandCatalog.Add( commandMock2.Object );
 
-         var results = commandCatalog.Resolve( commandText1 );
+         var results = commandCatalog.Search( commandText1 );
 
          // Assert
 
@@ -116,7 +116,7 @@ namespace Runway.UnitTests
       }
 
       [Fact]
-      public void Resolve_CatalogHasTwoCommands_SearchCorrectlyOnlyFindsOneMatch()
+      public void Search_CatalogHasTwoCommands_SearchCorrectlyOnlyFindsOneMatch()
       {
          const string commandText1 = "copy";
          const string commandText2 = "uninstall";
@@ -136,7 +136,7 @@ namespace Runway.UnitTests
          commandCatalog.Add( commandMock1.Object );
          commandCatalog.Add( commandMock2.Object );
 
-         var results = commandCatalog.Resolve( commandText1 );
+         var results = commandCatalog.Search( commandText1 );
 
          // Assert
 
@@ -145,7 +145,7 @@ namespace Runway.UnitTests
       }
 
       [Fact]
-      public void Resolve_CatalogHasTwoCommands_BothFoundByPartialMatch()
+      public void Search_CatalogHasTwoCommands_BothFoundByPartialMatch()
       {
          const string commandText1 = "copy";
          const string commandText2 = "comment";
@@ -165,7 +165,7 @@ namespace Runway.UnitTests
          commandCatalog.Add( commandMock1.Object );
          commandCatalog.Add( commandMock2.Object );
 
-         var results = commandCatalog.Resolve( "co" );
+         var results = commandCatalog.Search( "co" );
 
          // Assert
 
@@ -175,7 +175,7 @@ namespace Runway.UnitTests
       }
 
       [Fact]
-      public void Resolve_CatalogHasTwoCommands_ReturnedInAlphabeticalOrder()
+      public void Search_CatalogHasTwoCommands_ReturnedInAlphabeticalOrder()
       {
          const string commandText1 = "uninstall";
          const string commandText2 = "undo";
@@ -195,7 +195,7 @@ namespace Runway.UnitTests
          commandCatalog.Add( commandMock1.Object );
          commandCatalog.Add( commandMock2.Object );
 
-         var results = commandCatalog.Resolve( "u" );
+         var results = commandCatalog.Search( "u" );
 
          // Assert
 

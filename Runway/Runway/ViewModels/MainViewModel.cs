@@ -2,50 +2,47 @@
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using Runway.Input;
 using Runway.Services;
 
 namespace Runway.ViewModels
 {
    public class MainViewModel : ViewModelBase
    {
-      private readonly ICommandCatalog _commandCatalog;
-      private readonly IAppService _appService;
+      private readonly IInputController _inputController;
 
       public BulkObservableCollection<IMatchResult> Suggestions
       {
          get;
       } = new BulkObservableCollection<IMatchResult>();
 
-      private string _currentCommandText;
-      public string CurrentCommandText
+      public string InputText
       {
          get
          {
-            return _currentCommandText;
+            return _inputController.InputText;
          }
          set
          {
-            bool changed = Set( () => CurrentCommandText, ref _currentCommandText, value );
+            _inputController.InputText = value;
+            RaisePropertyChanged();
 
-            if ( changed )
+            Suggestions.Reset( _inputController.MatchResults );
+
+            if ( _inputController.MatchResults.Length == 0 )
             {
-               UpdateCommandText( value );
+               _selectedIndex = -1;
+               SelectedSuggestion = null;
+            }
+            else
+            {
+               _selectedIndex = 0;
+               SelectedSuggestion = Suggestions[0];
             }
          }
       }
 
-      public string PreviewCommandText
-      {
-         get
-         {
-            if ( CurrentMatchResults.Length > 0 )
-            {
-               return CurrentMatchResults[_selectedIndex].DisplayText;
-            }
-
-            return null;
-         }
-      }
+      public string PreviewCommandText => SelectedSuggestion?.DisplayText;
 
       private int _selectedIndex;
       private IMatchResult _selectedSuggestion;
@@ -58,14 +55,9 @@ namespace Runway.ViewModels
          set
          {
             Set( () => SelectedSuggestion, ref _selectedSuggestion, value );
+            RaisePropertyChanged( () => PreviewCommandText );
          }
       }
-
-      public IMatchResult[] CurrentMatchResults
-      {
-         get;
-         private set;
-      } = CommandCatalog.EmptySet;
 
       public ICommand SelectNextSuggestionCommand
       {
@@ -100,32 +92,16 @@ namespace Runway.ViewModels
       public event EventHandler<MoveCaretEventArgs> MoveCaretRequested;
       public event EventHandler DismissRequested;
 
-      public MainViewModel( ICommandCatalog commandCatalog, IAppService appService )
+      public MainViewModel( IAppService appService, IInputController inputController )
       {
-         _commandCatalog = commandCatalog;
-         _appService = appService;
+         _inputController = inputController;
 
          SelectNextSuggestionCommand = new RelayCommand( OnSelectNextSuggestionCommand );
          SelectPreviousSuggestionCommand = new RelayCommand( OnSelectPreviousSuggestionCommand );
          CompleteSuggestionCommand = new RelayCommand( OnCompleteSuggestionCommand );
          SpacePressedCommand = new RelayCommand( OnSpacePressedCommand );
          LaunchCommand = new RelayCommand( OnLaunchCommand );
-         ExitCommand = new RelayCommand( () => _appService.Exit() );
-      }
-
-      private void UpdateCommandText( string newText )
-      {
-         CurrentMatchResults = _commandCatalog.Resolve( newText );
-
-         Suggestions.Reset( CurrentMatchResults );
-
-         if ( CurrentMatchResults.Length > 0 )
-         {
-            _selectedIndex = 0;
-            SelectedSuggestion = CurrentMatchResults[_selectedIndex];
-         }
-
-         RaisePropertyChanged( () => PreviewCommandText );
+         ExitCommand = new RelayCommand( appService.Exit );
       }
 
       protected virtual void OnMoveCaretRequested( object sender, MoveCaretEventArgs e )
@@ -136,7 +112,7 @@ namespace Runway.ViewModels
 
       private void OnSelectNextSuggestionCommand()
       {
-         if ( _selectedIndex + 1 >= CurrentMatchResults.Length )
+         if ( _selectedIndex + 1 >= Suggestions.Count )
          {
             _selectedIndex = 0;
          }
@@ -145,11 +121,9 @@ namespace Runway.ViewModels
             _selectedIndex++;
          }
 
-         SelectedSuggestion = CurrentMatchResults[_selectedIndex];
+         SelectedSuggestion = Suggestions[_selectedIndex];
 
-         _currentCommandText = SelectedSuggestion.DisplayText;
-
-         RaisePropertyChanged( () => CurrentCommandText );
+         RaisePropertyChanged( () => InputText );
          RaisePropertyChanged( () => PreviewCommandText );
 
          OnMoveCaretRequested( this, new MoveCaretEventArgs( CaretPosition.End ) );
@@ -159,18 +133,16 @@ namespace Runway.ViewModels
       {
          if ( _selectedIndex - 1 < 0 )
          {
-            _selectedIndex = CurrentMatchResults.Length - 1;
+            _selectedIndex = Suggestions.Count - 1;
          }
          else
          {
             _selectedIndex--;
          }
 
-         SelectedSuggestion = CurrentMatchResults[_selectedIndex];
+         SelectedSuggestion = Suggestions[_selectedIndex];
 
-         _currentCommandText = SelectedSuggestion.DisplayText;
-
-         RaisePropertyChanged( () => CurrentCommandText );
+         RaisePropertyChanged( () => InputText );
          RaisePropertyChanged( () => PreviewCommandText );
 
          OnMoveCaretRequested( this, new MoveCaretEventArgs( CaretPosition.End ) );
@@ -178,16 +150,12 @@ namespace Runway.ViewModels
 
       private void OnCompleteSuggestionCommand()
       {
-         if ( string.IsNullOrEmpty( PreviewCommandText ) )
+         if ( SelectedSuggestion == null )
          {
             return;
          }
 
-         _currentCommandText = PreviewCommandText;
-
-         RaisePropertyChanged( () => CurrentCommandText );
-         RaisePropertyChanged( () => PreviewCommandText );
-
+         InputText = SelectedSuggestion.DisplayText;
          OnMoveCaretRequested( this, new MoveCaretEventArgs( CaretPosition.End ) );
       }
 
@@ -195,7 +163,7 @@ namespace Runway.ViewModels
       {
          CompleteSuggestionCommand.Execute( null );
 
-         CurrentCommandText += " ";
+         InputText += " ";
       }
 
       private void OnLaunchCommand()
@@ -205,16 +173,9 @@ namespace Runway.ViewModels
             return;
          }
 
-         string commandText = CommandParser.ParseCommand( CurrentCommandText );
-         string argumentString = CommandParser.ParseArguments( CurrentCommandText );
+         SelectedSuggestion.Activate( null );
 
-         var results = _commandCatalog.Resolve( commandText );
-
-         if ( results.Length > 0 )
-         {
-            SelectedSuggestion.Activate( new object[] { argumentString } );
-            OnDismissRequested( this, EventArgs.Empty );
-         }
+         OnDismissRequested( this, EventArgs.Empty );
       }
    }
 }

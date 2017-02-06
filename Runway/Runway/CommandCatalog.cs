@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Runway
 {
-   public class CommandCatalog : ICommandCatalog
+   public class CommandCatalog : ISearchCatalog
    {
       private readonly List<ILaunchableCommand> _commandList = new List<ILaunchableCommand>();
 
@@ -12,7 +12,7 @@ namespace Runway
 
       public void Add( ILaunchableCommand command ) => _commandList.Add( command );
 
-      public IMatchResult[] Resolve( string searchText )
+      public IMatchResult[] Search( string searchText )
       {
          if ( string.IsNullOrEmpty( searchText ) )
          {

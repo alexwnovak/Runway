@@ -4,6 +4,7 @@ using GalaSoft.MvvmLight.Ioc;
 using NHotkey;
 using NHotkey.Wpf;
 using Runway.Commands.Uninstall;
+using Runway.Input;
 using Runway.Services;
 
 namespace Runway
@@ -24,8 +25,12 @@ namespace Runway
          var commandCatalog = new CommandCatalog();
          commandCatalog.Add( new CopyLaunchCommand() );
 
-         SimpleIoc.Default.Register<ICommandCatalog>( () => commandCatalog );
+         SimpleIoc.Default.Register<ISearchCatalog>( () => commandCatalog );
          SimpleIoc.Default.Register<IAppService>( () => new AppService() );
+
+         var inputController = new InputController( new InputFrame( commandCatalog ) );
+         SimpleIoc.Default.Register<IInputController>( () => inputController );
+
          SimpleIoc.Default.Register<IAppCatalog, AppCatalog>();
          SimpleIoc.Default.Register<IRegistry, RegistryAdapter>();
          SimpleIoc.Default.Register<IProcess, ProcessAdapter>();

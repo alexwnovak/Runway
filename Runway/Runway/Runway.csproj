@@ -95,6 +95,10 @@
     <Compile Include="Commands\Uninstall\UninstallCommand.cs" />
     <Compile Include="Commands\Uninstall\UninstallStringParser.cs" />
     <Compile Include="IMatchResult.cs" />
+    <Compile Include="Input\IInputController.cs" />
+    <Compile Include="Input\IInputFrame.cs" />
+    <Compile Include="Input\InputController.cs" />
+    <Compile Include="Input\InputFrame.cs" />
     <Compile Include="MatchResult.cs" />
     <Compile Include="MatchType.cs" />
     <Compile Include="ViewModels\CommandParser.cs" />
@@ -111,7 +115,7 @@
     </Compile>
     <Compile Include="CommandCatalog.cs" />
     <Compile Include="CopyLaunchCommand.cs" />
-    <Compile Include="ICommandCatalog.cs" />
+    <Compile Include="ISearchCatalog.cs" />
     <Compile Include="ILaunchableCommand.cs" />
     <Compile Include="LaunchableCommandBase.cs" />
     <Compile Include="Services\AppService.cs" />

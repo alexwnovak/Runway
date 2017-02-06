@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Moq;
 using Xunit;
+using Runway.Input;
 using Runway.Services;
 using Runway.UnitTests.Helpers;
 using Runway.ViewModels;
@@ -10,36 +11,158 @@ namespace Runway.UnitTests.ViewModels
    public class MainViewModelTests
    {
       [Fact]
-      public void CurrentMatchResults_DefaultState_HasNoMatchResults()
+      public void InputText_SetsInputText_PassesInputToInputController()
       {
-         var viewModel = new MainViewModel( null, null );
-
-         viewModel.CurrentMatchResults.Should().BeSameAs( CommandCatalog.EmptySet );
-      }
-
-      [Fact]
-      public void CurrentMatchResults_MatchIsFound_MatchIsCached()
-      {
-         const string command = "x";
+         const string text = "input text here";
 
          // Arrange
 
-         var matchResultMock = new Mock<IMatchResult>();
-         var results = ArrayHelper.Create( matchResultMock.Object );
-
-         var commandCatalogMock = new Mock<ICommandCatalog>();
-         commandCatalogMock.Setup( cc => cc.Resolve( command ) ).Returns( results );
+         var appServiceMock = new Mock<IAppService>();
+         var inputControllerMock = new Mock<IInputController>();
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+         var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object );
 
-         viewModel.CurrentCommandText = command;
+         viewModel.InputText = text;
 
          // Assert
 
-         viewModel.CurrentMatchResults.Should().HaveCount( 1 );
-         viewModel.CurrentMatchResults[0].Should().Be( matchResultMock.Object );
+         inputControllerMock.VerifySet( ic => ic.InputText = text );
+      }
+
+      [Fact]
+      public void InputText_SetsInputText_RaisesNotifyPropertyChangedForInputText()
+      {
+         // Arrange
+
+         var appServiceMock = new Mock<IAppService>();
+         var inputControllerMock = new Mock<IInputController>();
+
+         // Act
+
+         var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object );
+
+         viewModel.MonitorEvents();
+
+         viewModel.InputText = "doesntmatter";
+
+         // Assert
+
+         viewModel.ShouldRaisePropertyChangeFor( vm => vm.InputText );
+      }
+
+      [Fact]
+      public void InputText_ReadsInputText_InputTextComesFromInputController()
+      {
+         const string expectedInputString = "input text";
+
+         // Arrange
+
+         var appServiceMock = new Mock<IAppService>();
+         var inputControllerMock = new Mock<IInputController>();
+         inputControllerMock.SetupGet( ic => ic.InputText ).Returns( expectedInputString );
+
+         // Act
+
+         var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object );
+
+         string inputText = viewModel.InputText;
+
+         // Assert
+
+         inputText.Should().Be( expectedInputString );
+      }
+
+      [Fact]
+      public void InputText_RetrievesMatches_SetsSelectedSuggestionToFirstResult()
+      {
+         // Arrange
+
+         var appServiceMock = new Mock<IAppService>();
+
+         var matchResultMock = new Mock<IMatchResult>();
+         var matchResults = ArrayHelper.Create( matchResultMock.Object );
+
+         var inputControllerMock = new Mock<IInputController>();
+         inputControllerMock.SetupGet( ic => ic.MatchResults ).Returns( matchResults );
+
+         // Act
+
+         var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object );
+
+         viewModel.InputText = "doesntmatter";
+
+         // Assert
+
+         viewModel.SelectedSuggestion.Should().Be( matchResultMock.Object );
+      }
+
+      [Fact]
+      public void InputText_DoesNotMatchAnything_NoMatchIsSelected()
+      {
+         // Arrange
+
+         var appServiceMock = new Mock<IAppService>();
+         var inputControllerMock = new Mock<IInputController>();
+
+         // Act
+
+         var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object );
+
+         viewModel.InputText = "doesnotmatter";
+
+         // Assert
+
+         viewModel.SelectedSuggestion.Should().Be( null );
+      }
+
+      [Fact]
+      public void InputText_SetsCommandText_RaisesPropertyChangeForPreview()
+      {
+         // Arrange
+
+         var appServiceMock = new Mock<IAppService>();
+         var inputControllerMock = new Mock<IInputController>();
+
+         // Act
+
+         var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object );
+
+         viewModel.MonitorEvents();
+
+         viewModel.InputText = "doesntmatter";
+
+         // Assert
+
+         viewModel.ShouldRaisePropertyChangeFor( vm => vm.PreviewCommandText );
+      }
+
+      [Fact]
+      public void InputText_CommandIsFoundForPrefix_PreviewTextIsSetCorrectly()
+      {
+         const string inputText = "command";
+
+         // Arrange
+
+         var appServiceMock = new Mock<IAppService>();
+
+         var matchResultMock = new Mock<IMatchResult>();
+         matchResultMock.SetupGet( mr => mr.DisplayText ).Returns( inputText );
+         var matchResults = ArrayHelper.Create( matchResultMock.Object );
+
+         var inputControllerMock = new Mock<IInputController>();
+         inputControllerMock.SetupGet( ic => ic.MatchResults ).Returns( matchResults );
+
+         // Act
+
+         var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object );
+
+         viewModel.InputText = inputText;
+
+         // Assert
+
+         viewModel.PreviewCommandText.Should().Be( inputText );
       }
 
       [Fact]
@@ -47,14 +170,17 @@ namespace Runway.UnitTests.ViewModels
       {
          // Arrange
 
-         var commandCatalogMock = new Mock<ICommandCatalog>();
-         commandCatalogMock.Setup( cc => cc.Resolve( null ) ).Returns<ILaunchableCommand>( null );
+         var commandCatalogMock = new Mock<ISearchCatalog>();
+         commandCatalogMock.Setup( cc => cc.Search( null ) ).Returns<ILaunchableCommand>( null );
+
+         var appServiceMock = new Mock<IAppService>();
+         var inputControllerMock = new Mock<IInputController>();
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null )
+         var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object )
          {
-            CurrentCommandText = null
+            InputText = null
          };
 
          // Assert
@@ -69,14 +195,17 @@ namespace Runway.UnitTests.ViewModels
 
          // Arrange
 
-         var commandCatalogMock = new Mock<ICommandCatalog>();
-         commandCatalogMock.Setup( cc => cc.Resolve( command ) ).Returns( new MatchResult[0] );
+         var commandCatalogMock = new Mock<ISearchCatalog>();
+         commandCatalogMock.Setup( cc => cc.Search( command ) ).Returns( new MatchResult[0] );
+
+         var appServiceMock = new Mock<IAppService>();
+         var inputControllerMock = new Mock<IInputController>();
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+         var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object );
 
-         viewModel.CurrentCommandText = command;
+         viewModel.InputText = command;
 
          // Assert
 
@@ -84,51 +213,54 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
-      public void CompleteSuggestionCommand_HappyPath_RaisesPropertyChangeForCurrentCommandText()
+      public void CompleteSuggestionCommand_CompletingASuggestion_InputTextBecomesTheCompleteText()
       {
-         const string command = "SomeCommand";
+         const string partialCommand = "s";
+         const string command = "somecommand";
 
          // Arrange
 
-         var commandMock = new Mock<ILaunchableCommand>();
-         commandMock.SetupGet( c => c.CommandText ).Returns( command );
+         var matchResultMock = new Mock<IMatchResult>();
+         matchResultMock.SetupGet( mr => mr.DisplayText ).Returns( command );
+         var results = ArrayHelper.Create( matchResultMock.Object );
 
-         var results = MatchResultHelper.Create( MatchType.Exact, commandMock.Object );
-         var commandCatalogMock = new Mock<ICommandCatalog>();
-         commandCatalogMock.Setup( cc => cc.Resolve( command ) ).Returns( results );
+         var appServiceMock = new Mock<IAppService>();
+         var inputControllerMock = new Mock<IInputController>();
+         inputControllerMock.SetupAllProperties();
+         inputControllerMock.Setup( ic => ic.MatchResults ).Returns( results );
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
-         viewModel.CurrentCommandText = command;
-
-         viewModel.MonitorEvents();
+         var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object );
+         viewModel.InputText = partialCommand;
 
          viewModel.CompleteSuggestionCommand.Execute( null );
 
          // Assert
 
-         viewModel.ShouldRaisePropertyChangeFor( vm => vm.CurrentCommandText );
+         viewModel.InputText.Should().Be( command );
       }
 
       [Fact]
-      public void CompleteSuggestionCommand_HappyPath_RaisesMoveCaretRequested()
+      public void CompleteSuggestionCommand_CompletesTheSelectedSuggestion_RaisesMoveCaretRequested()
       {
-         const string command = "SomeCommand";
+         const string command = "somecommand";
 
          // Arrange
 
-         var commandMock = new Mock<ILaunchableCommand>();
-         commandMock.SetupGet( c => c.CommandText ).Returns( command );
+         var matchResultMock = new Mock<IMatchResult>();
+         matchResultMock.SetupGet( mr => mr.DisplayText ).Returns( command );
+         var results = ArrayHelper.Create( matchResultMock.Object );
 
-         var results = MatchResultHelper.Create( MatchType.Exact, commandMock.Object );
-         var commandCatalogMock = new Mock<ICommandCatalog>();
-         commandCatalogMock.Setup( cc => cc.Resolve( command ) ).Returns( results );
+         var appServiceMock = new Mock<IAppService>();
+         var inputControllerMock = new Mock<IInputController>();
+         inputControllerMock.SetupAllProperties();
+         inputControllerMock.Setup( ic => ic.MatchResults ).Returns( results );
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
-         viewModel.CurrentCommandText = command;
+         var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object );
+         viewModel.InputText = "s";
 
          viewModel.MonitorEvents();
 
@@ -141,49 +273,21 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
-      public void CompleteSuggestionCommand_HasPartialTextAndSuggestion_SuggestionBecomesTheCommandText()
-      {
-         const string currentCommand = "c";
-         const string commandName = "copy";
-
-         // Arrange
-
-         var commandMock = new Mock<ILaunchableCommand>();
-         commandMock.SetupGet( c => c.CommandText ).Returns( commandName );
-
-         var matchResults = MatchResultHelper.Create( MatchType.Exact, commandMock.Object );
-         var commandCatalogMock = new Mock<ICommandCatalog>();
-         commandCatalogMock.Setup( cc => cc.Resolve( currentCommand ) ).Returns( matchResults );
-
-         // Act
-
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null )
-         {
-            CurrentCommandText = currentCommand
-         };
-
-         viewModel.CompleteSuggestionCommand.Execute( null );
-
-         // Assert
-
-         viewModel.CurrentCommandText.Should().Be( commandName );
-      }
-
-      [Fact]
-      public void CompleteSuggestionCommand_TextMatchesNoSuggestion_DoesNotTryToComplete()
+      public void CompleteSuggestionCommand_TextMatchesNoSuggestion_InputTextDoesNotChange()
       {
          const string currentCommand = "c";
 
          // Arrange
 
-         var commandCatalogMock = new Mock<ICommandCatalog>();
-         commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( CommandCatalog.EmptySet );
+         var appServiceMock = new Mock<IAppService>();
+         var inputControllerMock = new Mock<IInputController>();
+         inputControllerMock.SetupAllProperties();
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null )
+         var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object )
          {
-            CurrentCommandText = currentCommand
+            InputText = currentCommand
          };
 
          viewModel.MonitorEvents();
@@ -192,98 +296,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Assert
 
-         viewModel.CurrentCommandText.Should().Be( currentCommand );
-         viewModel.ShouldNotRaise( nameof( viewModel.MoveCaretRequested ) );
-      }
-
-      [Fact]
-      public void CommandText_SetsCommandText_RaisesPropertyChangeForPreview()
-      {
-         // Arrange
-
-         var commandCatalogMock = new Mock<ICommandCatalog>();
-
-         // Act
-
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
-
-         viewModel.MonitorEvents();
-
-         viewModel.CurrentCommandText = "doesntmatter";
-
-         // Assert
-
-         viewModel.ShouldRaisePropertyChangeFor( vm => vm.PreviewCommandText );
-      }
-
-      [Fact]
-      public void CommandText_CommandIsFoundForPrefix_PreviewTextIsSetCorrectly()
-      {
-         const string commandPartialText = "co";
-         const string commandText = "command";
-
-         // Arrange
-
-         var commandMock = new Mock<ILaunchableCommand>();
-         commandMock.SetupGet( lc => lc.CommandText ).Returns( commandText );
-
-         var matchResults = MatchResultHelper.Create( MatchType.Exact, commandMock.Object );
-         var commandCatalogMock = new Mock<ICommandCatalog>();
-         commandCatalogMock.Setup( cc => cc.Resolve( commandPartialText ) ).Returns( matchResults );
-
-         // Act
-
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
-
-         viewModel.CurrentCommandText = commandPartialText;
-
-         // Assert
-
-         viewModel.PreviewCommandText.Should().Be( commandText );
-      }
-
-      [Fact]
-      public void CommandText_MatchesACommand_MarksTheFirstResultAsSelected()
-      {
-         const string commandText = "copy";
-
-         // Arrange
-
-         var commandMock = new Mock<ILaunchableCommand>();
-         commandMock.SetupGet( lc => lc.CommandText ).Returns( commandText );
-
-         var matchResults = MatchResultHelper.Create( MatchType.Exact, commandMock.Object );
-         var commandCatalogMock = new Mock<ICommandCatalog>();
-         commandCatalogMock.Setup( cc => cc.Resolve( commandText ) ).Returns( matchResults );
-
-         // Act
-
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
-
-         viewModel.CurrentCommandText = commandText;
-
-         // Assert
-
-         viewModel.SelectedSuggestion.Should().Be( matchResults[0] );
-      }
-
-      [Fact]
-      public void CommandText_DoesNotMatchAnything_NoMatchIsSelected()
-      {
-         // Arrange
-
-         var commandCatalogMock = new Mock<ICommandCatalog>();
-         commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( CommandCatalog.EmptySet );
-
-         // Act
-
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
-
-         viewModel.CurrentCommandText = "doesnotmatter";
-
-         // Assert
-
-         viewModel.SelectedSuggestion.Should().Be( null );
+         viewModel.InputText.Should().Be( currentCommand );
       }
 
       [Fact]
@@ -295,14 +308,15 @@ namespace Runway.UnitTests.ViewModels
          var matchResultMock2 = new Mock<IMatchResult>();
          var matchResults = ArrayHelper.Create( matchResultMock1.Object, matchResultMock2.Object );
 
-         var commandCatalogMock = new Mock<ICommandCatalog>();
-         commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( matchResults );
+         var appServiceMock = new Mock<IAppService>();
+         var inputControllerMock = new Mock<IInputController>();
+         inputControllerMock.SetupGet( ic => ic.MatchResults ).Returns( matchResults );
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+         var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object );
 
-         viewModel.CurrentCommandText = "u";
+         viewModel.InputText = "doesntmatter";
          viewModel.SelectNextSuggestionCommand.Execute( null );
 
          // Assert
@@ -315,19 +329,20 @@ namespace Runway.UnitTests.ViewModels
       {
          // Arrange
 
-         var commandMock = new Mock<ILaunchableCommand>();
+         var matchResultMock = new Mock<IMatchResult>();
+         var matchResults = ArrayHelper.Create( matchResultMock.Object );
 
-         var matchResults = MatchResultHelper.CreatePartial( commandMock.Object );
-         var commandCatalogMock = new Mock<ICommandCatalog>();
-         commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( matchResults );
+         var appServiceMock = new Mock<IAppService>();
+         var inputControllerMock = new Mock<IInputController>();
+         inputControllerMock.SetupGet( ic => ic.MatchResults ).Returns( matchResults );
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+         var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object );
 
          viewModel.MonitorEvents();
 
-         viewModel.CurrentCommandText = "doesnotmatter";
+         viewModel.InputText = "doesnotmatter";
          viewModel.SelectNextSuggestionCommand.Execute( null );
 
          // Assert
@@ -339,26 +354,21 @@ namespace Runway.UnitTests.ViewModels
       [Fact]
       public void SelectPreviousSuggestionCommand_FirstCommandIsSelected_SecondCommandBecomesSelected()
       {
-         const string commandText1 = "uninstall";
-         const string commandText2 = "undo";
-
          // Arrange
 
          var matchResultMock1 = new Mock<IMatchResult>();
-         matchResultMock1.SetupGet( mr => mr.DisplayText ).Returns( commandText1 );
-
          var matchResultMock2 = new Mock<IMatchResult>();
-         matchResultMock2.SetupGet( mr => mr.DisplayText ).Returns( commandText2 );
-
          var matchResults = ArrayHelper.Create( matchResultMock1.Object, matchResultMock2.Object );
-         var commandCatalogMock = new Mock<ICommandCatalog>();
-         commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( matchResults );
+
+         var appServiceMock = new Mock<IAppService>();
+         var inputControllerMock = new Mock<IInputController>();
+         inputControllerMock.Setup( ic => ic.MatchResults ).Returns( matchResults );
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+         var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object );
 
-         viewModel.CurrentCommandText = "u";
+         viewModel.InputText = "u";
          viewModel.SelectPreviousSuggestionCommand.Execute( null );
 
          // Assert
@@ -371,19 +381,20 @@ namespace Runway.UnitTests.ViewModels
       {
          // Arrange
 
-         var commandMock = new Mock<ILaunchableCommand>();
+         var matchResultMock = new Mock<IMatchResult>();
+         var matchResults = ArrayHelper.Create( matchResultMock.Object );
 
-         var matchResults = MatchResultHelper.CreatePartial( commandMock.Object );
-         var commandCatalogMock = new Mock<ICommandCatalog>();
-         commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( matchResults );
+         var appServiceMock = new Mock<IAppService>();
+         var inputControllerMock = new Mock<IInputController>();
+         inputControllerMock.SetupGet( ic => ic.MatchResults ).Returns( matchResults );
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+         var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object );
 
          viewModel.MonitorEvents();
 
-         viewModel.CurrentCommandText = "doesnotmatter";
+         viewModel.InputText = "doesnotmatter";
          viewModel.SelectPreviousSuggestionCommand.Execute( null );
 
          // Assert
@@ -397,29 +408,29 @@ namespace Runway.UnitTests.ViewModels
       {
          const string commandText = "copy";
          const string partialText = "c";
-         
+
          // Arrange
 
-         var commandMock = new Mock<ILaunchableCommand>();
-         commandMock.SetupGet( c => c.CommandText ).Returns( commandText );
+         var matchResultMock = new Mock<IMatchResult>();
+         matchResultMock.SetupGet( mr => mr.DisplayText ).Returns( commandText );
+         var matchResults = ArrayHelper.Create( matchResultMock.Object );
 
-         var matchResults = MatchResultHelper.CreatePartial( commandMock.Object );
-         var commandCatalogMock = new Mock<ICommandCatalog>();
-         commandCatalogMock.Setup( cc => cc.Resolve( partialText ) ).Returns( matchResults );
+         var appServiceMock = new Mock<IAppService>();
+         var inputControllerMock = new Mock<IInputController>();
+         inputControllerMock.SetupAllProperties();
+         inputControllerMock.SetupGet( ic => ic.MatchResults ).Returns( matchResults );
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+         var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object );
 
-         viewModel.MonitorEvents();
-
-         viewModel.CurrentCommandText = partialText;
+         viewModel.InputText = partialText;
 
          viewModel.SpacePressedCommand.Execute( null );
 
          // Assert
 
-         viewModel.CurrentCommandText.Should().Be( commandText + " " );
+         viewModel.InputText.Should().Be( commandText + " " );
       }
 
       [Fact]
@@ -427,16 +438,17 @@ namespace Runway.UnitTests.ViewModels
       {
          // Arrange
 
-         var commandMock = new Mock<ILaunchableCommand>();
+         var matchResultMock = new Mock<IMatchResult>();
+         var matchResults = ArrayHelper.Create( matchResultMock.Object );
 
-         var matchResults = MatchResultHelper.Create( MatchType.Exact, commandMock.Object );
-         var commandCatalogMock = new Mock<ICommandCatalog>();
-         commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( matchResults );
+         var appServiceMock = new Mock<IAppService>();
+         var inputControllerMock = new Mock<IInputController>();
+         inputControllerMock.SetupGet( ic => ic.MatchResults ).Returns( matchResults );
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
-         viewModel.CurrentCommandText = "doesnotmatter";
+         var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object );
+         viewModel.InputText = "doesnotmatter";
 
          viewModel.MonitorEvents();
 
@@ -452,12 +464,15 @@ namespace Runway.UnitTests.ViewModels
       {
          // Arrange
 
-         var commandCatalogMock = new Mock<ICommandCatalog>();
-         commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( CommandCatalog.EmptySet );
+         var commandCatalogMock = new Mock<ISearchCatalog>();
+         commandCatalogMock.Setup( cc => cc.Search( It.IsAny<string>() ) ).Returns( CommandCatalog.EmptySet );
+
+         var appServiceMock = new Mock<IAppService>();
+         var inputControllerMock = new Mock<IInputController>();
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+         var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object );
 
          viewModel.MonitorEvents();
 
@@ -471,32 +486,26 @@ namespace Runway.UnitTests.ViewModels
       [Fact]
       public void LaunchCommand_SelectedASuggestion_LaunchesTheSuggestion()
       {
-         const string commandText1 = "uninstall";
-         const string commandText2 = "undo";
-
          // Arrange
 
-         var commandMock1 = new Mock<ILaunchableCommand>();
-         commandMock1.SetupGet( c => c.CommandText ).Returns( commandText1 );
+         var matchResultMock = new Mock<IMatchResult>();
+         var matchResults = ArrayHelper.Create( matchResultMock.Object );
 
-         var commandMock2 = new Mock<ILaunchableCommand>();
-         commandMock2.Setup( c => c.CommandText ).Returns( commandText2 );
-
-         var matchResults = MatchResultHelper.CreatePartial( commandMock1.Object, commandMock2.Object );
-         var commandCatalogMock = new Mock<ICommandCatalog>();
-         commandCatalogMock.Setup( cc => cc.Resolve( It.IsAny<string>() ) ).Returns( matchResults );
+         var appServiceMock = new Mock<IAppService>();
+         var inputControllerMock = new Mock<IInputController>();
+         inputControllerMock.SetupGet( ic => ic.MatchResults ).Returns( matchResults );
 
          // Act
 
-         var viewModel = new MainViewModel( commandCatalogMock.Object, null );
+         var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object );
 
-         viewModel.CurrentCommandText = "u";
-         viewModel.SelectPreviousSuggestionCommand.Execute( null );
+         viewModel.InputText = "doesntmatter";
+
          viewModel.LaunchCommand.Execute( null );
 
          // Assert
 
-         commandMock2.Verify( c => c.Launch( It.IsAny<object[]>() ), Times.Once() );
+         matchResultMock.Verify( mr => mr.Activate( It.IsAny<object[]>() ), Times.Once() );
       }
 
       [Fact]
@@ -508,7 +517,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Act
 
-         var viewModel = new MainViewModel( null, appService.Object );
+         var viewModel = new MainViewModel( appService.Object, null );
 
          viewModel.ExitCommand.Execute( null );
 
