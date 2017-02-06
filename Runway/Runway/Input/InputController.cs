@@ -17,8 +17,7 @@ namespace Runway.Input
          set
          {
             _inputText = value;
-            var currentInputFrame = _inputFrames.Peek();
-            MatchResults = currentInputFrame.Match( value );
+            UpdateMatches( value );
          }
       }
 
@@ -36,6 +35,12 @@ namespace Runway.Input
          }
 
          _inputFrames.Push( initialInputFrame );
+      }
+
+      private void UpdateMatches( string newText )
+      {
+         var currentInputFrame = _inputFrames.Peek();
+         MatchResults = currentInputFrame.Match( newText );
       }
    }
 }
