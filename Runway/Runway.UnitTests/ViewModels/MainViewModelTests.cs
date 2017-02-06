@@ -489,35 +489,26 @@ namespace Runway.UnitTests.ViewModels
       [Fact]
       public void LaunchCommand_SelectedASuggestion_LaunchesTheSuggestion()
       {
-         const string commandText1 = "uninstall";
-         const string commandText2 = "undo";
-
          // Arrange
 
-         var commandMock1 = new Mock<ILaunchableCommand>();
-         commandMock1.SetupGet( c => c.CommandText ).Returns( commandText1 );
-
-         var commandMock2 = new Mock<ILaunchableCommand>();
-         commandMock2.Setup( c => c.CommandText ).Returns( commandText2 );
-
-         var matchResults = MatchResultHelper.CreatePartial( commandMock1.Object, commandMock2.Object );
-         var commandCatalogMock = new Mock<ISearchCatalog>();
-         commandCatalogMock.Setup( cc => cc.Search( It.IsAny<string>() ) ).Returns( matchResults );
+         var matchResultMock = new Mock<IMatchResult>();
+         var matchResults = ArrayHelper.Create( matchResultMock.Object );
 
          var appServiceMock = new Mock<IAppService>();
          var inputControllerMock = new Mock<IInputController>();
+         inputControllerMock.SetupGet( ic => ic.MatchResults ).Returns( matchResults );
 
          // Act
 
          var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object );
 
-         viewModel.InputText = "u";
-         viewModel.SelectPreviousSuggestionCommand.Execute( null );
+         viewModel.InputText = "doesntmatter";
+
          viewModel.LaunchCommand.Execute( null );
 
          // Assert
 
-         commandMock2.Verify( c => c.Launch( It.IsAny<object[]>() ), Times.Once() );
+         matchResultMock.Verify( mr => mr.Activate( It.IsAny<object[]>() ), Times.Once() );
       }
 
       [Fact]

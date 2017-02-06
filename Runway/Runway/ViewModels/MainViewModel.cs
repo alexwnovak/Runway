@@ -176,6 +176,8 @@ namespace Runway.ViewModels
          string commandText = CommandParser.ParseCommand( InputText );
          string argumentString = CommandParser.ParseArguments( InputText );
 
+         SelectedSuggestion.Activate( null );
+
          OnDismissRequested( this, EventArgs.Empty );
 
          //var results = _commandCatalog.Search( commandText );
