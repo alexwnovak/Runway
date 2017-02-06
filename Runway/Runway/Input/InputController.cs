@@ -17,11 +17,10 @@ namespace Runway.Input
          set
          {
             _inputText = value;
-            MatchResults = CurrentInputFrame.Match( value );
+            var currentInputFrame = _inputFrames.Peek();
+            MatchResults = currentInputFrame.Match( value );
          }
       }
-
-      public IInputFrame CurrentInputFrame => _inputFrames.Peek();
 
       public IMatchResult[] MatchResults
       {
