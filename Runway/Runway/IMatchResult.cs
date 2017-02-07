@@ -12,6 +12,11 @@
          get;
       }
 
+      ISearchCatalog Source
+      {
+         get;
+      }
+
       void Activate( object[] parameters );
    }
 }
