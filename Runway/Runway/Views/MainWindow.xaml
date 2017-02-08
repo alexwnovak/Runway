@@ -89,7 +89,6 @@
                         <Grid x:Name="ItemBackground">
                            <ContentPresenter />
                         </Grid>
-
                         <ControlTemplate.Triggers>
                            <Trigger Property="IsSelected" Value="True">
                               <Setter TargetName="ItemBackground"
