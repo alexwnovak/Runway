@@ -87,6 +87,7 @@
     <Compile Include="Behaviors\WindowPlacementBehavior.cs" />
     <Compile Include="Commands\Uninstall\AppCatalog.cs" />
     <Compile Include="Commands\Uninstall\AppEntry.cs" />
+    <Compile Include="Commands\Uninstall\AppMatchResult.cs" />
     <Compile Include="Commands\Uninstall\AppSearchCatalog.cs" />
     <Compile Include="Commands\Uninstall\IAppCatalog.cs" />
     <Compile Include="Commands\Uninstall\IProcess.cs" />
