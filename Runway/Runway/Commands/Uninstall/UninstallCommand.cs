@@ -6,7 +6,7 @@ namespace Runway.Commands.Uninstall
    {
       private readonly IAppCatalog _appCatalog;
 
-      public UninstallCommand( IAppCatalog appCatalog ) : base( "uninstall" )
+      public UninstallCommand( IAppCatalog appCatalog ) : base( "uninstall", null )
       {
          _appCatalog = appCatalog;
       }
