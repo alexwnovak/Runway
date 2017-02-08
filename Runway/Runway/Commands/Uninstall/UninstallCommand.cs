@@ -4,11 +4,8 @@ namespace Runway.Commands.Uninstall
 {
    public class UninstallCommand : LaunchableCommandBase
    {
-      private readonly IAppCatalog _appCatalog;
-
-      public UninstallCommand( IAppCatalog appCatalog ) : base( "uninstall", null )
+      public UninstallCommand( ISearchCatalog appCatalog ) : base( "uninstall", appCatalog )
       {
-         _appCatalog = appCatalog;
       }
 
       public override void Launch( object[] parameters )
