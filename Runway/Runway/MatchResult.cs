@@ -1,4 +1,6 @@
-﻿namespace Runway
+﻿using Runway.Input;
+
+namespace Runway
 {
    public class MatchResult : IMatchResult
    {
@@ -24,6 +26,11 @@
          MatchType = matchType;
          Command = command;
          Source = source;
+      }
+
+      public IInputFrame BeginInputFrame()
+      {
+         return new InputFrame( Command.ParameterSource );
       }
 
       public void Activate( object[] parameters ) => Command.Launch( parameters );

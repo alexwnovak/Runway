@@ -1,4 +1,6 @@
-﻿namespace Runway
+﻿using Runway.Input;
+
+namespace Runway
 {
    public interface IMatchResult
    {
@@ -16,6 +18,8 @@
       {
          get;
       }
+
+      IInputFrame BeginInputFrame();
 
       void Activate( object[] parameters );
    }
