@@ -33,11 +33,10 @@ namespace Runway
          SimpleIoc.Default.Register<IInputController>( () => inputController );
 
          SimpleIoc.Default.Register<IAppCatalog, AppCatalog>();
+         SimpleIoc.Default.Register<IAppSearchCatalog, AppSearchCatalog>();
          SimpleIoc.Default.Register<IRegistry, RegistryAdapter>();
          SimpleIoc.Default.Register<IProcess, ProcessAdapter>();
-
-         var registryAdapter = SimpleIoc.Default.GetInstance<IRegistry>();
-         SimpleIoc.Default.Register( () => new UninstallCommand( new AppSearchCatalog( registryAdapter ) ) );
+         SimpleIoc.Default.Register<UninstallCommand>();
 
          commandCatalog.Add( SimpleIoc.Default.GetInstance<UninstallCommand>() );
       }
