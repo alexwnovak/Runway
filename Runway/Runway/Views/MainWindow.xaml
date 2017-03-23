@@ -83,6 +83,7 @@
          </ListBox.ItemTemplate>
          <ListBox.ItemContainerStyle>
             <Style TargetType="ListBoxItem">
+               <Setter Property="Foreground" Value="White" />
                <Setter Property="Template">
                   <Setter.Value>
                      <ControlTemplate TargetType="{x:Type ListBoxItem}">

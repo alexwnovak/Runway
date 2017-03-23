@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Runway.Commands.Uninstall
 {
@@ -19,7 +18,7 @@ namespace Runway.Commands.Uninstall
       {
          const string uninstallKeyName = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
 
-         var appEntries = new List<AppEntry>();
+         var matchResults = new List<AppMatchResult>();
          var subKeys = _registry.GetSubKeysFromLocalMachine( uninstallKeyName );
 
          foreach ( string subKey in subKeys )
@@ -28,13 +27,13 @@ namespace Runway.Commands.Uninstall
 
             if ( !string.IsNullOrEmpty( displayName ) && displayName.StartsWith( searchText, StringComparison.InvariantCultureIgnoreCase ) )
             {
-               var appEntry = new AppEntry( displayName, subKey );
+               var appEntry = new AppMatchResult( displayName, subKey );
 
-               appEntries.Add( appEntry );
+               matchResults.Add( appEntry );
             }
          }
 
-         return appEntries.Select( ae => new AppMatchResult( ae.Name ) ).ToArray();
+         return matchResults.ToArray();
       }
 
       public void Uninstall( string path )

@@ -4,7 +4,7 @@ namespace Runway.Commands.Uninstall
 {
    public class UninstallCommand : LaunchableCommandBase
    {
-      public UninstallCommand( ISearchCatalog appCatalog ) : base( "uninstall", appCatalog )
+      public UninstallCommand( IAppSearchCatalog appCatalog ) : base( "uninstall", appCatalog )
       {
       }
 

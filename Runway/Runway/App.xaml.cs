@@ -32,7 +32,7 @@ namespace Runway
          var inputController = new InputController( new InputFrame( commandCatalog ) );
          SimpleIoc.Default.Register<IInputController>( () => inputController );
 
-         SimpleIoc.Default.Register<IAppCatalog, AppCatalog>();
+         //SimpleIoc.Default.Register<IAppCatalog, AppCatalog>();
          SimpleIoc.Default.Register<IAppSearchCatalog, AppSearchCatalog>();
          SimpleIoc.Default.Register<IRegistry, RegistryAdapter>();
          SimpleIoc.Default.Register<IProcess, ProcessAdapter>();

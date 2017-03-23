@@ -15,14 +15,20 @@ namespace Runway.Commands.Uninstall
          get;
       }
 
+      public string SubKey
+      {
+         get;
+      }
+
       public ISearchCatalog Source
       {
          get;
       }
 
-      public AppMatchResult( string displayText )
+      public AppMatchResult( string displayText, string subKey )
       {
          DisplayText = displayText;
+         SubKey = subKey;
       }
 
       public IInputFrame BeginInputFrame()

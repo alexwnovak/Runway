@@ -41,5 +41,31 @@ namespace Runway.UnitTests.Input
          inputController.MatchResults.Should().HaveCount( 1 );
          inputController.MatchResults[0].Should().Be( matchResultMock.Object );
       }
+
+      [Fact]
+      public void InputText_AddsSpaceAfterMatchedCommand_DoesNotChangeMatchesOrInputFrame()
+      {
+         const string searchText = "copy";
+
+         // Arrange
+
+         var matchResultMock = new Mock<IMatchResult>();
+         var matchResults = ArrayHelper.Create( matchResultMock.Object );
+
+         var inputFrameMock = new Mock<IInputFrame>();
+         inputFrameMock.Setup( @if => @if.Match( searchText ) ).Returns( matchResults );
+
+         // Act
+
+         var inputController = new InputController( inputFrameMock.Object );
+
+         inputController.InputText = searchText;
+         inputController.InputText += " ";
+
+         // Assert
+
+         inputController.MatchResults.Should().HaveCount( 1 );
+         inputController.MatchResults[0].Should().Be( matchResultMock.Object );
+      }
    }
 }

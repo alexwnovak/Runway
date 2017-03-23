@@ -169,7 +169,7 @@ namespace Runway.ViewModels
       {
          CompleteSuggestionCommand.Execute( null );
 
-         InputText += " ";
+         //_inp += " ";
       }
 
       private void OnLaunchCommand()

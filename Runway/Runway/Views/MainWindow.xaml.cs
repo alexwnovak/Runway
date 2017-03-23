@@ -59,8 +59,8 @@ namespace Runway.Views
          }
          else if ( e.Key == Key.Space )
          {
-            _viewModel.SpacePressedCommand.Execute( null );
-            e.Handled = true;
+            //_viewModel.SpacePressedCommand.Execute( null );
+            //e.Handled = true;
          }
       }
    }
