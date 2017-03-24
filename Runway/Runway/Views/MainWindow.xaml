@@ -24,6 +24,7 @@
       <ResourceDictionary>
          <ResourceDictionary.MergedDictionaries>
             <ResourceDictionary Source="..\Styles\TextBoxStyle.xaml" />
+            <ResourceDictionary Source="..\Styles\TextBlockStyles.xaml" />
          </ResourceDictionary.MergedDictionaries>
       </ResourceDictionary>
    </Window.Resources>
@@ -40,16 +41,20 @@
 
    <Grid Margin="50">
       <Grid.RowDefinitions>
-         <RowDefinition Height="50" />
+         <RowDefinition Height="55" />
          <RowDefinition Height="20" />
          <RowDefinition />
       </Grid.RowDefinitions>
 
       <TextBox x:Name="InputTextBox"
+         Margin="0,0,55,0"
          Text="{Binding InputText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
       <TextBox Grid.Row="0"
          Foreground="#20FFFFFF"
          Text="{Binding PreviewCommandText, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+      <TextBlock Grid.Row="0"
+         Style="{StaticResource GlyphStyle}"
+         Text="&#xE11A;" />
 
       <Rectangle Grid.Row="1"
          Fill="#8FFF"

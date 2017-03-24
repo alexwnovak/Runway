@@ -3,7 +3,6 @@
    <Style TargetType="TextBox">
       <Setter Property="CaretBrush" Value="White" />
       <Setter Property="FontSize" Value="40" />
-      <Setter Property="Padding" Value="8,0,0,0" />
       <Setter Property="Foreground" Value="White" />
       <Setter Property="VerticalContentAlignment" Value="Center" />
       <Setter Property="Template">

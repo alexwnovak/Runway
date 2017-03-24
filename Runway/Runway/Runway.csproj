@@ -106,6 +106,10 @@
     <Compile Include="ViewModels\BulkObservableCollection.cs" />
     <Compile Include="Views\ListBoxExtensions.cs" />
     <Compile Include="Views\TextBoxExtensions.cs" />
+    <Page Include="Styles\TextBlockStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
