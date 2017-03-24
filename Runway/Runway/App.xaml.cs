@@ -4,6 +4,7 @@ using GalaSoft.MvvmLight.Ioc;
 using NHotkey;
 using NHotkey.Wpf;
 using Runway.Commands.Uninstall;
+using Runway.Extensions;
 using Runway.Input;
 using Runway.Services;
 
@@ -42,7 +43,7 @@ namespace Runway
       private void OnLaunch( object sender, HotkeyEventArgs e )
       {
          MainWindow.Visibility = Visibility.Visible;
-         MainWindow.Activate();
+         MainWindow.FadeIn();
       }
    }
 }

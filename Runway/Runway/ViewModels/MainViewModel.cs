@@ -89,6 +89,11 @@ namespace Runway.ViewModels
          get;
       }
 
+      public ICommand DismissCommand
+      {
+         get;
+      }
+
       public event EventHandler<MoveCaretEventArgs> MoveCaretRequested;
       public event EventHandler DismissRequested;
 
@@ -102,6 +107,7 @@ namespace Runway.ViewModels
          SpacePressedCommand = new RelayCommand( OnSpacePressedCommand );
          LaunchCommand = new RelayCommand( OnLaunchCommand );
          ExitCommand = new RelayCommand( appService.Exit );
+         DismissCommand = new RelayCommand( () => OnDismissRequested( this, EventArgs.Empty ) );
       }
 
       protected virtual void OnMoveCaretRequested( object sender, MoveCaretEventArgs e )
