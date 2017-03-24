@@ -2,6 +2,7 @@
 using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Input;
+using Runway.Extensions;
 using Runway.ViewModels;
 
 namespace Runway.Views
@@ -9,6 +10,7 @@ namespace Runway.Views
    public partial class MainWindow : Window
    {
       private readonly MainViewModel _viewModel;
+      private bool _firstLaunch = true;
 
       public MainWindow()
       {
@@ -23,8 +25,22 @@ namespace Runway.Views
       private void OnMoveCaretRequested( object sender, MoveCaretEventArgs e )
          => InputTextBox.MoveCaret( e.CaretPosition );
 
+      private void MainWindow_OnActivated( object sender, EventArgs e )
+      {
+         if ( _firstLaunch )
+         {
+            _firstLaunch = false;
+            return;
+         }
+
+         Opacity = 0;
+      }
+
+      private void MainWindow_OnDeactivated( object sender, EventArgs e )
+         => OnDismissRequested( sender, e );
+
       private void OnDismissRequested( object sender, EventArgs e )
-         => Visibility = Visibility.Hidden;
+         => this.FadeOut();
 
       private void OnSuggestionsChanged( object sender, NotifyCollectionChangedEventArgs e )
          => Height = _viewModel.Suggestions.Count == 0 ? 80 : 500;
