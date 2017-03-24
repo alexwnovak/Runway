@@ -42,8 +42,11 @@ namespace Runway
 
       private void OnLaunch( object sender, HotkeyEventArgs e )
       {
-         MainWindow.Visibility = Visibility.Visible;
-         MainWindow.FadeIn();
+         if ( !MainWindow.IsActive )
+         {
+            MainWindow.Visibility = Visibility.Visible;
+            MainWindow.FadeIn();
+         }
       }
    }
 }
