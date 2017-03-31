@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace Runway.Input
 {
-   public class KeyboardHook
+   public sealed class KeyboardHook : IDisposable
    {
       private readonly HookHandlerDelegate _hookHandler;
       private readonly IntPtr _hookId;
@@ -24,6 +24,11 @@ namespace Runway.Input
       private IntPtr HookCallback( int nCode, IntPtr wParam, ref KBDLLHOOKSTRUCT lParam )
       {
          return NativeMethods.CallNextHookEx( _hookId, nCode, wParam, ref lParam );
+      }
+
+      public void Dispose()
+      {
+         NativeMethods.UnhookWindowsHookEx( _hookId );
       }
    }
 }
