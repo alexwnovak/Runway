@@ -8,6 +8,8 @@ namespace Runway.Input
       private readonly HookHandlerDelegate _hookHandler;
       private readonly IntPtr _hookId;
 
+      public event EventHandler<KeyboardHookEventArgs> KeyIntercepted;
+
       public KeyboardHook()
       {
          _hookHandler = HookCallback;
@@ -23,8 +25,19 @@ namespace Runway.Input
 
       private IntPtr HookCallback( int nCode, IntPtr wParam, ref KBDLLHOOKSTRUCT lParam )
       {
+         var e = new KeyboardHookEventArgs( lParam.vkCode );
+         OnKeyIntercepted( this, e );
+
+         if ( e.Handled )
+         {
+            return (IntPtr) 1;
+         }
+
          return NativeMethods.CallNextHookEx( _hookId, nCode, wParam, ref lParam );
       }
+
+      private void OnKeyIntercepted( object sender, KeyboardHookEventArgs e )
+         => KeyIntercepted?.Invoke( sender, e );
 
       public void Dispose()
       {
