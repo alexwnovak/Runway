@@ -7,6 +7,8 @@ namespace Runway.Input
 
    internal static class NativeMethods
    {
+      public const int WH_KEYBOARD_LL = 13;
+
       [DllImport( "kernel32.dll", CharSet = CharSet.Auto, SetLastError = true )]
       public static extern IntPtr GetModuleHandle( string lpModuleName );
 
