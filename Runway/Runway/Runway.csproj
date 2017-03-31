@@ -102,6 +102,7 @@
     <Compile Include="Input\InputFrame.cs" />
     <Compile Include="Input\KBDLLHOOKSTRUCT.cs" />
     <Compile Include="Input\KeyboardHook.cs" />
+    <Compile Include="Input\NativeMethods.cs" />
     <Compile Include="MatchResult.cs" />
     <Compile Include="MatchType.cs" />
     <Compile Include="ViewModels\CommandParser.cs" />
