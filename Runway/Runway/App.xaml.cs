@@ -1,8 +1,5 @@
 ﻿using System.Windows;
-using System.Windows.Input;
 using GalaSoft.MvvmLight.Ioc;
-using NHotkey;
-using NHotkey.Wpf;
 using Runway.Commands.Uninstall;
 using Runway.Extensions;
 using Runway.Input;
@@ -12,13 +9,24 @@ namespace Runway
 {
    public partial class App : Application
    {
+      private const int _leftWinKey = 91;
+      private const int _rightWinKey = 92;
+
       protected override void OnStartup( StartupEventArgs e )
       {
          base.OnStartup( e );
 
          WireDependencies();
 
-         HotkeyManager.Current.AddOrReplace( "Launch", Key.R, ModifierKeys.Control | ModifierKeys.Shift, OnLaunch );
+         var keyboardHook = new KeyboardHook();
+         keyboardHook.KeyIntercepted += ( _, keyArgs ) =>
+         {
+            if ( keyArgs.KeyCode == _leftWinKey || keyArgs.KeyCode == _rightWinKey )
+            {
+               keyArgs.Handled = true;
+               Launch();
+            }
+         };
       }
 
       private void WireDependencies()
@@ -40,7 +48,7 @@ namespace Runway
          commandCatalog.Add( SimpleIoc.Default.GetInstance<UninstallCommand>() );
       }
 
-      private void OnLaunch( object sender, HotkeyEventArgs e )
+      private void Launch()
       {
          if ( !MainWindow.IsActive )
          {
