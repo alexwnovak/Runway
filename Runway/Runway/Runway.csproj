@@ -100,6 +100,7 @@
     <Compile Include="Input\IInputFrame.cs" />
     <Compile Include="Input\InputController.cs" />
     <Compile Include="Input\InputFrame.cs" />
+    <Compile Include="Input\KBDLLHOOKSTRUCT.cs" />
     <Compile Include="Input\KeyboardHook.cs" />
     <Compile Include="MatchResult.cs" />
     <Compile Include="MatchType.cs" />
