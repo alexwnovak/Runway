@@ -8,11 +8,11 @@ namespace Runway.UnitTests.Helpers
       {
          return new []
          {
-            new MatchResult( matchType, command )
+            new MatchResult( matchType, command, null )
          };
       }
 
       public static MatchResult[] CreatePartial( params ILaunchableCommand[] commands )
-         => commands.Select( c => new MatchResult( MatchType.Partial, c ) ).ToArray();
+         => commands.Select( c => new MatchResult( MatchType.Partial, c, null ) ).ToArray();
    }
 }

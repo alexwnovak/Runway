@@ -7,6 +7,11 @@
          get;
       }
 
+      ISearchCatalog ParameterSource
+      {
+         get;
+      }
+
       void Launch( object[] parameters );
    }
 }

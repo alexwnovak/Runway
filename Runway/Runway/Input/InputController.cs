@@ -7,6 +7,8 @@ namespace Runway.Input
    {
       private readonly Stack<IInputFrame> _inputFrames = new Stack<IInputFrame>();
 
+      private int _startingReadIndex = 0;
+
       private string _inputText;
       public string InputText
       {
@@ -17,11 +19,9 @@ namespace Runway.Input
          set
          {
             _inputText = value;
-            MatchResults = CurrentInputFrame.Match( value );
+            UpdateMatches( value );
          }
       }
-
-      public IInputFrame CurrentInputFrame => _inputFrames.Peek();
 
       public IMatchResult[] MatchResults
       {
@@ -37,6 +37,25 @@ namespace Runway.Input
          }
 
          _inputFrames.Push( initialInputFrame );
+      }
+
+      private void UpdateMatches( string newText )
+      {
+         char newChar = newText[newText.Length - 1];
+
+         if ( newChar == ' ' )
+         {
+            var newInputFrame = MatchResults[0].BeginInputFrame();
+            _inputFrames.Push( newInputFrame );
+
+            _startingReadIndex = newText.Length;
+            return;
+         }
+
+         string searchText = newText.Substring( _startingReadIndex );
+
+         var currentInputFrame = _inputFrames.Peek();
+         MatchResults = currentInputFrame.Match( searchText );
       }
    }
 }

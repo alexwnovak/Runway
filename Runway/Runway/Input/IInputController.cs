@@ -8,11 +8,6 @@
          set;
       }
 
-      IInputFrame CurrentInputFrame
-      {
-         get;
-      }
-
       IMatchResult[] MatchResults
       {
          get;

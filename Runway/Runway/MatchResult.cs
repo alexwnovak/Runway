@@ -1,4 +1,6 @@
-﻿namespace Runway
+﻿using Runway.Input;
+
+namespace Runway
 {
    public class MatchResult : IMatchResult
    {
@@ -9,15 +11,26 @@
 
       public string DisplayText => Command.CommandText;
 
+      public ISearchCatalog Source
+      {
+         get;
+      }
+
       public ILaunchableCommand Command
       {
          get;
       }
 
-      public MatchResult( MatchType matchType, ILaunchableCommand command )
+      public MatchResult( MatchType matchType, ILaunchableCommand command, ISearchCatalog source )
       {
          MatchType = matchType;
          Command = command;
+         Source = source;
+      }
+
+      public IInputFrame BeginInputFrame()
+      {
+         return new InputFrame( Command.ParameterSource );
       }
 
       public void Activate( object[] parameters ) => Command.Launch( parameters );

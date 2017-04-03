@@ -25,7 +25,7 @@ namespace Runway
                        let matchType = exactMatch ? MatchType.Exact : MatchType.Partial
                        where exactMatch || partialMatch
                        orderby c.CommandText
-                       select new MatchResult( matchType, c );
+                       select new MatchResult( matchType, c, this );
 
          return results.ToArray();
       }
