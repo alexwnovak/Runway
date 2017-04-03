@@ -3,6 +3,7 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight.Ioc;
 using NHotkey;
 using NHotkey.Wpf;
+using Runway.Commands;
 using Runway.Commands.Restart;
 using Runway.Commands.Uninstall;
 using Runway.Extensions;
@@ -27,6 +28,7 @@ namespace Runway
          var commandCatalog = new CommandCatalog();
          commandCatalog.Add( new CopyLaunchCommand() );
          commandCatalog.Add( new RestartCommand() );
+         commandCatalog.Add( new QuitCommand() );
 
          SimpleIoc.Default.Register<ISearchCatalog>( () => commandCatalog );
          SimpleIoc.Default.Register<IAppService>( () => new AppService() );
