@@ -4,7 +4,8 @@ namespace Runway.Commands.Restart
 {
    public class RestartCommand : LaunchableCommandBase
    {
-      public RestartCommand() : base( "restart" )
+      public RestartCommand()
+         : base( "restart", "Restarts the computer" )
       {
       }
 

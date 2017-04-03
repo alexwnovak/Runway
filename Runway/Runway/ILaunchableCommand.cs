@@ -7,6 +7,11 @@
          get;
       }
 
+      string Description
+      {
+         get;
+      }
+
       void Launch( object[] parameters );
    }
 }
