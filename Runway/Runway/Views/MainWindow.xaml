@@ -64,7 +64,6 @@
 
       <ListBox x:Name="SuggestionList"
          Grid.Row="2"
-         Padding="8"
          ItemsSource="{Binding Suggestions, Mode=OneWay, IsAsync=True}"
          SelectedItem="{Binding SelectedSuggestion, Mode=TwoWay}"
          Background="{x:Null}"
@@ -76,9 +75,19 @@
          </ListBox.ItemsPanel>
          <ListBox.ItemTemplate>
             <DataTemplate>
-               <TextBlock Text="{Binding Command.CommandText, Mode=OneWay}"
-                  Foreground="White"
-                  FontSize="24" />
+               <Grid Height="70"
+                  Margin="8,0,8,8">
+                  <TextBlock Text="{Binding Command.CommandText, Mode=OneWay}"
+                     Foreground="White"
+                     FontSize="34"
+                     VerticalAlignment="Top" />
+
+                  <TextBlock Text="{Binding Command.Description, Mode=OneWay}"
+                     Foreground="White"
+                     FontSize="16"
+                     Margin="1,0,0,0"
+                     VerticalAlignment="Bottom" />
+               </Grid>
             </DataTemplate>
          </ListBox.ItemTemplate>
          <ListBox.ItemContainerStyle>
