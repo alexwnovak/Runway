@@ -79,12 +79,26 @@
             <DataTemplate>
                <Grid Height="70"
                   Margin="8,0,8,8">
-                  <TextBlock Text="{Binding Command.CommandText, Mode=OneWay}"
+
+                  <Grid.ColumnDefinitions>
+                     <ColumnDefinition Width="60" /> 
+                     <ColumnDefinition />
+                  </Grid.ColumnDefinitions>
+
+                  <Image Source="/Resources/app.png"
+                     Stretch="None"
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Center"
+                     Margin="10,0,0,0 "/>
+
+                  <TextBlock Grid.Column="1"
+                     Text="{Binding Command.CommandText, Mode=OneWay}"
                      Foreground="White"
                      FontSize="34"
                      VerticalAlignment="Top" />
 
-                  <TextBlock Text="{Binding Command.Description, Mode=OneWay}"
+                  <TextBlock Grid.Column="1"
+                     Text="{Binding Command.Description, Mode=OneWay}"
                      Foreground="White"
                      FontSize="16"
                      Margin="1,0,0,0"
