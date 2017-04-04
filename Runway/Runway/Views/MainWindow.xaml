@@ -51,6 +51,7 @@
          Text="{Binding InputText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
       <TextBox Grid.Row="0"
          Foreground="#20FFFFFF"
+         Focusable="False"
          Text="{Binding PreviewCommandText, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
       <TextBlock Grid.Row="0"
          Style="{StaticResource GlyphStyle}"
