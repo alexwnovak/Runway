@@ -14,6 +14,7 @@
    AllowsTransparency="True"
    ResizeMode="NoResize"
    Background="#C000"
+   ShowInTaskbar="False"
    FocusManager.FocusedElement="{Binding ElementName=InputTextBox}"
    DataContext="{Binding Main, Source={StaticResource Locator}}"
    PreviewKeyDown="MainWindow_OnPreviewKeyDown"
