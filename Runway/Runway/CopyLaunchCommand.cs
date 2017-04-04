@@ -4,7 +4,8 @@ namespace Runway
 {
    public class CopyLaunchCommand : LaunchableCommandBase
    {
-      public CopyLaunchCommand() : base( "copy" )
+      public CopyLaunchCommand()
+         : base( "copy", "Copies text to the clipboard" )
       {
       }
 

@@ -4,7 +4,8 @@ namespace Runway.Commands
 {
    public class QuitCommand : LaunchableCommandBase
    {
-      public QuitCommand() : base( "quit" )
+      public QuitCommand()
+         : base( "quit", "Quits the Runway application" )
       {
       }
 
