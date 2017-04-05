@@ -10,6 +10,7 @@ namespace Runway.Commands.Uninstall
          : base( "uninstall", "Removes installed applications" )
       {
          _appCatalog = appCatalog;
+         Icon = GetIconFromFile( @"C:\Windows\System32\appwiz.cpl" );
       }
 
       public override void Launch( object[] parameters )

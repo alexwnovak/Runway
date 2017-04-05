@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Windows;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Ico = System.Drawing.Icon;
 
 namespace Runway
 {
@@ -28,6 +31,12 @@ namespace Runway
          Description = description;
 
          Icon = new BitmapImage( new Uri( "/Resources/app.png", UriKind.Relative ) );
+      }
+
+      protected ImageSource GetIconFromFile( string path )
+      {
+         var icon = Ico.ExtractAssociatedIcon( path );
+         return Imaging.CreateBitmapSourceFromHIcon( icon.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions() );
       }
 
       public abstract void Launch( object[] parameters );
