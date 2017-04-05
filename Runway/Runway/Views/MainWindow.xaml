@@ -85,7 +85,7 @@
                      <ColumnDefinition />
                   </Grid.ColumnDefinitions>
 
-                  <Image Source="/Resources/app.png"
+                  <Image Source="{Binding Command.Icon, Mode=OneWay}"
                      Stretch="None"
                      HorizontalAlignment="Left"
                      VerticalAlignment="Center"
