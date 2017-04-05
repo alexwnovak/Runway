@@ -37,7 +37,7 @@ namespace Runway.Views
       }
 
       private void MainWindow_OnDeactivated( object sender, EventArgs e )
-         => OnDismissRequested( sender, e );
+         => _viewModel.DismissCommand.Execute( null );
 
       private void OnDismissRequested( object sender, EventArgs e )
          => this.FadeOut();
