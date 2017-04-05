@@ -525,5 +525,48 @@ namespace Runway.UnitTests.ViewModels
 
          appService.Verify( @as => @as.Exit(), Times.Once() );
       }
+
+      [Fact]
+      public void DismissCommand_IsExecuted_RaisesDismissRequested()
+      {
+         // Arrange
+
+         var appServiceMock = new Mock<IAppService>();
+         var inputControllerMock = new Mock<IInputController>();
+
+         // Act
+
+         var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object );
+
+         viewModel.MonitorEvents();
+
+         viewModel.DismissCommand.Execute( null );
+
+         // Assert
+
+         viewModel.ShouldRaise( nameof( viewModel.DismissRequested ) );
+      }
+
+      [Fact]
+      public void DismissCommand_IsExecuted_ClearsCurrentState()
+      {
+         // Arrange
+
+         var appServiceMock = new Mock<IAppService>();
+         var inputControllerMock = new Mock<IInputController>();
+         inputControllerMock.SetupAllProperties();
+
+         // Act
+
+         var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object );
+
+         viewModel.InputText = "Some search criteria";
+
+         viewModel.DismissCommand.Execute( null );
+
+         // Assert
+
+         viewModel.InputText.Should().BeNull();
+      }
    }
 }

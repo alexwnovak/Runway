@@ -107,7 +107,7 @@ namespace Runway.ViewModels
          SpacePressedCommand = new RelayCommand( OnSpacePressedCommand );
          LaunchCommand = new RelayCommand( OnLaunchCommand );
          ExitCommand = new RelayCommand( appService.Exit );
-         DismissCommand = new RelayCommand( () => OnDismissRequested( this, EventArgs.Empty ) );
+         DismissCommand = new RelayCommand( OnDismissCommand );
       }
 
       protected virtual void OnMoveCaretRequested( object sender, MoveCaretEventArgs e )
@@ -181,6 +181,12 @@ namespace Runway.ViewModels
 
          SelectedSuggestion.Activate( null );
 
+         OnDismissRequested( this, EventArgs.Empty );
+      }
+
+      private void OnDismissCommand()
+      {
+         InputText = null;
          OnDismissRequested( this, EventArgs.Empty );
       }
    }
