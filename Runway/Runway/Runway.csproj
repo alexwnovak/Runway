@@ -127,7 +127,6 @@
     <Compile Include="CommandCatalog.cs" />
     <Compile Include="CopyLaunchCommand.cs" />
     <Compile Include="ISearchCatalog.cs" />
-    <Compile Include="ILaunchableCommand.cs" />
     <Compile Include="LaunchableCommandBase.cs" />
     <Compile Include="Services\AppService.cs" />
     <Compile Include="Services\IAppService.cs" />
@@ -177,6 +176,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="AppIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Runway.ExtensibilityModel\Runway.ExtensibilityModel.csproj">
+      <Project>{6217ad34-85fb-44a4-a2ce-f41d4a9b85dd}</Project>
+      <Name>Runway.ExtensibilityModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

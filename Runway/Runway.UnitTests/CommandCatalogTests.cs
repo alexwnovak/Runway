@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Moq;
+using Runway.ExtensibilityModel;
 using Xunit;
 
 namespace Runway.UnitTests
