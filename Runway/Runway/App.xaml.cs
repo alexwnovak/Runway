@@ -32,6 +32,7 @@ namespace Runway
          commandCatalog.Add( new QuitCommand() );
          commandCatalog.Add( new RunCommand() );
          commandCatalog.Add( new MinimizeCommand() );
+         commandCatalog.Add( new DateAndTimeCommand() );
 
          SimpleIoc.Default.Register<ISearchCatalog>( () => commandCatalog );
          SimpleIoc.Default.Register<IAppService>( () => new AppService() );
