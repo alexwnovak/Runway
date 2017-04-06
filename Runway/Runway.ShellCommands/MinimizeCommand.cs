@@ -3,15 +3,15 @@ using Runway.ExtensibilityModel;
 
 namespace Runway.ShellCommands
 {
-   public class RunCommand : ILaunchableCommand
+   public class MinimizeCommand : ILaunchableCommand
    {
-      public string CommandText => "run";
-      public string Description => "Launches the Windows Run dialog"; 
+      public string CommandText => "minimize";
+      public string Description => "Minimizes all windows";
 
       public void Launch( object[] parameters )
       {
          var shell = new Shell();
-         shell.FileRun();
+         shell.MinimizeAll();
       }
    }
 }
