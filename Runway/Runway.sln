@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Runway.UnitTests", "Runway.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Runway.ExtensibilityModel", "Runway.ExtensibilityModel\Runway.ExtensibilityModel.csproj", "{6217AD34-85FB-44A4-A2CE-F41D4A9B85DD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Runway.ShellCommands", "Runway.ShellCommands\Runway.ShellCommands.csproj", "{ECC8E367-6F11-4F07-9A3F-FFA6B23264B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{6217AD34-85FB-44A4-A2CE-F41D4A9B85DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6217AD34-85FB-44A4-A2CE-F41D4A9B85DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6217AD34-85FB-44A4-A2CE-F41D4A9B85DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECC8E367-6F11-4F07-9A3F-FFA6B23264B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECC8E367-6F11-4F07-9A3F-FFA6B23264B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECC8E367-6F11-4F07-9A3F-FFA6B23264B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECC8E367-6F11-4F07-9A3F-FFA6B23264B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

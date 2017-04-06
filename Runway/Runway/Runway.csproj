@@ -182,6 +182,10 @@
       <Project>{6217ad34-85fb-44a4-a2ce-f41d4a9b85dd}</Project>
       <Name>Runway.ExtensibilityModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Runway.ShellCommands\Runway.ShellCommands.csproj">
+      <Project>{ecc8e367-6f11-4f07-9a3f-ffa6b23264b7}</Project>
+      <Name>Runway.ShellCommands</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
