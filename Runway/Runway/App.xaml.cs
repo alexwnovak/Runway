@@ -9,6 +9,7 @@ using Runway.Commands.Uninstall;
 using Runway.Extensions;
 using Runway.Input;
 using Runway.Services;
+using Runway.ShellCommands;
 
 namespace Runway
 {
@@ -29,6 +30,9 @@ namespace Runway
          commandCatalog.Add( new CopyLaunchCommand() );
          commandCatalog.Add( new RestartCommand() );
          commandCatalog.Add( new QuitCommand() );
+         commandCatalog.Add( new RunCommand() );
+         commandCatalog.Add( new MinimizeCommand() );
+         commandCatalog.Add( new DateAndTimeCommand() );
 
          SimpleIoc.Default.Register<ISearchCatalog>( () => commandCatalog );
          SimpleIoc.Default.Register<IAppService>( () => new AppService() );

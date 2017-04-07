@@ -1,6 +1,4 @@
-﻿using System.Windows.Media;
-
-namespace Runway
+﻿namespace Runway.ExtensibilityModel
 {
    public interface ILaunchableCommand
    {
@@ -10,11 +8,6 @@ namespace Runway
       }
 
       string Description
-      {
-         get;
-      }
-
-      ImageSource Icon
       {
          get;
       }

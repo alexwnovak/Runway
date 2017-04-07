@@ -124,6 +124,10 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Runway.ExtensibilityModel\Runway.ExtensibilityModel.csproj">
+      <Project>{6217ad34-85fb-44a4-a2ce-f41d4a9b85dd}</Project>
+      <Name>Runway.ExtensibilityModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Runway\Runway.csproj">
       <Project>{B05B5476-E8B5-476E-B283-FE02A5A58544}</Project>
       <Name>Runway</Name>

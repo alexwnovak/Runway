@@ -1,4 +1,6 @@
-﻿namespace Runway
+﻿using Runway.ExtensibilityModel;
+
+namespace Runway
 {
    public class MatchResult : IMatchResult
    {

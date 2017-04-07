@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Runway.ExtensibilityModel;
 
 namespace Runway.UnitTests.Helpers
 {
