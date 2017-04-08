@@ -405,36 +405,6 @@ namespace Runway.UnitTests.ViewModels
       }
 
       [Fact]
-      public void SpacePressedCommand_HasPartialCommandTextAndSuggestion_AutoCompletesSuggestion()
-      {
-         const string commandText = "copy";
-         const string partialText = "c";
-
-         // Arrange
-
-         var matchResultMock = new Mock<IMatchResult>();
-         matchResultMock.SetupGet( mr => mr.DisplayText ).Returns( commandText );
-         var matchResults = ArrayHelper.Create( matchResultMock.Object );
-
-         var appServiceMock = new Mock<IAppService>();
-         var inputControllerMock = new Mock<IInputController>();
-         inputControllerMock.SetupAllProperties();
-         inputControllerMock.SetupGet( ic => ic.MatchResults ).Returns( matchResults );
-
-         // Act
-
-         var viewModel = new MainViewModel( appServiceMock.Object, inputControllerMock.Object );
-
-         viewModel.InputText = partialText;
-
-         viewModel.SpacePressedCommand.Execute( null );
-
-         // Assert
-
-         viewModel.InputText.Should().Be( commandText + " " );
-      }
-
-      [Fact]
       public void LaunchCommand_LaunchesACommand_DismissesTheUI()
       {
          // Arrange
