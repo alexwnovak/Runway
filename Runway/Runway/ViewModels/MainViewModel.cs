@@ -74,11 +74,6 @@ namespace Runway.ViewModels
          get;
       }
 
-      public ICommand SpacePressedCommand
-      {
-         get;
-      }
-
       public ICommand LaunchCommand
       {
          get;
@@ -104,7 +99,6 @@ namespace Runway.ViewModels
          SelectNextSuggestionCommand = new RelayCommand( OnSelectNextSuggestionCommand );
          SelectPreviousSuggestionCommand = new RelayCommand( OnSelectPreviousSuggestionCommand );
          CompleteSuggestionCommand = new RelayCommand( OnCompleteSuggestionCommand );
-         SpacePressedCommand = new RelayCommand( OnSpacePressedCommand );
          LaunchCommand = new RelayCommand( OnLaunchCommand );
          ExitCommand = new RelayCommand( appService.Exit );
          DismissCommand = new RelayCommand( OnDismissCommand );
@@ -163,13 +157,6 @@ namespace Runway.ViewModels
 
          InputText = SelectedSuggestion.DisplayText;
          OnMoveCaretRequested( this, new MoveCaretEventArgs( CaretPosition.End ) );
-      }
-
-      private void OnSpacePressedCommand()
-      {
-         CompleteSuggestionCommand.Execute( null );
-
-         InputText += " ";
       }
 
       private void OnLaunchCommand()

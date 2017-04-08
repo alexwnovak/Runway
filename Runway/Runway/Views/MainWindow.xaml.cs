@@ -57,11 +57,6 @@ namespace Runway.Views
             _viewModel.SelectPreviousSuggestionCommand.Execute( null );
             e.Handled = true;
          }
-         else if ( e.Key == Key.Space )
-         {
-            _viewModel.SpacePressedCommand.Execute( null );
-            e.Handled = true;
-         }
       }
    }
 }
