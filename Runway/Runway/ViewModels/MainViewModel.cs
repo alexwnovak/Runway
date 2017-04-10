@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using Runway.ExtensibilityModel;
 using Runway.Input;
 using Runway.Services;
 
@@ -16,16 +17,20 @@ namespace Runway.ViewModels
          get;
       } = new BulkObservableCollection<IMatchResult>();
 
+      private string _inputText;
       public string InputText
       {
          get
          {
-            return _inputController.InputText;
+            //return _inputController.InputText;
+            return _inputText;
          }
          set
          {
-            _inputController.InputText = value;
-            RaisePropertyChanged();
+            //_inputController.InputText = value;
+            _inputController.UpdateInputText( value );
+            _inputText = value;
+            //RaisePropertyChanged();
 
             Suggestions.Reset( _inputController.MatchResults );
 

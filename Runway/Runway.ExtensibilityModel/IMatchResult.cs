@@ -1,4 +1,4 @@
-﻿namespace Runway
+﻿namespace Runway.ExtensibilityModel
 {
    public interface IMatchResult
    {
@@ -8,6 +8,11 @@
       }
 
       string DisplayText
+      {
+         get;
+      }
+
+      ILaunchableCommand Command
       {
          get;
       }

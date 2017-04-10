@@ -1,4 +1,4 @@
-namespace Runway
+namespace Runway.ExtensibilityModel
 {
    public enum MatchType
    {

@@ -42,6 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ILaunchableCommand.cs" />
+    <Compile Include="IMatchResult.cs" />
+    <Compile Include="IQueryableCommand.cs" />
+    <Compile Include="ISearchCatalog.cs" />
+    <Compile Include="MatchType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

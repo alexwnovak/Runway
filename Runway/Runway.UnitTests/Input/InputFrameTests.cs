@@ -1,6 +1,7 @@
 ﻿using System;
 using FluentAssertions;
 using Moq;
+using Runway.ExtensibilityModel;
 using Xunit;
 using Runway.Input;
 using Runway.UnitTests.Helpers;

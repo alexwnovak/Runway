@@ -101,13 +101,12 @@
     <Compile Include="Commands\Uninstall\UninstallCommand.cs" />
     <Compile Include="Commands\Uninstall\UninstallStringParser.cs" />
     <Compile Include="Extensions\WindowExtensions.cs" />
-    <Compile Include="IMatchResult.cs" />
+    <Compile Include="FooCommand.cs" />
     <Compile Include="Input\IInputController.cs" />
     <Compile Include="Input\IInputFrame.cs" />
     <Compile Include="Input\InputController.cs" />
     <Compile Include="Input\InputFrame.cs" />
     <Compile Include="MatchResult.cs" />
-    <Compile Include="MatchType.cs" />
     <Compile Include="ViewModels\CommandParser.cs" />
     <Compile Include="ViewModels\BulkObservableCollection.cs" />
     <Compile Include="Views\ListBoxExtensions.cs" />
@@ -126,7 +125,6 @@
     </Compile>
     <Compile Include="CommandCatalog.cs" />
     <Compile Include="CopyLaunchCommand.cs" />
-    <Compile Include="ISearchCatalog.cs" />
     <Compile Include="LaunchableCommandBase.cs" />
     <Compile Include="Services\AppService.cs" />
     <Compile Include="Services\IAppService.cs" />
