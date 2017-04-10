@@ -110,6 +110,7 @@
     <Compile Include="MatchType.cs" />
     <Compile Include="ViewModels\CommandParser.cs" />
     <Compile Include="ViewModels\BulkObservableCollection.cs" />
+    <Compile Include="ViewModels\TextChangedEventArgsConverter.cs" />
     <Compile Include="Views\ListBoxExtensions.cs" />
     <Compile Include="Views\TextBoxExtensions.cs" />
     <Page Include="Styles\TextBlockStyles.xaml">
