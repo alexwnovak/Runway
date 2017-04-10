@@ -21,7 +21,7 @@ namespace Runway
 
          WireDependencies();
 
-         HotkeyManager.Current.AddOrReplace( "Launch", Key.R, ModifierKeys.Control | ModifierKeys.Shift, OnLaunch );
+         HotkeyManager.Current.AddOrReplace( "Launch", Key.OemQuestion, ModifierKeys.Windows, OnLaunch );
       }
 
       private void WireDependencies()
