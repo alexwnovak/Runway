@@ -9,6 +9,7 @@ namespace Runway.ViewModels
 {
    public class MainViewModel : ViewModelBase
    {
+      private readonly IAppService _appService;
       private readonly IInputController _inputController;
       private bool _isUpdatingInput;
 
@@ -101,13 +102,14 @@ namespace Runway.ViewModels
 
       public MainViewModel( IAppService appService, IInputController inputController )
       {
+         _appService = appService;
          _inputController = inputController;
 
          SelectNextSuggestionCommand = new RelayCommand( OnSelectNextSuggestionCommand );
          SelectPreviousSuggestionCommand = new RelayCommand( OnSelectPreviousSuggestionCommand );
          CompleteSuggestionCommand = new RelayCommand( OnCompleteSuggestionCommand );
          LaunchCommand = new RelayCommand( OnLaunchCommand );
-         ExitCommand = new RelayCommand( appService.Exit );
+         ExitCommand = new RelayCommand( OnExitCommand );
          DismissCommand = new RelayCommand( OnDismissCommand );
          InputTextChangedCommand = new RelayCommand<string>( OnInputTextChanged, OnInputTextChangedCanExecute );
       }
@@ -181,6 +183,8 @@ namespace Runway.ViewModels
 
          OnDismissRequested( this, EventArgs.Empty );
       }
+
+      private void OnExitCommand() => _appService.Exit();
 
       private void OnDismissCommand()
       {
