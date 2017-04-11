@@ -8,12 +8,7 @@ namespace Runway.Input
 
       public InputFrame( ISearchCatalog searchCatalog )
       {
-         if ( searchCatalog == null )
-         {
-            throw new ArgumentNullException( nameof( searchCatalog ) );
-         }
-
-         _searchCatalog = searchCatalog;
+         _searchCatalog = searchCatalog ?? throw new ArgumentNullException( nameof( searchCatalog ) );
       }
 
       public IMatchResult[] Match( string searchText ) => _searchCatalog.Search( searchText );
