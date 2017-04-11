@@ -25,10 +25,7 @@ namespace Runway.ViewModels
       private IMatchResult _selectedSuggestion;
       public IMatchResult SelectedSuggestion
       {
-         get
-         {
-            return _selectedSuggestion;
-         }
+         get => _selectedSuggestion;
          set
          {
             Set( () => SelectedSuggestion, ref _selectedSuggestion, value );
