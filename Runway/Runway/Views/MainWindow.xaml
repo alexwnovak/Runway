@@ -6,6 +6,8 @@
    xmlns:local="clr-namespace:Runway"
    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
    xmlns:behaviors="clr-namespace:Runway.Behaviors"
+   xmlns:command="http://www.galasoft.ch/mvvmlight"
+   xmlns:viewModels="clr-namespace:Runway.ViewModels"
    mc:Ignorable="d"
    Title="MainWindow"
    WindowStartupLocation="CenterScreen"
@@ -48,8 +50,18 @@
       </Grid.RowDefinitions>
 
       <TextBox x:Name="InputTextBox"
-         Margin="0,0,55,0"
-         Text="{Binding InputText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+         Margin="0,0,55,0">
+         <TextBox.Resources>
+            <viewModels:TextChangedEventArgsConverter x:Key="TextChangedConverter" />
+         </TextBox.Resources>
+         <i:Interaction.Triggers>
+            <i:EventTrigger EventName="TextChanged">
+               <command:EventToCommand Command="{Binding ChangeInputTextCommand, Mode=OneTime}"
+                  PassEventArgsToCommand="True"
+                  EventArgsConverter="{StaticResource TextChangedConverter}" />
+            </i:EventTrigger>
+         </i:Interaction.Triggers>
+      </TextBox>
       <TextBox Grid.Row="0"
          Foreground="#20FFFFFF"
          Focusable="False"
@@ -135,3 +147,4 @@
       </ListBox>
    </Grid>
 </Window>
+

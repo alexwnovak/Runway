@@ -19,6 +19,7 @@ namespace Runway.Views
          _viewModel = (MainViewModel) DataContext;
          _viewModel.MoveCaretRequested += OnMoveCaretRequested;
          _viewModel.DismissRequested += OnDismissRequested;
+         _viewModel.ChangeTextRequested += OnChangeTextRequested;
          _viewModel.Suggestions.CollectionChanged += OnSuggestionsChanged;
       }
 
@@ -41,6 +42,9 @@ namespace Runway.Views
 
       private void OnDismissRequested( object sender, EventArgs e )
          => this.FadeOut();
+
+      private void OnChangeTextRequested( object sender, ChangeTextRequestedEventArgs e )
+         => InputTextBox.Text = e.Text;
 
       private void OnSuggestionsChanged( object sender, NotifyCollectionChangedEventArgs e )
          => Height = _viewModel.Suggestions.Count == 0 ? 80 : 500;

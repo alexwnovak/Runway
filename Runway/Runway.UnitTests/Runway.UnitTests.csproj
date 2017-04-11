@@ -107,6 +107,7 @@
     <Compile Include="CommandCatalogTests.cs" />
     <Compile Include="Commands\Uninstall\AppCatalogTests.cs" />
     <Compile Include="Commands\Uninstall\UninstallStringParserTests.cs" />
+    <Compile Include="Extensions\Int32ExtensionsTests.cs" />
     <Compile Include="Helpers\ArrayHelper.cs" />
     <Compile Include="Helpers\MatchResultHelper.cs" />
     <Compile Include="Input\InputControllerTests.cs" />
