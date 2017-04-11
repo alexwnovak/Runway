@@ -96,6 +96,7 @@ namespace Runway.ViewModels
       }
 
       public event EventHandler<MoveCaretEventArgs> MoveCaretRequested;
+      public event EventHandler<ChangeTextRequestedEventArgs> ChangeTextRequested;
       public event EventHandler DismissRequested;
 
       public MainViewModel( IAppService appService, IInputController inputController )
@@ -116,6 +117,9 @@ namespace Runway.ViewModels
 
       protected virtual void OnDismissRequested( object sender, EventArgs e )
          => DismissRequested?.Invoke( sender, e );
+
+      protected virtual void OnChangeTextRequested( object sender, ChangeTextRequestedEventArgs e )
+         => ChangeTextRequested?.Invoke( sender, e );
 
       private void OnSelectNextSuggestionCommand()
       {

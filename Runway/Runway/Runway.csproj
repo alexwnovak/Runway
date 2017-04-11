@@ -108,6 +108,7 @@
     <Compile Include="Input\InputFrame.cs" />
     <Compile Include="MatchResult.cs" />
     <Compile Include="MatchType.cs" />
+    <Compile Include="ViewModels\ChangeTextRequestedEventArgs.cs" />
     <Compile Include="ViewModels\CommandParser.cs" />
     <Compile Include="ViewModels\BulkObservableCollection.cs" />
     <Compile Include="ViewModels\TextChangedEventArgsConverter.cs" />
