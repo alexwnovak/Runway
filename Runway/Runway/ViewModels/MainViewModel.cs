@@ -10,6 +10,7 @@ namespace Runway.ViewModels
    public class MainViewModel : ViewModelBase
    {
       private readonly IInputController _inputController;
+      private bool _isUpdatingInput;
 
       public BulkObservableCollection<IMatchResult> Suggestions
       {
@@ -107,7 +108,7 @@ namespace Runway.ViewModels
          LaunchCommand = new RelayCommand( OnLaunchCommand );
          ExitCommand = new RelayCommand( appService.Exit );
          DismissCommand = new RelayCommand( OnDismissCommand );
-         InputTextChangedCommand = new RelayCommand<string>( OnInputTextChanged );
+         InputTextChangedCommand = new RelayCommand<string>( OnInputTextChanged, OnInputTextChangedCanExecute );
       }
 
       protected virtual void OnMoveCaretRequested( object sender, MoveCaretEventArgs e )
@@ -186,5 +187,7 @@ namespace Runway.ViewModels
       private void OnInputTextChanged( string text )
       {
       }
+
+      private bool OnInputTextChangedCanExecute( string text ) => !_isUpdatingInput;
    }
 }
