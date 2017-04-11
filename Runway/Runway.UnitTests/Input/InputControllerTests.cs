@@ -32,7 +32,7 @@ namespace Runway.UnitTests.Input
       }
 
       [Fact]
-      public void InputText_SearchesForSomething_GetsResultsFromInputFrame()
+      public void UpdateInputText_SearchesForSomething_GetsResultsFromInputFrame()
       {
          const string searchText = "c";
 
@@ -48,12 +48,11 @@ namespace Runway.UnitTests.Input
 
          var inputController = new InputController( inputFrameMock.Object );
 
-         inputController.InputText = searchText;
+         var actualMatchResults = inputController.UpdateInputText( searchText );
 
          // Assert
 
-         inputController.MatchResults.Should().HaveCount( 1 );
-         inputController.MatchResults[0].Should().Be( matchResultMock.Object );
+         actualMatchResults.Should().HaveCount( 1 ).And.Contain( matchResultMock.Object );
       }
    }
 }

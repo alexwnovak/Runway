@@ -1,7 +1,6 @@
 ﻿using Xunit;
 using Moq;
 using FluentAssertions;
-using Runway.ExtensibilityModel;
 using Runway.Input;
 using Runway.Services;
 using Runway.UnitTests.Helpers;
@@ -19,13 +18,11 @@ namespace Runway.UnitTests.ViewModels
          // Arrange
 
          var matchResultMock = new Mock<IMatchResult>();
-         IMatchResult[] matchResults = null;
+         var matchResults = ArrayHelper.Create( matchResultMock.Object );
 
          var appServiceMock = new Mock<IAppService>();
          var inputControllerMock = new Mock<IInputController>();
-         inputControllerMock.SetupGet( ic => ic.MatchResults ).Returns( matchResults );
-         inputControllerMock.SetupSet( ic => ic.InputText = text )
-            .Callback( () => inputControllerMock.SetupGet( ic => ic.MatchResults ).Returns( ArrayHelper.Create( matchResultMock.Object ) ) );
+         inputControllerMock.Setup( ic => ic.UpdateInputText( text ) ).Returns( matchResults );
 
          // Act
 
@@ -70,7 +67,7 @@ namespace Runway.UnitTests.ViewModels
 
          var appServiceMock = new Mock<IAppService>();
          var inputControllerMock = new Mock<IInputController>();
-         inputControllerMock.SetupGet( ic => ic.MatchResults ).Returns( matchResults );
+         inputControllerMock.Setup( ic => ic.UpdateInputText( text ) ).Returns( matchResults );
 
          // Act
 
@@ -96,7 +93,7 @@ namespace Runway.UnitTests.ViewModels
 
          var appServiceMock = new Mock<IAppService>();
          var inputControllerMock = new Mock<IInputController>();
-         inputControllerMock.SetupGet( ic => ic.MatchResults ).Returns( matchResults );
+         inputControllerMock.Setup( ic => ic.UpdateInputText( text ) ).Returns( matchResults );
 
          // Act
 

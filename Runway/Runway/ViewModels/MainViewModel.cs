@@ -139,11 +139,11 @@ namespace Runway.ViewModels
       private void OnChangeInputText( string text )
       {
          _isUpdatingInput = true;
-         _inputController.InputText = text;
+         var matchResults = _inputController.UpdateInputText( text );
 
-         Suggestions.Reset( _inputController.MatchResults );
+         Suggestions.Reset( matchResults );
 
-         if ( _inputController.MatchResults.Length == 0 )
+         if ( matchResults.Length == 0 )
          {
             _selectedIndex = -1;
             SelectedSuggestion = null;

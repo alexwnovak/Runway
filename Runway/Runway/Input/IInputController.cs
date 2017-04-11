@@ -2,20 +2,11 @@
 {
    public interface IInputController
    {
-      string InputText
-      {
-         get;
-         set;
-      }
-
       IInputFrame CurrentInputFrame
       {
          get;
       }
 
-      IMatchResult[] MatchResults
-      {
-         get;
-      }
+      IMatchResult[] UpdateInputText( string inputText );
    }
 }
