@@ -89,6 +89,11 @@ namespace Runway.ViewModels
          get;
       }
 
+      public ICommand InputTextChangedCommand
+      {
+         get;
+      }
+
       public event EventHandler<MoveCaretEventArgs> MoveCaretRequested;
       public event EventHandler DismissRequested;
 
@@ -102,6 +107,7 @@ namespace Runway.ViewModels
          LaunchCommand = new RelayCommand( OnLaunchCommand );
          ExitCommand = new RelayCommand( appService.Exit );
          DismissCommand = new RelayCommand( OnDismissCommand );
+         InputTextChangedCommand = new RelayCommand<string>( OnInputTextChanged );
       }
 
       protected virtual void OnMoveCaretRequested( object sender, MoveCaretEventArgs e )
@@ -175,6 +181,10 @@ namespace Runway.ViewModels
       {
          InputText = null;
          OnDismissRequested( this, EventArgs.Empty );
+      }
+
+      private void OnInputTextChanged( string text )
+      {
       }
    }
 }
