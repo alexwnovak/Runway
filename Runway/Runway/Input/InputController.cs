@@ -10,10 +10,7 @@ namespace Runway.Input
       private string _inputText;
       public string InputText
       {
-         get
-         {
-            return _inputText;
-         }
+         get => _inputText;
          set
          {
             _inputText = value;

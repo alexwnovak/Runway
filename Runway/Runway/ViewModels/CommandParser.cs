@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Runway.ViewModels
+﻿namespace Runway.ViewModels
 {
    public static class CommandParser
    {
