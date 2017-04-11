@@ -50,14 +50,13 @@
       </Grid.RowDefinitions>
 
       <TextBox x:Name="InputTextBox"
-         Margin="0,0,55,0"
-         Text="{Binding InputText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+         Margin="0,0,55,0">
          <TextBox.Resources>
             <viewModels:TextChangedEventArgsConverter x:Key="TextChangedConverter" />
          </TextBox.Resources>
          <i:Interaction.Triggers>
             <i:EventTrigger EventName="TextChanged">
-               <command:EventToCommand Command="{Binding InputTextChangedCommand, Mode=OneTime}"
+               <command:EventToCommand Command="{Binding ChangeInputTextCommand, Mode=OneTime}"
                   PassEventArgsToCommand="True"
                   EventArgsConverter="{StaticResource TextChangedConverter}" />
             </i:EventTrigger>
