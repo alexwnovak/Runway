@@ -34,7 +34,7 @@ Task( "Build" )
    .IsDependentOn( "RestoreNuGetPackages")
    .Does( () =>
 {
-  MSBuild( "./Runway/Runway.sln", settings => settings.SetConfiguration( configuration ) );
+   MSBuild( "./Runway/Runway.sln", settings => settings.SetConfiguration( configuration ).UseToolVersion( MSBuildToolVersion.VS2017 ) );
 } );
 
 //===========================================================================
