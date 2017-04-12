@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using Runway.ExtensibilityModel;
 using Runway.Extensions;
 using Runway.Input;
 using Runway.Services;

@@ -1,4 +1,6 @@
-﻿namespace Runway.Input
+﻿using Runway.ExtensibilityModel;
+
+namespace Runway.Input
 {
    public interface IInputController
    {
