@@ -55,5 +55,35 @@ namespace Runway.UnitTests.Input
 
          actualMatchResults.Should().HaveCount( 1 ).And.Contain( matchResultMock.Object );
       }
+
+      [Fact]
+      public void UpdateInputText_AddsSpaceToCommand_QueriesNewInputFrameForFrameText()
+      {
+         const string searchText = "c";
+
+         // Arrange
+
+         var searchCatalogMock = new Mock<ISearchCatalog>();
+         var commandMock = new Mock<IQueryableCommand>();
+         commandMock.Setup( c => c.Query() ).Returns( searchCatalogMock.Object );
+         var matchResultMock = new Mock<IMatchResult>();
+         matchResultMock.SetupGet( mr => mr.Command ).Returns( commandMock.Object );
+
+         var matchResults = ArrayHelper.Create( matchResultMock.Object );
+
+         var inputFrameMock = new Mock<IInputFrame>();
+         inputFrameMock.Setup( @if => @if.Match( searchText ) ).Returns( matchResults );
+
+         // Act
+
+         var inputController = new InputController( inputFrameMock.Object );
+
+         inputController.UpdateInputText( searchText );
+         inputController.UpdateInputText( " " );
+
+         // Assert
+
+         searchCatalogMock.Verify( sc => sc.Search( "" ), Times.Once() );
+      }
    }
 }
