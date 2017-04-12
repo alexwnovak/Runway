@@ -11,7 +11,7 @@ namespace Runway.Input
       public IInputFrame CurrentInputFrame => _inputFrames.Peek();
 
       private IMatchResult[] _matchResults;
-      private string _inputText;
+      private string _inputText = string.Empty;
       private int _readIndex;
 
       public InputController( IInputFrame initialInputFrame )
@@ -26,19 +26,30 @@ namespace Runway.Input
 
       public IMatchResult[] UpdateInputText( string inputText )
       {
-         if ( inputText.Last() == ' ' )
+         if ( inputText.Length > _inputText.Length )
          {
-            if ( _matchResults[0].Command is IQueryableCommand queryable )
+            if ( inputText.Last() == ' ' )
             {
-               var searchCatalog = queryable.Query();
-               var nextInputFrame = new InputFrame( searchCatalog );
-               _inputFrames.Push( nextInputFrame );
+               if ( _matchResults[0].Command is IQueryableCommand queryable )
+               {
+                  var searchCatalog = queryable.Query();
+                  var nextInputFrame = new InputFrame( searchCatalog );
+                  _inputFrames.Push( nextInputFrame );
 
-               _readIndex = _inputText.Length + inputText.Length;
+                  _readIndex = inputText.Length;
+               }
+            }
+         }
+         else if ( inputText.Length < _inputText.Length )
+         {
+            if ( _inputText.Last() == ' ' )
+            {
+               _inputFrames.Pop();
+               _readIndex = 0;
             }
          }
 
-         _inputText += inputText;
+         _inputText = inputText;
 
          string frameText = GetCurrentText();
          _matchResults = CurrentInputFrame.Match( frameText );
