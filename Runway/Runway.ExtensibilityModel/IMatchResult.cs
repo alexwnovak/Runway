@@ -12,6 +12,11 @@
          get;
       }
 
+      ILaunchableCommand Command
+      {
+         get;
+      }
+
       void Activate( object[] parameters );
    }
 }
