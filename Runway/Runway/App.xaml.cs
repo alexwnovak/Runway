@@ -6,6 +6,7 @@ using NHotkey.Wpf;
 using Runway.Commands;
 using Runway.Commands.Restart;
 using Runway.Commands.Uninstall;
+using Runway.ExtensibilityModel;
 using Runway.Extensions;
 using Runway.Input;
 using Runway.Services;

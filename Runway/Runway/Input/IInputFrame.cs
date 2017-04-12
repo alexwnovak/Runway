@@ -1,3 +1,5 @@
+using Runway.ExtensibilityModel;
+
 namespace Runway.Input
 {
    public interface IInputFrame
