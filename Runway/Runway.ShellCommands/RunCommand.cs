@@ -8,7 +8,7 @@ namespace Runway.ShellCommands
       public string CommandText => "run";
       public string Description => "Launches the Windows Run dialog"; 
 
-      public void Launch( object[] parameters )
+      public void Launch()
       {
          var shell = new Shell();
          shell.FileRun();

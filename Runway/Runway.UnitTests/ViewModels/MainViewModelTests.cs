@@ -292,7 +292,7 @@ namespace Runway.UnitTests.ViewModels
 
          // Assert
 
-         matchResultMock.Verify( mr => mr.Activate( null ), Times.Once() );
+         matchResultMock.Verify( mr => mr.Activate(), Times.Once() );
       }
 
       [Fact]

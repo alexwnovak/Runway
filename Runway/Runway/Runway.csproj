@@ -126,7 +126,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CommandCatalog.cs" />
-    <Compile Include="CopyLaunchCommand.cs" />
     <Compile Include="LaunchableCommandBase.cs" />
     <Compile Include="Services\AppService.cs" />
     <Compile Include="Services\IAppService.cs" />

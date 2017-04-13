@@ -28,7 +28,6 @@ namespace Runway
       private void WireDependencies()
       {
          var commandCatalog = new CommandCatalog();
-         commandCatalog.Add( new CopyLaunchCommand() );
          commandCatalog.Add( new RestartCommand() );
          commandCatalog.Add( new QuitCommand() );
          commandCatalog.Add( new RunCommand() );

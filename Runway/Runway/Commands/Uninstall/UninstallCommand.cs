@@ -13,7 +13,7 @@ namespace Runway.Commands.Uninstall
          Icon = GetIconFromFile( @"C:\Windows\System32\appwiz.cpl" );
       }
 
-      public override void Launch( object[] parameters )
+      public override void Launch()
       {
          throw new NotImplementedException();
       }

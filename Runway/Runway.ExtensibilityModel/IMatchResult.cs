@@ -17,6 +17,6 @@
          get;
       }
 
-      void Activate( object[] parameters );
+      void Activate();
    }
 }

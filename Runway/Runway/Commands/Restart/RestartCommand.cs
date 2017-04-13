@@ -9,7 +9,7 @@ namespace Runway.Commands.Restart
       {
       }
 
-      public override void Launch( object[] parameters )
+      public override void Launch()
       {
          var startInfo = new ProcessStartInfo
          {

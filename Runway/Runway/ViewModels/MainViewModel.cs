@@ -118,7 +118,7 @@ namespace Runway.ViewModels
 
       private void OnLaunchCommand()
       {
-         SelectedSuggestion.Activate( null );
+         SelectedSuggestion.Command.Launch();
          OnDismissRequested( this, EventArgs.Empty );
       }
 

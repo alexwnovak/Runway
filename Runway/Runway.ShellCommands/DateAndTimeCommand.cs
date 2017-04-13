@@ -8,7 +8,7 @@ namespace Runway.ShellCommands
       public string CommandText => "dateandtime";
       public string Description => "Opens the Windows Date and Time settings";
 
-      public void Launch( object[] parameters )
+      public void Launch()
       {
          var shell = new Shell();
          shell.ControlPanelItem( "timedate.cpl" );
