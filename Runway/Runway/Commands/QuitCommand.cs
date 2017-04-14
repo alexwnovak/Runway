@@ -9,6 +9,6 @@ namespace Runway.Commands
       {
       }
 
-      public override void Launch( object[] parameters ) => Environment.Exit( 0 );
+      public override void Launch() => Environment.Exit( 0 );
    }
 }

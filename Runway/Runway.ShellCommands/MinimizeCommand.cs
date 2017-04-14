@@ -8,7 +8,7 @@ namespace Runway.ShellCommands
       public string CommandText => "minimize";
       public string Description => "Minimizes all windows";
 
-      public void Launch( object[] parameters )
+      public void Launch()
       {
          var shell = new Shell();
          shell.MinimizeAll();

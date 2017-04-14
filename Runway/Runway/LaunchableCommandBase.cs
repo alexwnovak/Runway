@@ -40,6 +40,6 @@ namespace Runway
          return Imaging.CreateBitmapSourceFromHIcon( icon.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions() );
       }
 
-      public abstract void Launch( object[] parameters );
+      public abstract void Launch();
    }
 }

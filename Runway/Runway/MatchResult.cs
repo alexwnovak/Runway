@@ -21,7 +21,5 @@ namespace Runway
          MatchType = matchType;
          Command = command;
       }
-
-      public void Activate( object[] parameters ) => Command.Launch( parameters );
    }
 }

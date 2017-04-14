@@ -80,8 +80,8 @@ namespace Runway.ViewModels
 
          SelectNextSuggestionCommand = new RelayCommand( OnSelectNextSuggestionCommand );
          SelectPreviousSuggestionCommand = new RelayCommand( OnSelectPreviousSuggestionCommand );
-         CompleteSuggestionCommand = new RelayCommand( OnCompleteSuggestionCommand );
-         LaunchCommand = new RelayCommand( OnLaunchCommand, LaunchCommandCanExecute );
+         CompleteSuggestionCommand = new RelayCommand( OnCompleteSuggestionCommand, HasSelectedSuggestion );
+         LaunchCommand = new RelayCommand( OnLaunchCommand, HasSelectedSuggestion );
          ExitCommand = new RelayCommand( OnExitCommand );
          DismissCommand = new RelayCommand( OnDismissCommand );
          ChangeInputTextCommand = new RelayCommand<string>( OnChangeInputText, ChangeInputTextCanExecute );
@@ -112,22 +112,17 @@ namespace Runway.ViewModels
 
       private void OnCompleteSuggestionCommand()
       {
-         if ( SelectedSuggestion == null )
-         {
-            return;
-         }
-
          OnChangeTextRequested( this, new ChangeTextRequestedEventArgs( SelectedSuggestion.DisplayText ) );
          OnMoveCaretRequested( this, new MoveCaretEventArgs( CaretPosition.End ) );
       }
 
       private void OnLaunchCommand()
       {
-         SelectedSuggestion.Activate( null );
+         SelectedSuggestion.Command.Launch();
          OnDismissRequested( this, EventArgs.Empty );
       }
 
-      private bool LaunchCommandCanExecute() => SelectedSuggestion != null;
+      private bool HasSelectedSuggestion() => SelectedSuggestion != null;
 
       private void OnExitCommand() => _appService.Exit();
 

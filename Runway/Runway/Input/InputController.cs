@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Runway.ExtensibilityModel;
 
 namespace Runway.Input
@@ -8,6 +9,10 @@ namespace Runway.Input
    {
       private readonly Stack<IInputFrame> _inputFrames = new Stack<IInputFrame>();
       public IInputFrame CurrentInputFrame => _inputFrames.Peek();
+
+      private IMatchResult[] _matchResults;
+      private string _inputText = string.Empty;
+      private int _readIndex;
 
       public InputController( IInputFrame initialInputFrame )
       {
@@ -19,6 +24,42 @@ namespace Runway.Input
          _inputFrames.Push( initialInputFrame );
       }
 
-      public IMatchResult[] UpdateInputText( string inputText ) => CurrentInputFrame.Match( inputText );
+      public IMatchResult[] UpdateInputText( string inputText )
+      {
+         if ( inputText.Length > _inputText.Length )
+         {
+            if ( inputText.Last() == ' ' )
+            {
+               if ( _matchResults[0].Command is IQueryableCommand queryable )
+               {
+                  var searchCatalog = queryable.Query();
+                  var nextInputFrame = new InputFrame( searchCatalog );
+                  _inputFrames.Push( nextInputFrame );
+
+                  _readIndex = inputText.Length;
+               }
+            }
+         }
+         else if ( inputText.Length < _inputText.Length )
+         {
+            if ( _inputText.Last() == ' ' )
+            {
+               _inputFrames.Pop();
+               _readIndex = 0;
+            }
+         }
+
+         _inputText = inputText;
+
+         string frameText = GetCurrentText();
+         _matchResults = CurrentInputFrame.Match( frameText );
+
+         return _matchResults;
+      }
+
+      private string GetCurrentText()
+      {
+         return _inputText.Substring( _readIndex );
+      }
    }
 }

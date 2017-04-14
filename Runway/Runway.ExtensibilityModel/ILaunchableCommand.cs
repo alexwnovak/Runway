@@ -12,6 +12,6 @@
          get;
       }
 
-      void Launch( object[] parameters );
+      void Launch();
    }
 }

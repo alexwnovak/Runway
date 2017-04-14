@@ -5,6 +5,7 @@ using NHotkey;
 using NHotkey.Wpf;
 using Runway.Commands;
 using Runway.Commands.Restart;
+using Runway.Commands.Stop;
 using Runway.Commands.Uninstall;
 using Runway.ExtensibilityModel;
 using Runway.Extensions;
@@ -28,12 +29,12 @@ namespace Runway
       private void WireDependencies()
       {
          var commandCatalog = new CommandCatalog();
-         commandCatalog.Add( new CopyLaunchCommand() );
          commandCatalog.Add( new RestartCommand() );
          commandCatalog.Add( new QuitCommand() );
          commandCatalog.Add( new RunCommand() );
          commandCatalog.Add( new MinimizeCommand() );
          commandCatalog.Add( new DateAndTimeCommand() );
+         commandCatalog.Add( new StopCommand() );
 
          SimpleIoc.Default.Register<ISearchCatalog>( () => commandCatalog );
          SimpleIoc.Default.Register<IAppService>( () => new AppService() );
