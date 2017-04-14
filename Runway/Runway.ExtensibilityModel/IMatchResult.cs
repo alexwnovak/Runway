@@ -16,7 +16,5 @@
       {
          get;
       }
-
-      void Activate();
    }
 }
