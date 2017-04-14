@@ -5,6 +5,7 @@ using NHotkey;
 using NHotkey.Wpf;
 using Runway.Commands;
 using Runway.Commands.Restart;
+using Runway.Commands.Stop;
 using Runway.Commands.Uninstall;
 using Runway.ExtensibilityModel;
 using Runway.Extensions;
@@ -33,6 +34,7 @@ namespace Runway
          commandCatalog.Add( new RunCommand() );
          commandCatalog.Add( new MinimizeCommand() );
          commandCatalog.Add( new DateAndTimeCommand() );
+         commandCatalog.Add( new StopCommand() );
 
          SimpleIoc.Default.Register<ISearchCatalog>( () => commandCatalog );
          SimpleIoc.Default.Register<IAppService>( () => new AppService() );
