@@ -93,6 +93,7 @@
     <Compile Include="Commands\Restart\RestartCommand.cs" />
     <Compile Include="Commands\Stop\ProcessSearchCatalog.cs" />
     <Compile Include="Commands\Stop\StopCommand.cs" />
+    <Compile Include="Commands\Stop\StopSubCommand.cs" />
     <Compile Include="Commands\Uninstall\AppCatalog.cs" />
     <Compile Include="Commands\Uninstall\AppEntry.cs" />
     <Compile Include="Commands\Uninstall\IAppCatalog.cs" />
