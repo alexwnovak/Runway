@@ -1,28 +1,16 @@
-﻿using System;
-using Runway.ExtensibilityModel;
+﻿using Runway.ExtensibilityModel;
 
 namespace Runway.Commands.Stop
 {
    public class StopCommand : IQueryableCommand
    {
-      public string CommandText
-      {
-         get;
-      }
-
-      public string Description
-      {
-         get;
-      }
+      public string CommandText => "stop";
+      public string Description => "Stops Window processes";
 
       public void Launch()
       {
-         throw new NotImplementedException();
       }
 
-      public ISearchCatalog Query()
-      {
-         throw new NotImplementedException();
-      }
+      public ISearchCatalog Query() => new ProcessSearchCatalog();
    }
 }
