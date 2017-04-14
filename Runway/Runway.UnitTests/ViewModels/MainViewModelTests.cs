@@ -279,7 +279,9 @@ namespace Runway.UnitTests.ViewModels
       {
          // Arrange
 
+         var commandMock = new Mock<ILaunchableCommand>();
          var matchResultMock = new Mock<IMatchResult>();
+         matchResultMock.Setup( mr => mr.Command ).Returns( commandMock.Object );
 
          // Act
 
@@ -292,15 +294,18 @@ namespace Runway.UnitTests.ViewModels
 
          // Assert
 
-         matchResultMock.Verify( mr => mr.Activate(), Times.Once() );
+         commandMock.Verify( c => c.Launch(), Times.Once() );
       }
 
       [Fact]
       public void LaunchCommand_HasSuggestion_RaisesDismissRequested()
       {
+         var matchResult = new Mock<IMatchResult>();
+         matchResult.Setup( mr => mr.Command ).Returns( Mock.Of<ILaunchableCommand>() );
+
          var viewModel = new MainViewModel( null, null )
          {
-            SelectedSuggestion = Mock.Of<IMatchResult>()
+            SelectedSuggestion = matchResult.Object
          };
 
          viewModel.MonitorEvents();
