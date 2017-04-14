@@ -91,6 +91,7 @@
     <Compile Include="Behaviors\WindowPlacementBehavior.cs" />
     <Compile Include="Commands\QuitCommand.cs" />
     <Compile Include="Commands\Restart\RestartCommand.cs" />
+    <Compile Include="Commands\Stop\ProcessSearchCatalog.cs" />
     <Compile Include="Commands\Stop\StopCommand.cs" />
     <Compile Include="Commands\Uninstall\AppCatalog.cs" />
     <Compile Include="Commands\Uninstall\AppEntry.cs" />
