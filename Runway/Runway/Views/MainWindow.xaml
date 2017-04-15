@@ -85,7 +85,7 @@
          BorderBrush="{x:Null}">
          <ListBox.ItemsPanel>
             <ItemsPanelTemplate>
-               <StackPanel />
+               <VirtualizingStackPanel />
             </ItemsPanelTemplate>
          </ListBox.ItemsPanel>
          <ListBox.ItemTemplate>
