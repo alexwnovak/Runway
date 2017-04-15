@@ -1,7 +1,9 @@
-﻿namespace Runway.ExtensibilityModel
+﻿using System.Threading.Tasks;
+
+namespace Runway.ExtensibilityModel
 {
    public interface ISearchCatalog
    {
-      IMatchResult[] Search( string searchText );
+      Task<IMatchResult[]> Search( string searchText );
    }
 }

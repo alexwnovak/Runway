@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Runway.ExtensibilityModel;
 
 namespace Runway
@@ -13,11 +14,11 @@ namespace Runway
 
       public void Add( ILaunchableCommand command ) => _commandList.Add( command );
 
-      public IMatchResult[] Search( string searchText )
+      public Task<IMatchResult[]> Search( string searchText )
       {
          if ( string.IsNullOrEmpty( searchText ) )
          {
-            return EmptySet;
+            return Task.FromResult( EmptySet );
          }
 
          var results = from c in _commandList
@@ -28,7 +29,7 @@ namespace Runway
                        orderby c.CommandText
                        select new MatchResult( matchType, c );
 
-         return results.ToArray();
+         return Task.FromResult<IMatchResult[]>( results.ToArray() );
       }
    }
 }

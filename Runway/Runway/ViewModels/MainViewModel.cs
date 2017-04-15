@@ -13,7 +13,13 @@ namespace Runway.ViewModels
    {
       private readonly IAppService _appService;
       private readonly IInputController _inputController;
+
       private bool _isUpdatingInput;
+      public bool IsUpdatingInput
+      {
+         get => _isUpdatingInput;
+         set => Set( () => IsUpdatingInput, ref _isUpdatingInput, value );
+      }
 
       public BulkObservableCollection<IMatchResult> Suggestions
       {
@@ -132,10 +138,13 @@ namespace Runway.ViewModels
          OnDismissRequested( this, EventArgs.Empty );
       }
 
-      private void OnChangeInputText( string text )
+      private async void OnChangeInputText( string text )
       {
-         _isUpdatingInput = true;
-         var matchResults = _inputController.UpdateInputText( text );
+         IsUpdatingInput = true;
+
+
+
+         var matchResults = await _inputController.UpdateInputText( text );
 
          Suggestions.Reset( matchResults );
 
@@ -150,9 +159,9 @@ namespace Runway.ViewModels
             SelectedSuggestion = Suggestions[0];
          }
 
-         _isUpdatingInput = false;
+         IsUpdatingInput = false;
       }
 
-      private bool ChangeInputTextCanExecute( string text ) => !_isUpdatingInput;
+      private bool ChangeInputTextCanExecute( string text ) => !IsUpdatingInput;
    }
 }

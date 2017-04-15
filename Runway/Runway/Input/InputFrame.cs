@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Runway.ExtensibilityModel;
 
 namespace Runway.Input
@@ -12,6 +13,6 @@ namespace Runway.Input
          _searchCatalog = searchCatalog ?? throw new ArgumentNullException( nameof( searchCatalog ) );
       }
 
-      public IMatchResult[] Match( string searchText ) => _searchCatalog.Search( searchText );
+      public Task<IMatchResult[]> Match( string searchText ) => _searchCatalog.Search( searchText );
    }
 }

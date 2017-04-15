@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Runway.ExtensibilityModel;
 
 namespace Runway.Input
@@ -24,7 +25,7 @@ namespace Runway.Input
          _inputFrames.Push( initialInputFrame );
       }
 
-      public IMatchResult[] UpdateInputText( string inputText )
+      public async Task<IMatchResult[]> UpdateInputText( string inputText )
       {
          if ( inputText.Length > _inputText.Length )
          {
@@ -52,7 +53,7 @@ namespace Runway.Input
          _inputText = inputText;
 
          string frameText = GetCurrentText();
-         _matchResults = CurrentInputFrame.Match( frameText );
+         _matchResults = await CurrentInputFrame.Match( frameText );
 
          return _matchResults;
       }

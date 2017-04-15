@@ -29,6 +29,25 @@
             <ResourceDictionary Source="..\Styles\ScrollBarStyle.xaml" />
             <ResourceDictionary Source="..\Styles\TextBoxStyle.xaml" />
             <ResourceDictionary Source="..\Styles\TextBlockStyles.xaml" />
+            <ResourceDictionary>
+               <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
+               <Storyboard x:Key="Red">
+                  <DoubleAnimation Storyboard.TargetProperty="Angle"
+                     Storyboard.TargetName="RedTransform"
+                     From="0"
+                     To="360"
+                     Duration="0:0:2"
+                     RepeatBehavior="Forever" />
+               </Storyboard>
+               <Storyboard x:Key="Green">
+                  <DoubleAnimation Storyboard.TargetProperty="Angle"
+                     Storyboard.TargetName="GreenTransform"
+                     From="0"
+                     To="-360"
+                     Duration="0:0:1"
+                     RepeatBehavior="Forever" />
+               </Storyboard>
+            </ResourceDictionary>
          </ResourceDictionary.MergedDictionaries>
       </ResourceDictionary>
    </Window.Resources>
@@ -146,6 +165,72 @@
             </Style>
          </ListBox.ItemContainerStyle>
       </ListBox>
+
+      <Canvas Grid.Row="2"
+         HorizontalAlignment="Center"
+         VerticalAlignment="Center"
+         Visibility="{Binding IsUpdatingInput, Converter={StaticResource BooleanToVisibility}}">
+         <Path Stroke="White">
+            <Path.Data>
+               <EllipseGeometry RadiusX="50" RadiusY="50" />
+            </Path.Data>
+         </Path>
+          <Path Stroke="Blue" StrokeThickness="10">
+             <Path.Data>
+                <PathGeometry>
+                   <PathFigure StartPoint="0,-50">
+                      <ArcSegment Point="-0.001,-50"
+                         Size="49,50"
+                         IsLargeArc="True"
+                         SweepDirection="Clockwise"/>
+                   </PathFigure>
+                </PathGeometry>
+             </Path.Data>
+          </Path>
+         <Path Stroke="Red" StrokeThickness="10">
+            <Path.Data>
+               <PathGeometry>
+                  <PathFigure StartPoint="0,-50">
+                     <ArcSegment Point="35,35"
+                        Size="50,50"
+                        SweepDirection="Clockwise"/>
+                  </PathFigure>
+                  <PathGeometry.Transform>
+                     <RotateTransform x:Name="RedTransform" Angle="0"/>
+                  </PathGeometry.Transform>
+               </PathGeometry>
+            </Path.Data>
+          </Path>
+         <Path Stroke="Green"
+               StrokeThickness="10">
+            <Path.Data>
+               <PathGeometry>
+                  <PathFigure StartPoint="0,-50">
+                     <ArcSegment Point="-35,35"
+                                 Size="50,50"
+                                 SweepDirection="Counterclockwise" />
+                  </PathFigure>
+                  <PathGeometry.Transform>
+                     <RotateTransform x:Name="GreenTransform" Angle="0" />
+                  </PathGeometry.Transform>
+               </PathGeometry>
+            </Path.Data>
+         </Path>
+      </Canvas>
+
+      <!--<Grid Grid.Row="2" Width="50" Height="50" Background="Red"
+         Visibility="{Binding IsUpdatingInput, Converter={StaticResource BooleanToVisibility}}">
+         <Path StrokeThickness="5" Fill="White">
+            <Path.Data>
+               <PathGeometry>
+                  <PathFigure StartPoint="0,0">
+                     <ArcSegment Point="0,0"
+                                 Size="40,40" />
+                  </PathFigure>
+               </PathGeometry>
+            </Path.Data>
+         </Path>
+      </Grid>-->
    </Grid>
 </Window>
 

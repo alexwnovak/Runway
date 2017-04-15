@@ -1,9 +1,10 @@
+using System.Threading.Tasks;
 using Runway.ExtensibilityModel;
 
 namespace Runway.Input
 {
    public interface IInputFrame
    {
-      IMatchResult[] Match( string searchText );
+      Task<IMatchResult[]> Match( string searchText );
    }
 }

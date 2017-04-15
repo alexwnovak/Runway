@@ -2,6 +2,7 @@
 using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
 using Runway.Extensions;
 using Runway.ViewModels;
 
@@ -21,6 +22,12 @@ namespace Runway.Views
          _viewModel.DismissRequested += OnDismissRequested;
          _viewModel.ChangeTextRequested += OnChangeTextRequested;
          _viewModel.Suggestions.CollectionChanged += OnSuggestionsChanged;
+
+         Loaded += ( _, __ ) =>
+         {
+            ((Storyboard) Resources["Red"]).Begin();
+            ((Storyboard) Resources["Green"]).Begin();
+         };
       }
 
       private void OnMoveCaretRequested( object sender, MoveCaretEventArgs e )

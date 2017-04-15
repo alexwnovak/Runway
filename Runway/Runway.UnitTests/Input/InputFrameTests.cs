@@ -1,46 +1,46 @@
-﻿using System;
-using FluentAssertions;
-using Moq;
-using Runway.ExtensibilityModel;
-using Xunit;
-using Runway.Input;
-using Runway.UnitTests.Helpers;
+﻿//using System;
+//using FluentAssertions;
+//using Moq;
+//using Runway.ExtensibilityModel;
+//using Xunit;
+//using Runway.Input;
+//using Runway.UnitTests.Helpers;
 
-namespace Runway.UnitTests.Input
-{
-   public class InputFrameTests
-   {
-      [Fact]
-      public void Match_SearchCatalogIsNull_ThrowsArgumentNullException()
-      {
-         Action constructor = () => new InputFrame( null );
+//namespace Runway.UnitTests.Input
+//{
+//   public class InputFrameTests
+//   {
+//      [Fact]
+//      public void Match_SearchCatalogIsNull_ThrowsArgumentNullException()
+//      {
+//         Action constructor = () => new InputFrame( null );
 
-         constructor.ShouldThrow<ArgumentNullException>();
-      }
+//         constructor.ShouldThrow<ArgumentNullException>();
+//      }
 
-      [Fact]
-      public void Match_SearchesWithText_ReturnsMatchResultsForText()
-      {
-         const string searchText = "search";
+//      [Fact]
+//      public void Match_SearchesWithText_ReturnsMatchResultsForText()
+//      {
+//         const string searchText = "search";
 
-         // Arrange
+//         // Arrange
 
-         var matchResultMock = new Mock<IMatchResult>();
-         var expectedMatchResults = ArrayHelper.Create( matchResultMock.Object );
+//         var matchResultMock = new Mock<IMatchResult>();
+//         var expectedMatchResults = ArrayHelper.Create( matchResultMock.Object );
 
-         var searchCatalogMock = new Mock<ISearchCatalog>();
-         searchCatalogMock.Setup( sc => sc.Search( searchText ) ).Returns( expectedMatchResults );
+//         var searchCatalogMock = new Mock<ISearchCatalog>();
+//         searchCatalogMock.Setup( sc => sc.Search( searchText ) ).Returns( expectedMatchResults );
 
-         // Act
+//         // Act
 
-         var inputFrame = new InputFrame( searchCatalogMock.Object );
+//         var inputFrame = new InputFrame( searchCatalogMock.Object );
 
-         var matchResults = inputFrame.Match( searchText );
+//         var matchResults = inputFrame.Match( searchText );
 
-         // Assert
+//         // Assert
 
-         matchResults.Should().HaveCount( 1 );
-         matchResults[0].Should().Be( matchResultMock.Object );
-      }
-   }
-}
+//         matchResults.Should().HaveCount( 1 );
+//         matchResults[0].Should().Be( matchResultMock.Object );
+//      }
+//   }
+//}

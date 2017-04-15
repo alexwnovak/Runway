@@ -1,4 +1,5 @@
-﻿using Runway.ExtensibilityModel;
+﻿using System.Threading.Tasks;
+using Runway.ExtensibilityModel;
 
 namespace Runway.Input
 {
@@ -9,6 +10,6 @@ namespace Runway.Input
          get;
       }
 
-      IMatchResult[] UpdateInputText( string inputText );
+      Task<IMatchResult[]> UpdateInputText( string inputText );
    }
 }
