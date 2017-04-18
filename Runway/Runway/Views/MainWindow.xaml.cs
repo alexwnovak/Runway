@@ -10,7 +10,7 @@ namespace Runway.Views
    public partial class MainWindow : Window
    {
       private readonly MainViewModel _viewModel;
-      private bool _firstLaunch = true;
+      private bool _wasActivated;
 
       public MainWindow()
       {
@@ -25,17 +25,6 @@ namespace Runway.Views
 
       private void OnMoveCaretRequested( object sender, MoveCaretEventArgs e )
          => InputTextBox.MoveCaret( e.CaretPosition );
-
-      private void MainWindow_OnActivated( object sender, EventArgs e )
-      {
-         if ( _firstLaunch )
-         {
-            _firstLaunch = false;
-            return;
-         }
-
-         Opacity = 0;
-      }
 
       private void MainWindow_OnDeactivated( object sender, EventArgs e )
          => _viewModel.DismissCommand.Execute( null );
