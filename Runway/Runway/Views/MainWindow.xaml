@@ -41,7 +41,7 @@
       <KeyBinding Gesture="Escape" Command="{Binding DismissCommand, Mode=OneTime}" />
    </Window.InputBindings>
 
-   <Grid Margin="50">
+   <Grid Margin="25">
       <Grid.RowDefinitions>
          <RowDefinition Height="55" />
          <RowDefinition Height="20" />
