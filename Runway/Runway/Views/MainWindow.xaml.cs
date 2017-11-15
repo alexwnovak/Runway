@@ -12,6 +12,8 @@ namespace Runway.Views
       private readonly MainViewModel _viewModel;
       private bool _firstLaunch = true;
 
+      
+
       public MainWindow()
       {
          InitializeComponent();
@@ -28,26 +30,36 @@ namespace Runway.Views
 
       private void MainWindow_OnActivated( object sender, EventArgs e )
       {
-         if ( _firstLaunch )
-         {
-            _firstLaunch = false;
-            return;
-         }
+         //if ( _firstLaunch )
+         //{
+         //   _firstLaunch = false;
+         //   return;
+         //}
 
-         Opacity = 0;
+         //Top = -ActualHeight;
+         //Opacity = 0;
       }
 
       private void MainWindow_OnDeactivated( object sender, EventArgs e )
          => _viewModel.DismissCommand.Execute( null );
 
       private void OnDismissRequested( object sender, EventArgs e )
-         => this.FadeOut();
+      {
+         this.SlideOut();
+         //Hide();
+         //InputTextBox.Text = "";
+      }
+         //this.SlideOut();
+         //=> this.FadeOut();
 
       private void OnChangeTextRequested( object sender, ChangeTextRequestedEventArgs e )
          => InputTextBox.Text = e.Text;
 
       private void OnSuggestionsChanged( object sender, NotifyCollectionChangedEventArgs e )
-         => Height = _viewModel.Suggestions.Count == 0 ? 80 : 500;
+      {
+         
+      }
+         //=> Height = _viewModel.Suggestions.Count == 0 ? 80 : 500;
 
       private void MainWindow_OnPreviewKeyDown( object sender, KeyEventArgs e )
       {

@@ -11,8 +11,10 @@ namespace Runway.Behaviors
       private void AssociatedObject_OnLoaded( object sender, RoutedEventArgs e )
       {
          AssociatedObject.WindowStartupLocation = WindowStartupLocation.Manual;
-         AssociatedObject.Left = ( SystemParameters.FullPrimaryScreenWidth - AssociatedObject.Width ) / 2;
-         AssociatedObject.Top = SystemParameters.FullPrimaryScreenHeight / 4;
+         AssociatedObject.Left = 0;
+         AssociatedObject.Top = 0;
+         AssociatedObject.Width = SystemParameters.FullPrimaryScreenWidth;
+         AssociatedObject.Height = 120;
       }
    }
 }

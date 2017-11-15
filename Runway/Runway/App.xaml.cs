@@ -12,6 +12,7 @@ using Runway.Extensions;
 using Runway.Input;
 using Runway.Services;
 using Runway.ShellCommands;
+using Runway.Views;
 
 namespace Runway
 {
@@ -54,8 +55,14 @@ namespace Runway
       {
          if ( !MainWindow.IsActive )
          {
-            MainWindow.Visibility = Visibility.Visible;
-            MainWindow.FadeIn();
+            //MainWindow.Top = -MainWindow.Height;
+            MainWindow.Top = 0;
+            MainWindow.Show();
+            MainWindow.Activate();
+            //MainWindow.Visibility = Visibility.Visible;
+            //MainWindow.FadeIn();
+
+            (MainWindow as MainWindow).SlideIn();
          }
       }
    }
